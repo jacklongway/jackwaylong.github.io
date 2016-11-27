@@ -160,6 +160,8 @@
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
 
 
     </div>
@@ -179,7 +181,7 @@
     <div class="post-content" id="post-content" itemprop="postContent" >
 
     
-        Android组件化开发
+        
 主题大纲
 
 什么是组件化
@@ -195,13 +197,6 @@
 Q&amp;A
 
 
-什么是组件化在了解组件化之前,我们首先回顾一下目前非组件化工程的基本结构,首先我想说大家最想说的是as编译太慢,编译让人蓝瘦香菇，并且谁者业务需求越来越多，代码越来越多，编译时间线性增加，有些同学可能会通过自己机器的配置对应的设置，as的编译配置文件，增量编译，但是这样的结果还不是很明显，一方面由于as对增量编译的支持力度，在这个过程中有代码缓存问题。我们通过clean去解决，这样会导致重新build，从而导致编译时间还是很长，编译就像as给予我们放松的时刻。面对上面的这些问题，我相信我们很多同学都思考过，拆分当个工程为多个工程，然后模块编译，模块测试，最后整合若干模块称为一个apk，没错，思路是对的，但是为什么这些理论很难得到实践了。这就是我们经常说的，理想很丰满，现实很骨感。当我们找到一个理论突破口的时候，就感觉很满足，就觉得就这样。我想说我们必须实践，熟话说，实践才是检验真理的唯一标准，我们需要思考，学习，实践，用理论去解决实际问题。我个人认为as与生俱来就是提供开发者模块化的ide，很多同学可能有疑问，为什么这么认为，我们开发时仅仅把as看作一个开发辅助工具，但是我们站在更高的角度去思考，其实as给我们不仅仅是一种工具，而是一种给予我们基于这个工具去能创造，创新开发模式的软件。明白了这些，那么组件化到底是什么了，我看目前网上关于组件化开发的文章，这说明也有很多在开发中实践的，我个人认为还是不够完善，或者说很多问题，很多坑。我对组件化的理解就是module化开发，module测试，module打包，module发包，module集成，module暴露，下面详细说这些具体怎么做。
-什么是插件化有的同学很能有很大的疑问，主题是组件化，为什么要了解什么是插件化，这里只是说明一下插件化与组件化的区别，让我们实践过程中能够分清开发界限，能够将组件化做的更好。插件化是很多的开发模式，我们明白一点就可以了，插件化是单独的apk，jar，zip，dex，资源，so等。将这些进行动态加载，然而组件化本质还是一个主apk。不管多少module，最后都会整合成一个apk。所以我们就有了更新的开发模式，组件化中插件化，这里不详细展开说，今天主题是组件化，我们专一讲好一个主题，后面再安排讲解这种模式。
-为什么要组件化一开始我们讲解了，什么组件化，以及组件化的好处，以及组件化的大致几个流程，有的同学可能还有很多的疑问，我们一个app运行起来，如果机器配置好点，速度也挺快的，写代码写起来也很舒服，组件化也没必要，可能还认为组件化开发流程复杂，带给我们的价值不大。我想说作为开发者千万不要这么想，我们要想的是这种模式能不能适合我们的场景，任何一种技术都是有场景范围的，不是universal的。我个人认为组件化最大的好处就是解耦合，最大程度的并行开发，非常适合自动化测试，非常适合代码管理，这些同学们不能很好的体会，后面我都会通过事例来讲解，先心中有个印象。
-如何组件化 组件化开发要简单也可以很简单，要复杂也可以很复杂，但是我们开发就是要偷懒，要写脚本自动化执行我们重复的工作。所以我们如何将复杂的事情转化成简单的脚本，让as帮我们去加载执行。既然组件化是基于as的，那么首先我们需要学习gradle脚本的编写，groovy语言的学习，不同平台的脚本语言学习，比如mac下面的bash语言学习，还有一门辅助脚本的学习python，这些都可以让我们的组件化开发高效，从而提高开发效率，降低开发成本。没有做过组件化架构搭建的同学可能一下子就懵了，这些我都不要会，就会写基础代码，大多数都一样，不会我们学习就好，够用就好，然后不断去深入学习。有了这些基础的东西，下面进展就会比较顺利，不然后面可能很多问题。接下来我们就是需要拆分模块，同时引入基础库，初始化基本配置，配置依赖，这些后面我会通过演示的方式进行讲解。
-组件化的基本模型基于我对组件化开发的实践，与团队对组件化的理解，我总结出了一套开发模型基本图
-组件化开发中的问题其实组件化开发中很多问题需要我们解决，我遇到的有，依赖关系的处理，资源重复(通过添加资源前缀)，清单文件的冲突(tools)，打包运行崩溃，直接依赖aar,jar等
-组件化测试由于业务需求多，我想同学们基本都是很少测试的，即使测试也是run一下，没有写单元测试，这很大原因是写测试代码需要发费很多时间，需要编译整个工程，编译时间太长。组件化之后，我们就很容易测试自己负责的module了，并不需要加载其他人写的module，目前我们可以用自测方式测试，不用自动化测试框架之内的，看个人对测试的兴趣，这部分我也会通过演示的方式，进行讲解,同时可能涉及到application访问的问题，即使在app容器里面也有类似的问题。
     
 
         <a href="/2016/11/27/modularity/" class="post-more waves-effect waves-button">
@@ -213,48 +208,6 @@ Q&amp;A
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/modularity/">modularity</a></li></ul>
 
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-hello-world"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time datetime="2016-11-27T05:43:33.000Z" itemprop="datePublished" class="post-time">
-  2016-11-27
-</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/11/27/hello-world/">Hello World</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent" >
-
-    
-        Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu...
-    
-
-        <a href="/2016/11/27/hello-world/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
     </div>
     
 </article>
