@@ -4,9 +4,9 @@
   <subtitle>Technology change the world</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://jackwaylong.github.io/"/>
   <updated>2016-11-27T09:53:21.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://jackwaylong.github.io/</id>
   
   <author>
     <name>longway</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>modularity</title>
-    <link href="http://yoursite.com/2016/11/27/modularity/"/>
-    <id>http://yoursite.com/2016/11/27/modularity/</id>
+    <link href="http://jackwaylong.github.io/2016/11/27/modularity/"/>
+    <id>http://jackwaylong.github.io/2016/11/27/modularity/</id>
     <published>2016-11-27T08:50:54.000Z</published>
     <updated>2016-11-27T09:53:21.000Z</updated>
     
@@ -73,10 +73,10 @@
     
     </summary>
     
-      <category term="android" scheme="http://yoursite.com/categories/android/"/>
+      <category term="android" scheme="http://jackwaylong.github.io/categories/android/"/>
     
     
-      <category term="modularity" scheme="http://yoursite.com/tags/modularity/"/>
+      <category term="modularity" scheme="http://jackwaylong.github.io/tags/modularity/"/>
     
   </entry>
   
