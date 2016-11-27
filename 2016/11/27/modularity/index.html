@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>modularity | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="modularity">
+  <meta name="description" content="Android组件化开发
+主题大纲
+
+什么是组件化
+什么是插件化
+为什么要组件化
+如何组件化
+组件化的基本模型
+组件化开发中的问题
+组件化测试
+组件化组件编译
+组件化打包
+组件化开发闭环链接系统
+Q&amp;amp;A
+
+
+什么是组件化在了解组件化之前,我们首先回顾一下目前非组件化工程的基本结构,首先我想说大家最想说的是as编译太慢,编译让人蓝瘦香菇，并且谁者业务需求越来越多，代码越来越多，编译时间线性增">
+<meta property="og:type" content="article">
+<meta property="og:title" content="modularity">
+<meta property="og:url" content="http://yoursite.com/2016/11/27/modularity/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="Android组件化开发
+主题大纲
+
+什么是组件化
+什么是插件化
+为什么要组件化
+如何组件化
+组件化的基本模型
+组件化开发中的问题
+组件化测试
+组件化组件编译
+组件化打包
+组件化开发闭环链接系统
+Q&amp;amp;A
+
+
+什么是组件化在了解组件化之前,我们首先回顾一下目前非组件化工程的基本结构,首先我想说大家最想说的是as编译太慢,编译让人蓝瘦香菇，并且谁者业务需求越来越多，代码越来越多，编译时间线性增">
+<meta property="og:updated_time" content="2016-11-27T08:54:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="modularity">
+<meta name="twitter:description" content="Android组件化开发
+主题大纲
+
+什么是组件化
+什么是插件化
+为什么要组件化
+如何组件化
+组件化的基本模型
+组件化开发中的问题
+组件化测试
+组件化组件编译
+组件化打包
+组件化开发闭环链接系统
+Q&amp;amp;A
+
+
+什么是组件化在了解组件化之前,我们首先回顾一下目前非组件化工程的基本结构,首先我想说大家最想说的是as编译太慢,编译让人蓝瘦香菇，并且谁者业务需求越来越多，代码越来越多，编译时间线性增">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">longway</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">modularity</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">modularity</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-27T08:50:54.000Z" itemprop="datePublished" class="page-time">
+  2016-11-27
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Android组件化开发"><span class="post-toc-number">1.</span> <span class="post-toc-text">Android组件化开发</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是组件化"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">什么是组件化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是插件化"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">什么是插件化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么要组件化"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">为什么要组件化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何组件化"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">如何组件化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#组件化的基本模型"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">组件化的基本模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#组件化开发中的问题"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">组件化开发中的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#组件化测试"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">组件化测试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#组件化组件编译"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">组件化组件编译</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#组件化打包"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">组件化打包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#组件化开发闭环链接系统"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">组件化开发闭环链接系统</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Q-amp-A"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">Q&A</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-modularity"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">modularity</h1>
+        <div class="post-meta">
+            <time datetime="2016-11-27T08:50:54.000Z" itemprop="datePublished" class="post-time">
+  2016-11-27
+</time>
+
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Android组件化开发"><a href="#Android组件化开发" class="headerlink" title="Android组件化开发"></a>Android组件化开发</h1><blockquote>
+<p>主题大纲</p>
+<ol>
+<li>什么是组件化</li>
+<li>什么是插件化</li>
+<li>为什么要组件化</li>
+<li>如何组件化</li>
+<li>组件化的基本模型</li>
+<li>组件化开发中的问题</li>
+<li>组件化测试</li>
+<li>组件化组件编译</li>
+<li>组件化打包</li>
+<li>组件化开发闭环链接系统</li>
+<li>Q&amp;A</li>
+</ol>
+</blockquote>
+<h2 id="什么是组件化"><a href="#什么是组件化" class="headerlink" title="什么是组件化"></a>什么是组件化</h2><p>在了解组件化之前,我们首先回顾一下目前非组件化工程的基本结构,首先我想说大家最想说的是as编译太慢,编译让人蓝瘦香菇，并且谁者业务需求越来越多，代码越来越多，编译时间线性增加，有些同学可能会通过自己机器的配置对应的设置，as的编译配置文件，增量编译，但是这样的结果还不是很明显，一方面由于as对增量编译的支持力度，在这个过程中有代码缓存问题。我们通过clean去解决，这样会导致重新build，从而导致编译时间还是很长，编译就像as给予我们放松的时刻。面对上面的这些问题，我相信我们很多同学都思考过，拆分当个工程为多个工程，然后模块编译，模块测试，最后整合若干模块称为一个apk，没错，思路是对的，但是为什么这些理论很难得到实践了。这就是我们经常说的，理想很丰满，现实很骨感。当我们找到一个理论突破口的时候，就感觉很满足，就觉得就这样。我想说我们必须实践，熟话说，实践才是检验真理的唯一标准，我们需要思考，学习，实践，用理论去解决实际问题。我个人认为as与生俱来就是提供开发者模块化的ide，很多同学可能有疑问，为什么这么认为，我们开发时仅仅把as看作一个开发辅助工具，但是我们站在更高的角度去思考，其实as给我们不仅仅是一种工具，而是一种给予我们基于这个工具去能创造，创新开发模式的软件。明白了这些，那么组件化到底是什么了，我看目前网上关于组件化开发的文章，这说明也有很多在开发中实践的，我个人认为还是不够完善，或者说很多问题，很多坑。我对组件化的理解就是module化开发，module测试，module打包，module发包，module集成，module暴露，下面详细说这些具体怎么做。</p>
+<h2 id="什么是插件化"><a href="#什么是插件化" class="headerlink" title="什么是插件化"></a>什么是插件化</h2><p>有的同学很能有很大的疑问，主题是组件化，为什么要了解什么是插件化，这里只是说明一下插件化与组件化的区别，让我们实践过程中能够分清开发界限，能够将组件化做的更好。插件化是很多的开发模式，我们明白一点就可以了，插件化是单独的apk，jar，zip，dex，资源，so等。将这些进行动态加载，然而组件化本质还是一个主apk。不管多少module，最后都会整合成一个apk。所以我们就有了更新的开发模式，组件化中插件化，这里不详细展开说，今天主题是组件化，我们专一讲好一个主题，后面再安排讲解这种模式。</p>
+<h2 id="为什么要组件化"><a href="#为什么要组件化" class="headerlink" title="为什么要组件化"></a>为什么要组件化</h2><p>一开始我们讲解了，什么组件化，以及组件化的好处，以及组件化的大致几个流程，有的同学可能还有很多的疑问，我们一个app运行起来，如果机器配置好点，速度也挺快的，写代码写起来也很舒服，组件化也没必要，可能还认为组件化开发流程复杂，带给我们的价值不大。我想说作为开发者千万不要这么想，我们要想的是这种模式能不能适合我们的场景，任何一种技术都是有场景范围的，不是universal的。我个人认为组件化最大的好处就是解耦合，最大程度的并行开发，非常适合自动化测试，非常适合代码管理，这些同学们不能很好的体会，后面我都会通过事例来讲解，先心中有个印象。</p>
+<h2 id="如何组件化"><a href="#如何组件化" class="headerlink" title="如何组件化"></a>如何组件化</h2><p> 组件化开发要简单也可以很简单，要复杂也可以很复杂，但是我们开发就是要偷懒，要写脚本自动化执行我们重复的工作。所以我们如何将复杂的事情转化成简单的脚本，让as帮我们去加载执行。既然组件化是基于as的，那么首先我们需要学习gradle脚本的编写，groovy语言的学习，不同平台的脚本语言学习，比如mac下面的bash语言学习，还有一门辅助脚本的学习python，这些都可以让我们的组件化开发高效，从而提高开发效率，降低开发成本。没有做过组件化架构搭建的同学可能一下子就懵了，这些我都不要会，就会写基础代码，大多数都一样，不会我们学习就好，够用就好，然后不断去深入学习。有了这些基础的东西，下面进展就会比较顺利，不然后面可能很多问题。接下来我们就是需要拆分模块，同时引入基础库，初始化基本配置，配置依赖，这些后面我会通过演示的方式进行讲解。</p>
+<h2 id="组件化的基本模型"><a href="#组件化的基本模型" class="headerlink" title="组件化的基本模型"></a>组件化的基本模型</h2><p>基于我对组件化开发的实践，与团队对组件化的理解，我总结出了一套开发模型基本图</p>
+<h2 id="组件化开发中的问题"><a href="#组件化开发中的问题" class="headerlink" title="组件化开发中的问题"></a>组件化开发中的问题</h2><p>其实组件化开发中很多问题需要我们解决，我遇到的有，依赖关系的处理，资源重复(通过添加资源前缀)，清单文件的冲突(tools)，打包运行崩溃，直接依赖aar,jar等</p>
+<h2 id="组件化测试"><a href="#组件化测试" class="headerlink" title="组件化测试"></a>组件化测试</h2><p>由于业务需求多，我想同学们基本都是很少测试的，即使测试也是run一下，没有写单元测试，这很大原因是写测试代码需要发费很多时间，需要编译整个工程，编译时间太长。组件化之后，我们就很容易测试自己负责的module了，并不需要加载其他人写的module，目前我们可以用自测方式测试，不用自动化测试框架之内的，看个人对测试的兴趣，这部分我也会通过演示的方式，进行讲解,同时可能涉及到application访问的问题，即使在app容器里面也有类似的问题。</p>
+<a id="more"></a>
+<h2 id="组件化组件编译"><a href="#组件化组件编译" class="headerlink" title="组件化组件编译"></a>组件化组件编译</h2><p>组件化编译每个module都是一个aar，所以我们依赖直接aar就好，但是这里需要注意一个问题，就是必须依赖带有依赖文件的aar，比如pom文件，不管本地的还是服务端的，不然运行时可能出现Class找不到的情况。还有一些是生成jar包，直接依赖就好，如果组件化中有插件加载机制，需要注意插件工程依赖共同jar时重复打包问题，provider模式解决这种问题。</p>
+<h2 id="组件化打包"><a href="#组件化打包" class="headerlink" title="组件化打包"></a>组件化打包</h2><p>组件化打包其实就是将aar进行整合，然后生成一个apk文件。这个apk可以单独加载，也可以单独运行。</p>
+<h2 id="组件化开发闭环链接系统"><a href="#组件化开发闭环链接系统" class="headerlink" title="组件化开发闭环链接系统"></a>组件化开发闭环链接系统</h2><p>组件化闭环系统基本组成:git源代码管理,maven二进制包管理,jenkins打包管理,gerrit代码审查等其他辅助系统，比如mail系统，短信系统。</p>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>同学们的疑问与解答</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        这里写留言或版权声明：<a href="/2016/11/27/modularity/" target="_blank" rel="external">http://yoursite.com/2016/11/27/modularity/</a>
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="longway">
+            longway
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/modularity/">modularity</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/11/27/modularity/&title=《modularity》 — longway's blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/11/27/modularity/&title=《modularity》 — longway's blog&source=Android组件化开发
+主题大纲
+
+什么是组件化
+什么是插件化
+为什么要组件化
+如何组件化
+组件化的基本模型
+组件化开发中的问题
+组件化测试
+组件化组件..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/27/modularity/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《modularity》 — longway's blog&url=http://yoursite.com/2016/11/27/modularity/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/27/modularity/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/11/27/hello-world/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hello World</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="modularity" data-title="modularity" data-url="http://yoursite.com/2016/11/27/modularity/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/11/27/modularity/&title=《modularity》 — longway's blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/11/27/modularity/&title=《modularity》 — longway's blog&source=Android组件化开发
+主题大纲
+
+什么是组件化
+什么是插件化
+为什么要组件化
+如何组件化
+组件化的基本模型
+组件化开发中的问题
+组件化测试
+组件化组件..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/27/modularity/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《modularity》 — longway's blog&url=http://yoursite.com/2016/11/27/modularity/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/27/modularity/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABz0lEQVR42u3aO27EMAwFwL3/pR0gVYDA8qMoaV2MqmC9sSYpCP4+n/hcvyf5zt/z//O7TxYfXFzcNvcanjG3Q7x7evdOXFzc89xx8KqGnvGV1X8HLi7um7l56jOGtt6Pi4v7Mm4SmKrBDhcX983cpPhZULoEpdGyWg0XF7fB7QSdVT9v7O/i4uIWuVfxdIqlJDF6uB0XF/cIN3910uzIU6KkIXsb5nBxcY9w+y3R6tAlefrwHlxc3G3cpNmRl0BJgzVJm27vxcXFPcKtXja3YFFd8HoIiLi4uAe5naRnbXr0UG7h4uJu5uZpSiv0NKYk0T4ILi7uNm4/6SlfHzdKcHFxT3Kr489ksFr9U8tjGFxc3M3cfFGy2iqda6/g4uK+h5uvVswtWMwNYG4nP7i4uJu5hS9NJTfVIBitguHi4m7m5uEpH4pUmyDj38XFxf0Wt1rSrBq9VEcsuLi4J7n5WTWanRvP4OLinuFWA8qqdsm4KEqe4uLi7ubOBa+8dVIdtDyUUri4uAe5ndWKfGljQSqDi4v7Mm51eavaZo2KIlxc3Bdz54qiVnKDi4t7nDsXXOaWsaqtkMlaDRcXt8GtVhzVYWqSAM21XHFxcTdwfwAqtZWMwtI8PwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
