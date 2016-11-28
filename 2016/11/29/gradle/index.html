@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>揭开Gradle的神秘面纱 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="gradle">
+  <meta name="description" content="gradle前言
+在解开gradle神秘面纱前,我想说一下gradle是如此的强大,在我看来在目前互联网爆炸的时代,构建工具也不少,比如以前我接触的Ant,maven等,在这里只想说我接触gradle并且去研究之后,从此我就爱上了gradle的强大，灵活，高效，并且可以让我们android开发者上手快，这是因为我们android开发的主要语言是java，java是基于虚拟的一种语言，而grad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="揭开Gradle的神秘面纱">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/11/29/gradle/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="gradle前言
+在解开gradle神秘面纱前,我想说一下gradle是如此的强大,在我看来在目前互联网爆炸的时代,构建工具也不少,比如以前我接触的Ant,maven等,在这里只想说我接触gradle并且去研究之后,从此我就爱上了gradle的强大，灵活，高效，并且可以让我们android开发者上手快，这是因为我们android开发的主要语言是java，java是基于虚拟的一种语言，而grad">
+<meta property="og:image" content="https://www.processon.com/chart_image/583c622fe4b0e742e43f7055.png">
+<meta property="og:image" content="https://www.processon.com/chart_image/582570bce4b0fa6ffba35f85.png">
+<meta property="og:image" content="https://www.processon.com/chart_image/58257525e4b00c4fc871d544.png">
+<meta property="og:updated_time" content="2016-11-28T17:00:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="揭开Gradle的神秘面纱">
+<meta name="twitter:description" content="gradle前言
+在解开gradle神秘面纱前,我想说一下gradle是如此的强大,在我看来在目前互联网爆炸的时代,构建工具也不少,比如以前我接触的Ant,maven等,在这里只想说我接触gradle并且去研究之后,从此我就爱上了gradle的强大，灵活，高效，并且可以让我们android开发者上手快，这是因为我们android开发的主要语言是java，java是基于虚拟的一种语言，而grad">
+<meta name="twitter:image" content="https://www.processon.com/chart_image/583c622fe4b0e742e43f7055.png">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.1">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">longway</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">揭开Gradle的神秘面纱</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">揭开Gradle的神秘面纱</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-28T16:32:01.000Z" itemprop="datePublished" class="page-time">
+  2016-11-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/groovy/">groovy</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle是什么"><span class="post-toc-number">1.</span> <span class="post-toc-text">gradle是什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle的好处"><span class="post-toc-number">2.</span> <span class="post-toc-text">gradle的好处</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle的内部构建原理"><span class="post-toc-number">3.</span> <span class="post-toc-text">gradle的内部构建原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何使用gradle提高工作效率"><span class="post-toc-number">4.</span> <span class="post-toc-text">如何使用gradle提高工作效率</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle工程构建流"><span class="post-toc-number">5.</span> <span class="post-toc-text">gradle工程构建流</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle实战"><span class="post-toc-number">6.</span> <span class="post-toc-text">gradle实战</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle插件开发"><span class="post-toc-number">7.</span> <span class="post-toc-text">gradle插件开发</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number"></span> <span class="post-toc-text">总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#建议"><span class="post-toc-number">1.</span> <span class="post-toc-text">建议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后续gradle学习计划"><span class="post-toc-number">2.</span> <span class="post-toc-text">后续gradle学习计划</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gradle项目地址"><span class="post-toc-number">3.</span> <span class="post-toc-text">gradle项目地址</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-gradle"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">揭开Gradle的神秘面纱</h1>
+        <div class="post-meta">
+            <time datetime="2016-11-28T16:32:01.000Z" itemprop="datePublished" class="post-time">
+  2016-11-29
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/groovy/">groovy</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><img src="https://www.processon.com/chart_image/583c622fe4b0e742e43f7055.png"></p>
+<blockquote>
+<p>gradle前言</p>
+<p>在解开gradle神秘面纱前,我想说一下gradle是如此的强大,在我看来在目前互联网爆炸的时代,构建工具也不少,比如以前我接触的Ant,maven等,在这里只想说我接触gradle并且去研究之后,从此我就爱上了gradle的强大，灵活，高效，并且可以让我们android开发者上手快，这是因为我们android开发的主要语言是java，java是基于虚拟的一种语言，而gradle的最终产物也是java子节码，所以我认为我们写gadle代码就是写业务代码，当然也有不同，那就是dsl特性，后面会慢慢展开讲解，让大家真正的去理解gradle的强大，并且能够真正的在as的强大能力下，能够将gardle真正运用好，提高开发效率。这里我并不是吐槽其他构件工具不好,没有最好，只有更好，更适合，从客户端构件角度来看，我个人觉得gradle非常适合，下面将解开gradle一层一层的面纱。<br><a id="more"></a><br>gradle大纲</p>
+<ul>
+<li>gradle是什么</li>
+<li>gradle的好处</li>
+<li>gradle内部构建原理</li>
+<li>如何使用gradle提高工作效率</li>
+<li>gradle工程构建流</li>
+<li>gradle实战</li>
+</ul>
+</blockquote>
+<h2 id="gradle是什么"><a href="#gradle是什么" class="headerlink" title="gradle是什么"></a>gradle是什么</h2><blockquote>
+<p>gradle其实是一套构件工具机,使用groovy语言的DSL特性以及java的灵活特性进行构建,还有很多特性大家可以去<a href="https://gradle.org/" target="_blank" rel="external">gradle.org</a>官网进行深入的学习或者<code>google</code>找相关资料了解</p>
+</blockquote>
+<h2 id="gradle的好处"><a href="#gradle的好处" class="headerlink" title="gradle的好处"></a>gradle的好处</h2><blockquote>
+<p>其实我们学习一门技术肯定是有对应的好处我们才去学习对吧,不管好处多大,起码能帮助我们工作,毕竟我们都是上班的码农,我个人认为gradle最大的好处就是能够让我们更关注我们最关注的，不需要关注那些与我们关系不大的，毕竟我们不需要关注，然而这样就让我们失去了很多的深入学习的机会，导致我们养成了只要能用就行的思维，在我看来懒惰使人进步，为了想懒惰我一定要去思考如何自动化的去解决问题，gradle满足了我的目标，非常强大。</p>
+</blockquote>
+<h2 id="gradle的内部构建原理"><a href="#gradle的内部构建原理" class="headerlink" title="gradle的内部构建原理"></a>gradle的内部构建原理</h2><blockquote>
+<p>在讲解内部构件原理之前，我想讲解下我是如何去理解gradle这玩意的，gradle按照一般写业务代码的思维还是有点区别的，毕竟领域不同，gradle写的是脚本，却运行的java子节码，所以我这么思考，我用写java运行时的思维去写gradle脚本，然后学习gradle dsl特性，这样以来，理解这个构建工具就非常流畅了，不然我是理解不好的，每个人都有自己的理解方式，找自己最好的理解方式就好。gradle构建内部运行机制是这样的，首先初始化构建引擎，然后将脚本转换成java代码,然后就是我们最熟悉的构建过程了,将java代码转换成子节码,然后交给虚拟机加载执行</p>
+</blockquote>
+<h2 id="如何使用gradle提高工作效率"><a href="#如何使用gradle提高工作效率" class="headerlink" title="如何使用gradle提高工作效率"></a>如何使用gradle提高工作效率</h2><blockquote>
+<p>我个人认为构建工具毕竟是一种工具特性,那么就一套完善的高效特性让我去挖掘,我目前挖掘的有利用as的工程特性，结合gradle的强大构建特性，自动化分析文件，自动化打包，模版构建，后面不断有新的挖掘，我相信只要是工具类的东西然后结合我们的技术手段那么肯定会提高我们的工作效率，可能需要手动10分钟的事情，而用gradle处理只要1分钟，甚至更短，错误几率也大大减低，减除人工干预，毕竟现在是人工智能时代，感觉我们会被计算机征服，真可怕，我们唯一能做的就是提升自己。</p>
+</blockquote>
+<h2 id="gradle工程构建流"><a href="#gradle工程构建流" class="headerlink" title="gradle工程构建流"></a>gradle工程构建流</h2><blockquote>
+<p>as gradle工程构建流图示</p>
+</blockquote>
+<p><img src="https://www.processon.com/chart_image/582570bce4b0fa6ffba35f85.png"></p>
+<p><img src="https://www.processon.com/chart_image/58257525e4b00c4fc871d544.png"></p>
+<h2 id="gradle实战"><a href="#gradle实战" class="headerlink" title="gradle实战"></a>gradle实战</h2><blockquote>
+<p>构建脚本集</p>
+<ol>
+<li><a href="">settings.gradle</a></li>
+<li><a href="">root build.gradle</a></li>
+<li><a href="">init.gradle</a></li>
+<li><a href="">utils.gradle</a></li>
+<li><a href="">tasks.gradle</a></li>
+<li><a href="">submodle build.gradle</a></li>
+<li><a href="">common.properties</a></li>
+<li><a href="">template/project.properties</a></li>
+<li><a href="">publish.bat/publish.sh</a></li>
+<li><a href="">properties</a></li>
+</ol>
+</blockquote>
+<h2 id="gradle插件开发"><a href="#gradle插件开发" class="headerlink" title="gradle插件开发"></a>gradle插件开发</h2><blockquote>
+<p>插件开发基本流程</p>
+<ol>
+<li>插件工程一般结构</li>
+<li>插件开发语言(java,gradle,groovy等等)</li>
+<li>插件打包</li>
+<li>插件部署</li>
+<li>插件访问</li>
+</ol>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><blockquote>
+<p>到此gradle基本构建流已经说完了,这些只是构建的开始,后面我还会继续深入gradle在组件化开发中的作用以及强大支撑，只有明白了gradle的基本工作原理，我们才能更好的去灵活运用gradle来拆分我们的工程，很好的解耦我们的工程，目前比较的多的开发模式有组件化，插件化，我个人理解gradle就是开发模式的驱动者，学好gradle才是根本，才能很好的进行模式开发，gradle网上的指导资料很少，基本都是一些用法，没有分析原理的，对于技术者我强烈建议学习一门技术还是去对应的官网，这样不仅仅能系统的学习，并且还能更为深入的理解语言的本质。</p>
+</blockquote>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><blockquote>
+<p>工程构建一般是跨界的，也就是说可能会涉及到很多种技术的融合，我目前接触到的有python，groovy，bash，bat 等脚本语言，希望大家不要仅仅停留在android业务开发中，技术融合才能让自己强大，多学习不同技术提高自己的维度，深度，广度。</p>
+</blockquote>
+<h2 id="后续gradle学习计划"><a href="#后续gradle学习计划" class="headerlink" title="后续gradle学习计划"></a>后续gradle学习计划</h2><ol>
+<li>继续深入gradle构建流</li>
+<li>gradle源码分析</li>
+<li>发现gradle中好玩的东西，灵活运用到实际项目中</li>
+<li>基于gradle构建项目到产品输出闭环</li>
+</ol>
+<h2 id="gradle项目地址"><a href="#gradle项目地址" class="headerlink" title="gradle项目地址"></a>gradle项目地址</h2><ul>
+<li><a href="https://github.com/jackwaylong/Gradle/archive/master.zip" target="_blank" rel="external">下载</a></li>
+<li><a href="https://github.com/jackwaylong/gradle" target="_blank" rel="external">github查看</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得谁意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.png" alt="longway">
+            longway
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gradle/">gradle</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/11/29/gradle/&title=《揭开Gradle的神秘面纱》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/11/29/gradle/&title=《揭开Gradle的神秘面纱》 — longway's blog&source=
+
+gradle前言
+在解开gradle神秘面纱前,我想说一下gradle是如此的强大,在我看来在目前互联网爆炸的时代,构建工具也不少,比如以前我接触的A..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/11/29/gradle/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《揭开Gradle的神秘面纱》 — longway's blog&url=http://jackwaylong.github.io/2016/11/29/gradle/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/11/29/gradle/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/11/27/modularity/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">modularity</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="gradle" data-title="揭开Gradle的神秘面纱" data-url="http://jackwaylong.github.io/2016/11/29/gradle/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.1"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/11/29/gradle/&title=《揭开Gradle的神秘面纱》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/11/29/gradle/&title=《揭开Gradle的神秘面纱》 — longway's blog&source=
+
+gradle前言
+在解开gradle神秘面纱前,我想说一下gradle是如此的强大,在我看来在目前互联网爆炸的时代,构建工具也不少,比如以前我接触的A..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/11/29/gradle/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《揭开Gradle的神秘面纱》 — longway's blog&url=http://jackwaylong.github.io/2016/11/29/gradle/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/11/29/gradle/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3aQWrEMAwF0Ln/pdNtYZrky3IKsZ9XZTo4fimosqTPJ17Hr3X9yfdvv7/5/f2zPScvDAyM1zKOy5UcKz/u2RGrz/1jHwwMjA0YZ1tfB9Pq98cC9/XZMDAwMK7TuCQsJikgBgYGxhMBd27al/AwMDAwkgRubtWrU7bDwMDYjZEf7v9/fqS/gYGB8SrGUVx5U7N6rKOxMDAw1mZ0HpMMTHTSwerwBwYGxg6Msctnf8CrWoAbLLdhYGC8nPHE4EUUIofCdPRcDAyMhRjVJC9HjlX+8n1Oc1sMDIzlGGPpVyc4dj6/efUYGBiLMvrBtDrUlVySC3+BxI2BgbEEYxZs8BDxc28CLgYGxqKMPGpVxyPyQn81TN+cDQMDYzlGfnUcS+zy0JwPk91Mi2BgYCzHyB+QbFdtc04brcDAwNiYkV8mxxqTnULb6X8PDAyMRRmdpmO1DdAZvyiMXGBgYCzHSNK7auo2t1UQ7YyBgbExo3r06hhZ57ob9TYxMDAWYlSPVR2/6LQQCqkhBgbGNoz8sjp26Pz6miSRGBgYezLyIJtfMsdGKwoFOAwMjEUZR3FVi2Kd8Y4CFQMDY2lGJ1EbawDkLYHBYQsMDIxFGflFtAqb+2owMDAw8sDXbxUUbthxQxQDAwNjrBzWbzkUzoOBgYExqcSf71luS2BgYGzAGCvWJy+iOhBWTTcxMDB2YHQmNTqB8vFBMQwMjBUYPzJwiYcQxvKTAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.1"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.1"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
