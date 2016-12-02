@@ -4,6 +4,42 @@
   
     
     <entry>
+      <title><![CDATA[SharedPreferences真的安全吗?]]></title>
+      <url>http://jackwaylong.github.io/2016/12/03/safesharepreferences/</url>
+      <content type="html"><![CDATA[<p>SharedPreferences是单进程线程安全,Android系统进程之间的内存是隔离的,<br>这样就导致了进程之间如果访问同一个数据文件,进行数据共享通信的时候,可能会<br>出现下面几种异常:<br><a id="more"></a></p>
+<ol>
+<li>数据不一致</li>
+<li>数据异常</li>
+<li>文件异常</li>
+</ol>
+<h2 id="进程之间数据共享"><a href="#进程之间数据共享" class="headerlink" title="进程之间数据共享"></a>进程之间数据共享</h2><p>要想实现进程中之间安全通信,我们需要将不同进程之间对数据的访问映射到同一个数据<br>进程,然后通过这个进程实现线程安全实现数据通信,我们可以将这个进程理解为代理进程<br>,Android系统已经提供给我们ContentProvider进程,我们通过这个就可以实现安全通信</p>
+<h2 id="进程之间数据共享图例"><a href="#进程之间数据共享图例" class="headerlink" title="进程之间数据共享图例"></a>进程之间数据共享图例</h2><p><img src="https://www.processon.com/chart_image/5826bc16e4b00c4fc87d4b8c.png"></p>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><ol>
+<li><p>注册进程之间数据观察者(非必须)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">private SharePreferencesObserver mSharePreferencesObserver = new SharePreferencesObserver() &#123;</div><div class="line">       	@Override</div><div class="line">       	public void onSharePreferencesChange(SharePreferencesObservable sharePreferencesObservable, String key) &#123;</div><div class="line">           //Log.e(TAG, &quot;key:&quot; + key + &quot;,value:&quot; + mSharePreferencesManager.getBoolean(key, 		false));</div><div class="line">           Log.e(TAG, &quot;map result &lt;&lt;&quot; + mSharePreferencesManager.getAll().toString());</div><div class="line"></div><div class="line">       &#125;</div><div class="line">   &#125;;</div><div class="line">mSharePreferencesManager.registerOnSharePreferencesObserver(mSharePreferencesObserver);</div></pre></td></tr></table></figure>
+</li>
+<li><p>数据访问</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Log.e(TAG, mSharePreferencesManager.putBoolean(&quot;isExpire&quot;, true) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.contains(&quot;isExpire&quot;) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.getBoolean(&quot;isExpire&quot;, false) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.putInt(&quot;int&quot;, 3) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.getInt(&quot;int&quot;, -1) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.putFloat(&quot;float&quot;, 3.9f) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.getFloat(&quot;float&quot;, 0.0f) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.putLong(&quot;long&quot;, 40L) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.getLong(&quot;long&quot;, 0L) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.putString(&quot;string&quot;, &quot;小马哥&quot;) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.getString(&quot;string&quot;, &quot;马云&quot;));</div><div class="line">Log.e(TAG, mSharePreferencesManager.remove(&quot;string&quot;) + &quot;&quot;);</div><div class="line">Set&lt;String&gt; set = new HashSet&lt;&gt;();</div><div class="line">set.add(&quot;hello1&quot;);</div><div class="line">set.add(&quot;world1&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.putStringSet(&quot;set&quot;, set) + &quot;&quot;);</div><div class="line">Log.e(TAG, mSharePreferencesManager.getStringSet(&quot;set&quot;, null) + &quot;&quot;);</div><div class="line">Log.e(TAG, &quot;map result &lt;&lt;&quot; + mSharePreferencesManager.getAll().toString());</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>注意上面的步骤在任意进程都一样,并且数据都是安全共享的 </p>
+</blockquote>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>使用过程中有任何问题反馈至<a href="https://github.com/jackwaylong/SafeSharedPreferences/issues" target="_blank" rel="external">feedback</a></p>
+<h2 id="支持"><a href="#支持" class="headerlink" title="支持"></a>支持</h2><blockquote>
+<p>任何疑问?</p>
+</blockquote>
+<ol>
+<li>源码学习<a href="https://github.com/jackwaylong/SafeSharedPreferences/tree/master/safeshareperferences/src/main/java/com/longway/safeshareperferences" target="_blank" rel="external">safeSharedPreferences</a></li>
+</ol>
+<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><blockquote>
+<p>clone项目发送pull request</p>
+</blockquote>
+<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>SafeSharedPreferences is under the Apache license. See the <a href="https://github.com/jackwaylong/SafeSharedPreferences/blob/master/LICENSE" target="_blank" rel="external">LICENSE</a> file for details.</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[单例模式真的很简单吗？]]></title>
       <url>http://jackwaylong.github.io/2016/12/03/single/</url>
       <content type="html"><![CDATA[<blockquote>
