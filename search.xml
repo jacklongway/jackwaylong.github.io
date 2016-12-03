@@ -22,6 +22,7 @@
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><blockquote>
 <p>shareuid的前提是app已经安装到了设备中，不然是访问不了的，如果是没安装的访问，就只能用插件化的方式去加载，然后去访问了。根据自己的需求，选择对应的技术实现就好了。</p>
 </blockquote>
+<p><a href="https://github.com/jackwaylong/shareuid" target="_blank" rel="external">查看源码实例</a></p>
 ]]></content>
     </entry>
     
