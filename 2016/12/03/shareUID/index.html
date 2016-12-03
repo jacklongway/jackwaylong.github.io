@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>shareUID | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="shareUID,Context">
+  <meta name="description" content="shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共享，但是实现该目的也是有一定限制的，首先保证app之间的签名一致，同时shareUID值相等，才能完全无障碍访问所有资源，不然只能访问部分资源，代码，sharedPreferences等资源是没法访问到的，即使访问到的也是非安全的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shareUID">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/12/03/shareUID/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共享，但是实现该目的也是有一定限制的，首先保证app之间的签名一致，同时shareUID值相等，才能完全无障碍访问所有资源，不然只能访问部分资源，代码，sharedPreferences等资源是没法访问到的，即使访问到的也是非安全的。">
+<meta property="og:updated_time" content="2016-12-03T06:13:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shareUID">
+<meta name="twitter:description" content="shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共享，但是实现该目的也是有一定限制的，首先保证app之间的签名一致，同时shareUID值相等，才能完全无障碍访问所有资源，不然只能访问部分资源，代码，sharedPreferences等资源是没法访问到的，即使访问到的也是非安全的。">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2016</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">shareUID</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">shareUID</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-03T05:45:14.000Z" itemprop="datePublished" class="page-time">
+  2016-12-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#shareuid常见数据共享的方式有"><span class="post-toc-number">1.</span> <span class="post-toc-text">shareuid常见数据共享的方式有</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#用户数据共享"><span class="post-toc-number">2.</span> <span class="post-toc-text">用户数据共享</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#资源共享"><span class="post-toc-number">3.</span> <span class="post-toc-text">资源共享</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码共享"><span class="post-toc-number">4.</span> <span class="post-toc-text">代码共享</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#访问数据简单代码"><span class="post-toc-number">5.</span> <span class="post-toc-text">访问数据简单代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">6.</span> <span class="post-toc-text">注意</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-shareUID"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">shareUID</h1>
+        <div class="post-meta">
+            <time datetime="2016-12-03T05:45:14.000Z" itemprop="datePublished" class="post-time">
+  2016-12-03
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共享，但是实现该目的也是有一定限制的，首先保证app之间的签名一致，同时shareUID值相等，才能完全无障碍访问所有资源，不然只能访问部分资源，代码，sharedPreferences等资源是没法访问到的，即使访问到的也是非安全的。<br><a id="more"></a></p>
+<h2 id="shareuid常见数据共享的方式有"><a href="#shareuid常见数据共享的方式有" class="headerlink" title="shareuid常见数据共享的方式有"></a>shareuid常见数据共享的方式有</h2><ol>
+<li>用户数据共享</li>
+<li>资源共享</li>
+<li>代码共享</li>
+</ol>
+<h2 id="用户数据共享"><a href="#用户数据共享" class="headerlink" title="用户数据共享"></a>用户数据共享</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">String filename = &quot;share&quot;;</div><div class="line">       String key = &quot;share&quot;;</div><div class="line">       String value = ShareUtils.getStringValue(this, targetPackagename, filename, key, &quot;&quot;);</div><div class="line">       Log.e(TAG, &quot;value:&quot; + value);</div></pre></td></tr></table></figure>
+<h2 id="资源共享"><a href="#资源共享" class="headerlink" title="资源共享"></a>资源共享</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String app_name = ShareUtils.getResString(this, targetPackagename, &quot;app_name&quot;);</div><div class="line">       Log.e(TAG, &quot;app_name:&quot; + app_name);</div></pre></td></tr></table></figure>
+<h2 id="代码共享"><a href="#代码共享" class="headerlink" title="代码共享"></a>代码共享</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">String cName = &quot;com.longway.share.Print&quot;;</div><div class="line">        Class&lt;?&gt; clz = ShareUtils.loadClass(this, targetPackagename, cName);</div><div class="line">        if (clz != null) &#123;</div><div class="line">            try &#123;</div><div class="line">                Object o = clz.newInstance();</div><div class="line">                Method method = clz.getDeclaredMethod(&quot;print&quot;, String.class);</div><div class="line">                if (!method.isAccessible()) &#123;</div><div class="line">                    method.setAccessible(true);</div><div class="line">                &#125;</div><div class="line">                method.invoke(o, TAG);</div><div class="line">            &#125; catch (InstantiationException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; catch (IllegalAccessException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; catch (NoSuchMethodException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; catch (InvocationTargetException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上只是简单的提供数据访问的几种方式面，比如数据库，assets等等都是可以访问的，但是访问的时候需要考虑数据安全。</p>
+</blockquote>
+<h2 id="访问数据简单代码"><a href="#访问数据简单代码" class="headerlink" title="访问数据简单代码"></a>访问数据简单代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">public class ShareUtils &#123;</div><div class="line">    private ShareUtils() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static String getStringValue(Context context, String targetPackname, String filename, String key, String dv) &#123;</div><div class="line">        try &#123;</div><div class="line">            Context ctx = context.createPackageContext(targetPackname, Context.CONTEXT_IGNORE_SECURITY);</div><div class="line">            SharedPreferences sharedPreferences = ctx.getSharedPreferences(filename, Context.MODE_PRIVATE);</div><div class="line">            return sharedPreferences.getString(key, dv);</div><div class="line">        &#125; catch (PackageManager.NameNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return dv;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    public static String getResString(Context context, String targetPackname, String resName, Object... args) &#123;</div><div class="line">        try &#123;</div><div class="line">            Context ctx = context.createPackageContext(targetPackname, Context.CONTEXT_IGNORE_SECURITY);</div><div class="line">            Resources resources = ctx.getResources();</div><div class="line">            int id = resources.getIdentifier(resName, &quot;string&quot;, targetPackname);</div><div class="line">            if (id == 0) &#123;</div><div class="line">                return null;</div><div class="line">            &#125;</div><div class="line">            return resources.getString(id, args);</div><div class="line">        &#125; catch (PackageManager.NameNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static String getAppname(Context context, String targetPackname,int id) &#123;</div><div class="line">        try &#123;</div><div class="line">            Context ctx = context.createPackageContext(targetPackname, Context.CONTEXT_IGNORE_SECURITY);</div><div class="line">            Resources resources = ctx.getResources();</div><div class="line">            return resources.getString(id);</div><div class="line">        &#125; catch (PackageManager.NameNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static Class&lt;?&gt; loadClass(Context context, String targetPackagename, String name) &#123;</div><div class="line">        try &#123;</div><div class="line">            Context ctx = context.createPackageContext(targetPackagename,Context.CONTEXT_IGNORE_SECURITY|Context.CONTEXT_INCLUDE_CODE);</div><div class="line">            ClassLoader classLoader = ctx.getClassLoader();</div><div class="line">            Log.e(&quot;loader&quot;, (context.getClassLoader() == classLoader) + &quot;&quot;);</div><div class="line">            Log.e(&quot;pathClassLoader&quot;, (classLoader instanceof PathClassLoader) + &quot;&quot;);</div><div class="line">            return classLoader.loadClass(name);</div><div class="line">        &#125; catch (PackageManager.NameNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; catch (ClassNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><blockquote>
+<p>shareuid的前提是app已经安装到了设备中，不然是访问不了的，如果是没安装的访问，就只能用插件化的方式去加载，然后去访问了。根据自己的需求，选择对应的技术实现就好了。</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Context/">Context</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shareUID/">shareUID</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/03/shareUID/&title=《shareUID》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/03/shareUID/&title=《shareUID》 — longway's blog&source=shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/03/shareUID/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《shareUID》 — longway's blog&url=http://jackwaylong.github.io/2016/12/03/shareUID/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/03/shareUID/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/03/safesharepreferences/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">SharedPreferences真的安全吗?</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="shareUID" data-title="shareUID" data-url="http://jackwaylong.github.io/2016/12/03/shareUID/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/03/shareUID/&title=《shareUID》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/03/shareUID/&title=《shareUID》 — longway's blog&source=shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/03/shareUID/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《shareUID》 — longway's blog&url=http://jackwaylong.github.io/2016/12/03/shareUID/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/03/shareUID/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACFklEQVR42u3aQW7DMAwEwPz/0+m1QBB3l3IKRBqdDFuwNT4QlMjHIx7PlzF7ej3/3RtuGxgYGF/LeF6O33Ner9+9Lb9/PTNZGwYGxjmM9nXXn5k9zX8ZBgYGxjXjLvB1doeBgYExY+QJZTKSn4WBgYHRbmJnsDyk5sklBgbGaYzZEdj/XH+kvoGBgfFVjJWULgm7yf31RBMDA2NvRhsEV8Jie8RWp6cYGBibMmZJW741nW1r240xBgbG3oyVRq78w7Pkry5tYmBgHMOYbVzvarOYhXsMDIy9GYW1TAFvO0RLygYYGBgHMGZpWf7JFl83tmJgYBzDaJu3ZsnlJ4qmGBgYezPyo/k6CN7aEBbNx8DA2JTRJnxJA8RKu9gwMcXAwNiasfLhWfmzLRjc0HKBgYGxEWPWpJV8bFaezJ9iYGDszWgXnSdwybY2Tz3/CLsYGBhbM9ZTvbZskAf3uikEAwNjU0aSfq2EyGRxKwUGDAyMExhtMbI91m9/RxuyMTAwTmDkDV4rc9oUsy6mYmBgbM2YLaVd3AqsCN8YGBibMp7lWCk3tlvWogiBgYGxNWMW5maHdG1BNL/GwMA4gbEeZPOiYxJAZ0gMDIwTGG0LRZ725cWDG/biGBgYxzPaBrJZK+qwIIqBgYExWnSbCOYbZgwMjDMZK0FwVjCYlTZv3otjYGB8CaNtp8gP/VcaNfJCAgYGxtaMH37z60F6A7LaAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
