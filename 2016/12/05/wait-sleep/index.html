@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>wait和sleep 深度分析 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="wait,sleep">
+  <meta name="description" content="首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:
+
+
+wait是Object中的方法,sleep是Thread中的方法
+wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用
+wait释放锁,sleep不释放锁
+wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wait和sleep 深度分析">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/12/05/wait-sleep/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:
+
+
+wait是Object中的方法,sleep是Thread中的方法
+wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用
+wait释放锁,sleep不释放锁
+wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源">
+<meta property="og:updated_time" content="2016-12-05T06:11:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wait和sleep 深度分析">
+<meta name="twitter:description" content="首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:
+
+
+wait是Object中的方法,sleep是Thread中的方法
+wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用
+wait释放锁,sleep不释放锁
+wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2016</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">wait和sleep 深度分析</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">wait和sleep 深度分析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-05T06:08:43.000Z" itemprop="datePublished" class="page-time">
+  2016-12-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下面分析一种wait协助的场景，如果换成sleep可能导致死锁"><span class="post-toc-number">1.</span> <span class="post-toc-text">下面分析一种wait协助的场景，如果换成sleep可能导致死锁</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">2.</span> <span class="post-toc-text">注意</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-wait-sleep"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">wait和sleep 深度分析</h1>
+        <div class="post-meta">
+            <time datetime="2016-12-05T06:08:43.000Z" itemprop="datePublished" class="post-time">
+  2016-12-05
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:</p>
+</blockquote>
+<ol>
+<li>wait是Object中的方法,sleep是Thread中的方法</li>
+<li>wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用</li>
+<li>wait释放锁,sleep不释放锁</li>
+<li>wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源</li>
+</ol>
+<a id="more"></a>
+<h2 id="下面分析一种wait协助的场景，如果换成sleep可能导致死锁"><a href="#下面分析一种wait协助的场景，如果换成sleep可能导致死锁" class="headerlink" title="下面分析一种wait协助的场景，如果换成sleep可能导致死锁"></a>下面分析一种wait协助的场景，如果换成sleep可能导致死锁</h2><blockquote>
+<p>wait协助代码</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public class TestThread &#123;</div><div class="line">    private static final String TAG = TestThread.class.getSimpleName();</div><div class="line">    private static final Map&lt;String, Object&gt; MAP = new WeakHashMap&lt;&gt;();</div><div class="line">    private static final Object WAIT = new Object();</div><div class="line"></div><div class="line">    public Object get(String key) &#123;</div><div class="line">        Object object;</div><div class="line">        synchronized (MAP) &#123;</div><div class="line">            Log.e(TAG, &quot;tid:&quot; + Thread.currentThread().getId());</div><div class="line">            do &#123;</div><div class="line">                object = MAP.get(key);</div><div class="line">                if (object == WAIT) &#123;// 线程等待</div><div class="line">                    Log.e(TAG, &quot;wait......&quot;);</div><div class="line">                    try &#123;</div><div class="line">                        MAP.wait();</div><div class="line">                        //Thread.sleep(1000);</div><div class="line">                        Log.e(TAG,&quot;wake....&quot;);</div><div class="line">                    &#125; catch (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                &#125; else if (object != null) &#123; // hit</div><div class="line">                    Log.e(TAG, &quot;hit:&quot; + object);</div><div class="line">                    return object;</div><div class="line">                &#125; else &#123;</div><div class="line">                    MAP.put(key, WAIT); // 存放wait对象</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125; while (true);</div><div class="line">        &#125;</div><div class="line">        Log.e(TAG, &quot;generate....&quot;);</div><div class="line">        try &#123;</div><div class="line">            Thread.sleep(1000);</div><div class="line">        &#125; catch (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        synchronized (MAP) &#123;</div><div class="line">            object = UUID.randomUUID().toString();</div><div class="line">            Log.e(TAG, object.toString());</div><div class="line">            if (object != null) &#123;</div><div class="line">                MAP.put(key, object); // 存放真正数据</div><div class="line">            &#125; else &#123;</div><div class="line">                MAP.remove(key); // 如果获取数据失败,需要删除对应的key,让等待对象自己获取</div><div class="line">            &#125;</div><div class="line">            MAP.notifyAll(); // 通知在MAP上的所有等待对象</div><div class="line">        &#125;</div><div class="line">        return object;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面代码可以正常协助,如果将<code>MAP.wait()</code> 替换成 <code>Thread.sleep(1000)</code> 就很可能导致死锁</p>
+</blockquote>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><blockquote>
+<p>通过上面代码我们在写并发代码的时候，一定要理解场景，不然真的很危险.</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sleep/">sleep</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wait/">wait</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/05/wait-sleep/&title=《wait和sleep 深度分析》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/05/wait-sleep/&title=《wait和sleep 深度分析》 — longway's blog&source=
+首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:
+
+
+wait是Object中的方法,sleep是Thread中的方法
+wait必须..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/05/wait-sleep/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《wait和sleep 深度分析》 — longway's blog&url=http://jackwaylong.github.io/2016/12/05/wait-sleep/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/05/wait-sleep/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/03/shareUID/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">shareUID</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="wait-sleep" data-title="wait和sleep 深度分析" data-url="http://jackwaylong.github.io/2016/12/05/wait-sleep/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/05/wait-sleep/&title=《wait和sleep 深度分析》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/05/wait-sleep/&title=《wait和sleep 深度分析》 — longway's blog&source=
+首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:
+
+
+wait是Object中的方法,sleep是Thread中的方法
+wait必须..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/05/wait-sleep/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《wait和sleep 深度分析》 — longway's blog&url=http://jackwaylong.github.io/2016/12/05/wait-sleep/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/05/wait-sleep/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aS27DMAxF0ex/0+60QGHlPtIqYOp6FCCBzeMBw48+H3xdy+v3b9a//3vPu6d8dlwyZMh4LYOHSAJdh3sXInnu+ikyZMg4gXF3a/L52eTL2TJkyJCxvt0VXusSUIYMGTL2MUjzSZJyrZSUIUPGaQw+Sts3mONlpQwZMk5j8OD+//OW/YYMGTJexeg3omSgRsK6GpcMGTJmMzqP4WO4WjnI45EhQ8Y5jE6gZPTPi04yyAt6cRkyZIxjxOP4RoqsHURDCVeGDBlDGc8uJmuTv/TpwURQhgwZr2WkxylqhyT4UrM25pMhQ8ZsRq2Yqy04a+XgwwtOGTJkjGDw8RkfhPEXkTJuSTJkyBjHIKGnawPe0KariGBqKEOGjBGMzrCs03B2SsBgsyFDhowRjHQ0xg9Y8KCLRyv4VkGGDBkvZ6RjrBSQptpiypYhQ8ZoBg8ibUTJncnrC76VIUPGUMazR7jS5vaxVyNDhozRjLSt7ZR3a2o6Ymt15zJkyHghg6cwMlCrDez4UK9Y4cqQIWMEg0/aeVFYW3YW/ytkyJBxGCNdFZBwybe8eb5dDMiQIWMco1/G8ZRaa5IRVYYMGaMZ6RqgU/DxJcS69EzvJkOGjBkMnmR5W9tJjjwGGTJknMboJL503EZezZZeXIYMGUcy0gaVj/7J8iBeDMiQIeMYxo5fEsCXtlmGDBkHMNIFJA86DbHYKsuQIWM0g7eO6eEMHnRnOSFDhozRjB8KlImHWleNXQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>

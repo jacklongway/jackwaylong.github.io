@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jackwaylong.github.io/"/>
-  <updated>2016-12-03T06:20:57.000Z</updated>
+  <updated>2016-12-05T06:11:14.000Z</updated>
   <id>http://jackwaylong.github.io/</id>
   
   <author>
@@ -14,6 +14,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>wait和sleep 深度分析</title>
+    <link href="http://jackwaylong.github.io/2016/12/05/wait-sleep/"/>
+    <id>http://jackwaylong.github.io/2016/12/05/wait-sleep/</id>
+    <published>2016-12-05T06:08:43.000Z</published>
+    <updated>2016-12-05T06:11:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:</p>
+</blockquote>
+<ol>
+<li>wait是Object中的方法,sleep是Thread中的方法</li>
+<li>wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用</li>
+<li>wait释放锁,sleep不释放锁</li>
+<li>wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源</li>
+</ol>
+<a id="more"></a>
+<h2 id="下面分析一种wait协助的场景，如果换成sleep可能导致死锁"><a href="#下面分析一种wait协助的场景，如果换成sleep可能导致死锁" class="headerlink" title="下面分析一种wait协助的场景，如果换成sleep可能导致死锁"></a>下面分析一种wait协助的场景，如果换成sleep可能导致死锁</h2><blockquote>
+<p>wait协助代码</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public class TestThread &#123;</div><div class="line">    private static final String TAG = TestThread.class.getSimpleName();</div><div class="line">    private static final Map&lt;String, Object&gt; MAP = new WeakHashMap&lt;&gt;();</div><div class="line">    private static final Object WAIT = new Object();</div><div class="line"></div><div class="line">    public Object get(String key) &#123;</div><div class="line">        Object object;</div><div class="line">        synchronized (MAP) &#123;</div><div class="line">            Log.e(TAG, &quot;tid:&quot; + Thread.currentThread().getId());</div><div class="line">            do &#123;</div><div class="line">                object = MAP.get(key);</div><div class="line">                if (object == WAIT) &#123;// 线程等待</div><div class="line">                    Log.e(TAG, &quot;wait......&quot;);</div><div class="line">                    try &#123;</div><div class="line">                        MAP.wait();</div><div class="line">                        //Thread.sleep(1000);</div><div class="line">                        Log.e(TAG,&quot;wake....&quot;);</div><div class="line">                    &#125; catch (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                &#125; else if (object != null) &#123; // hit</div><div class="line">                    Log.e(TAG, &quot;hit:&quot; + object);</div><div class="line">                    return object;</div><div class="line">                &#125; else &#123;</div><div class="line">                    MAP.put(key, WAIT); // 存放wait对象</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125; while (true);</div><div class="line">        &#125;</div><div class="line">        Log.e(TAG, &quot;generate....&quot;);</div><div class="line">        try &#123;</div><div class="line">            Thread.sleep(1000);</div><div class="line">        &#125; catch (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        synchronized (MAP) &#123;</div><div class="line">            object = UUID.randomUUID().toString();</div><div class="line">            Log.e(TAG, object.toString());</div><div class="line">            if (object != null) &#123;</div><div class="line">                MAP.put(key, object); // 存放真正数据</div><div class="line">            &#125; else &#123;</div><div class="line">                MAP.remove(key); // 如果获取数据失败,需要删除对应的key,让等待对象自己获取</div><div class="line">            &#125;</div><div class="line">            MAP.notifyAll(); // 通知在MAP上的所有等待对象</div><div class="line">        &#125;</div><div class="line">        return object;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面代码可以正常协助,如果将<code>MAP.wait()</code> 替换成 <code>Thread.sleep(1000)</code> 就很可能导致死锁</p>
+</blockquote>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><blockquote>
+<p>通过上面代码我们在写并发代码的时候，一定要理解场景，不然真的很危险.</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;wait是Object中的方法,sleep是Thread中的方法&lt;/li&gt;
+&lt;li&gt;wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用&lt;/li&gt;
+&lt;li&gt;wait释放锁,sleep不释放锁&lt;/li&gt;
+&lt;li&gt;wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+    
+    
+      <category term="wait" scheme="http://jackwaylong.github.io/tags/wait/"/>
+    
+      <category term="sleep" scheme="http://jackwaylong.github.io/tags/sleep/"/>
+    
+  </entry>
   
   <entry>
     <title>shareUID</title>
