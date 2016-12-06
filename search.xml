@@ -4,6 +4,23 @@
   
     
     <entry>
+      <title><![CDATA[打破标准的第一个OC程序]]></title>
+      <url>http://jackwaylong.github.io/2016/12/06/ios-oc-1/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>平时我们写程序第一个程序都是<em>hello world</em>,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符串,但是我们从程序的角度看，就是一个空虚的字符串，不能让我们想到更多，我想如果能否说一些字符串的基本操作可能更有意思，一方面是基础语法，另一方面也理解了<code>oc</code>字符串对象与<code>java</code>的不同点。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="NSString"><a href="#NSString" class="headerlink" title="NSString"></a>NSString</h1><blockquote>
+<p>oc里面对象都是以NS开头的，记住就行，要想知道为什么的去<a href="http://www.google.com" target="_blank" rel="external">google</a>吧! oc里面的字符串与java最大的不同就是，java里面是个引用，而oc里面是个指针，跟c/c++ 很类似。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#<span class="keyword">import</span> &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">int main(int argc, const char * argv[]) &#123;</div><div class="line">    @autoreleasepool &#123;</div><div class="line">        <span class="comment">// insert code here...</span></div><div class="line">        <span class="comment">// 字符串</span></div><div class="line">        <span class="type">NSString</span>* str = @<span class="string">"first oc"</span>;</div><div class="line">        <span class="type">NSUInteger</span> len = str.length; <span class="comment">// 获取字符串的长度，跟java差不多，只是java是一个方法，而oc是一个属性</span></div><div class="line">        <span class="type">BOOL</span> contain = [str containsString:@<span class="string">"bc"</span>]; <span class="comment">// 判断子串</span></div><div class="line">        <span class="type">NSLog</span>(@<span class="string">"str:%@ contain %@ %hhd"</span>,str,@<span class="string">"bc"</span>,contain); <span class="comment">// 格式化打印,跟c/c++ printf长的很像，跟java的System.out.println 差不多</span></div><div class="line">        <span class="type">NSString</span>* result = [str stringByReplacingCharactersInRange:<span class="type">NSMakeRange</span>(<span class="number">0</span>, <span class="number">1</span>) withString:@<span class="string">"b"</span>]; <span class="comment">// 字符串子串替换</span></div><div class="line">        <span class="type">NSString</span>* sub = [str substringFromIndex:<span class="number">3</span>]; <span class="comment">// 获取子串</span></div><div class="line">        <span class="type">NSLog</span>(@<span class="string">"%@ %lu %@ sub"</span>, str,len,sub);</div><div class="line">        <span class="type">NSLog</span>(@<span class="string">"result:%@"</span>,result);</div><div class="line">        <span class="keyword">for</span> (int i=<span class="number">0</span>; i&lt; len; ++i) &#123;<span class="comment">// 遍历字符串</span></div><div class="line">            <span class="type">NSLog</span>(@<span class="string">"c:%c"</span>,[str characterAtIndex:i]);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 静态方法 将字符数组转换成os string</span></div><div class="line">        <span class="type">NSString</span>* chars = [<span class="type">NSString</span> stringWithCString:<span class="string">"oc"</span> encoding:<span class="type">NSUTF8StringEncoding</span>];</div><div class="line">        <span class="type">NSLog</span>(@<span class="string">"chars %@"</span>,chars);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>oc 里面导入基础库跟java一样，只是java导入的是类或者静态方法，而oc导入的是头文件，也是是实现的声明，因为oc不开源，我们只能通过看到头文件的具体声明。其中oc里面Foundation.h 这个是基础更能核心库，后面还有uikit等核心库。<br>第一个程序看起来很简单，其实里面很多语法细节，后面慢慢来讲吧，往往简单的东西背后都是复杂。</p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[wait和sleep 深度分析]]></title>
       <url>http://jackwaylong.github.io/2016/12/05/wait-sleep/</url>
       <content type="html"><![CDATA[<blockquote>

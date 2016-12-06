@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>打破标准的第一个OC程序 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="oc,NSString">
+  <meta name="description" content="平时我们写程序第一个程序都是hello world,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符串,但是我们从程序的角度看，就是一个空虚的字符串，不能让我们想到更多，我想如果能否说一些字符串的基本操作可能更有意思，一方面是基础语法，另一方面也理解了oc字符串对象与java的不同点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打破标准的第一个OC程序">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/12/06/ios-oc-1/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="平时我们写程序第一个程序都是hello world,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符串,但是我们从程序的角度看，就是一个空虚的字符串，不能让我们想到更多，我想如果能否说一些字符串的基本操作可能更有意思，一方面是基础语法，另一方面也理解了oc字符串对象与java的不同点。">
+<meta property="og:updated_time" content="2016-12-06T13:45:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="打破标准的第一个OC程序">
+<meta name="twitter:description" content="平时我们写程序第一个程序都是hello world,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符串,但是我们从程序的角度看，就是一个空虚的字符串，不能让我们想到更多，我想如果能否说一些字符串的基本操作可能更有意思，一方面是基础语法，另一方面也理解了oc字符串对象与java的不同点。">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2016</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">打破标准的第一个OC程序</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">打破标准的第一个OC程序</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-06T13:36:07.000Z" itemprop="datePublished" class="page-time">
+  2016-12-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ios/">ios</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#NSString"><span class="post-toc-number">1.</span> <span class="post-toc-text">NSString</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-ios-oc-1"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">打破标准的第一个OC程序</h1>
+        <div class="post-meta">
+            <time datetime="2016-12-06T13:36:07.000Z" itemprop="datePublished" class="post-time">
+  2016-12-06
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ios/">ios</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>平时我们写程序第一个程序都是<em>hello world</em>,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符串,但是我们从程序的角度看，就是一个空虚的字符串，不能让我们想到更多，我想如果能否说一些字符串的基本操作可能更有意思，一方面是基础语法，另一方面也理解了<code>oc</code>字符串对象与<code>java</code>的不同点。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="NSString"><a href="#NSString" class="headerlink" title="NSString"></a>NSString</h1><blockquote>
+<p>oc里面对象都是以NS开头的，记住就行，要想知道为什么的去<a href="http://www.google.com" target="_blank" rel="external">google</a>吧! oc里面的字符串与java最大的不同就是，java里面是个引用，而oc里面是个指针，跟c/c++ 很类似。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#<span class="keyword">import</span> &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">int main(int argc, const char * argv[]) &#123;</div><div class="line">    @autoreleasepool &#123;</div><div class="line">        <span class="comment">// insert code here...</span></div><div class="line">        <span class="comment">// 字符串</span></div><div class="line">        <span class="type">NSString</span>* str = @<span class="string">"first oc"</span>;</div><div class="line">        <span class="type">NSUInteger</span> len = str.length; <span class="comment">// 获取字符串的长度，跟java差不多，只是java是一个方法，而oc是一个属性</span></div><div class="line">        <span class="type">BOOL</span> contain = [str containsString:@<span class="string">"bc"</span>]; <span class="comment">// 判断子串</span></div><div class="line">        <span class="type">NSLog</span>(@<span class="string">"str:%@ contain %@ %hhd"</span>,str,@<span class="string">"bc"</span>,contain); <span class="comment">// 格式化打印,跟c/c++ printf长的很像，跟java的System.out.println 差不多</span></div><div class="line">        <span class="type">NSString</span>* result = [str stringByReplacingCharactersInRange:<span class="type">NSMakeRange</span>(<span class="number">0</span>, <span class="number">1</span>) withString:@<span class="string">"b"</span>]; <span class="comment">// 字符串子串替换</span></div><div class="line">        <span class="type">NSString</span>* sub = [str substringFromIndex:<span class="number">3</span>]; <span class="comment">// 获取子串</span></div><div class="line">        <span class="type">NSLog</span>(@<span class="string">"%@ %lu %@ sub"</span>, str,len,sub);</div><div class="line">        <span class="type">NSLog</span>(@<span class="string">"result:%@"</span>,result);</div><div class="line">        <span class="keyword">for</span> (int i=<span class="number">0</span>; i&lt; len; ++i) &#123;<span class="comment">// 遍历字符串</span></div><div class="line">            <span class="type">NSLog</span>(@<span class="string">"c:%c"</span>,[str characterAtIndex:i]);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 静态方法 将字符数组转换成os string</span></div><div class="line">        <span class="type">NSString</span>* chars = [<span class="type">NSString</span> stringWithCString:<span class="string">"oc"</span> encoding:<span class="type">NSUTF8StringEncoding</span>];</div><div class="line">        <span class="type">NSLog</span>(@<span class="string">"chars %@"</span>,chars);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>oc 里面导入基础库跟java一样，只是java导入的是类或者静态方法，而oc导入的是头文件，也是是实现的声明，因为oc不开源，我们只能通过看到头文件的具体声明。其中oc里面Foundation.h 这个是基础更能核心库，后面还有uikit等核心库。<br>第一个程序看起来很简单，其实里面很多语法细节，后面慢慢来讲吧，往往简单的东西背后都是复杂。</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSString/">NSString</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oc/">oc</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/06/ios-oc-1/&title=《打破标准的第一个OC程序》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/06/ios-oc-1/&title=《打破标准的第一个OC程序》 — longway's blog&source=
+平时我们写程序第一个程序都是hello world,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/06/ios-oc-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《打破标准的第一个OC程序》 — longway's blog&url=http://jackwaylong.github.io/2016/12/06/ios-oc-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/06/ios-oc-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/05/wait-sleep/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">wait和sleep 深度分析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="ios-oc-1" data-title="打破标准的第一个OC程序" data-url="http://jackwaylong.github.io/2016/12/06/ios-oc-1/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/06/ios-oc-1/&title=《打破标准的第一个OC程序》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/06/ios-oc-1/&title=《打破标准的第一个OC程序》 — longway's blog&source=
+平时我们写程序第一个程序都是hello world,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/06/ios-oc-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《打破标准的第一个OC程序》 — longway's blog&url=http://jackwaylong.github.io/2016/12/06/ios-oc-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/06/ios-oc-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aQY7CMAwF0Ln/pZktI6D9tstITV5WCESTFyQTx/75icfjaTy/c/zp63h95vEsFw8MDIzbMh6Ho7rQ4+UmG9GbBQMDYwfGpwiWBMc8HE+oJ2vGwMDAuDQ4JmwMDAyMOSNPPnvHTQwMDIxeEpvjrzo4fiUXx8DAuCEjv3X//9dfqW9gYGDcivEojoSXH+8mK/kzCwYGxtKMyTR5wSBpzkgOnSdpMwYGxqKM/Po+KT32GryqF3Bv5sXAwNiM0Vt0NdOsXrSdgDEwMDZgHC+0esibXNw3S5gYGBhLM6rlyfzg2Gsjyw+szd8EAwNjCUYecCctGtUDaFRmwMDAWJSRBMpJUM73shdk3+TiGBgYizJ66WjeipFfovWCPgYGxj6M3tVY9XWvDHBBtwgGBsbNGb2r/0nxYNRakcd+DAyMpRnJlydJbELKwzcGBsY+jGogrhYVJu0XJ59iYGBswKg2T1Sv+HvbVPguBgbG0ozqsiZZZC8Zrl7GYWBgrMrIi5HVUFgtAyTB+uPWY2BgbMz4XmGgulknx1MMDIzNGFcln3NY4RiKgYGxKONRHL2EsxdYy/k3BgbGooxJmMuT1WrL1/ETRiEbAwPjtozJgr4RHJubgoGBsQEjOcDlTRU5u/oPcJKLY2BgYMSHxWqpMp8xqipgYGBsz8gXXX3mZMswMDB2YFRDZxVcvcgrt6ZhYGAszchTx+r0xwvKQ3PeKIaBgbEc4xf2pQ8sWJlVQwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
