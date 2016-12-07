@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="alog,ams">
+  <meta name="description" content="介绍自己负责的部分，如何实现的。
+自定义view viewGroup
+activity的启动流程
+事件传递及滑动冲突的处理
+插件化（activity如何加载及资源处理
+内存优化 ，如何避免oom
+内存泄漏如何处理及如何排查
+handler问题
+图片加载用的什么以及原理
+从一堆数据里怎么查找最大的n个数
+快速排序
+字符串匹配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/12/07/interview-1/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="介绍自己负责的部分，如何实现的。
+自定义view viewGroup
+activity的启动流程
+事件传递及滑动冲突的处理
+插件化（activity如何加载及资源处理
+内存优化 ，如何避免oom
+内存泄漏如何处理及如何排查
+handler问题
+图片加载用的什么以及原理
+从一堆数据里怎么查找最大的n个数
+快速排序
+字符串匹配">
+<meta property="og:updated_time" content="2016-12-07T10:50:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问">
+<meta name="twitter:description" content="介绍自己负责的部分，如何实现的。
+自定义view viewGroup
+activity的启动流程
+事件传递及滑动冲突的处理
+插件化（activity如何加载及资源处理
+内存优化 ，如何避免oom
+内存泄漏如何处理及如何排查
+handler问题
+图片加载用的什么以及原理
+从一堆数据里怎么查找最大的n个数
+快速排序
+字符串匹配">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2016</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-07T10:46:41.000Z" itemprop="datePublished" class="page-time">
+  2016-12-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/interview/">interview</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#介绍自己负责的部分，如何实现的"><span class="post-toc-number">1.</span> <span class="post-toc-text">介绍自己负责的部分，如何实现的</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自定义view-viewGroup"><span class="post-toc-number">2.</span> <span class="post-toc-text">自定义view viewGroup</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#activity的启动流程"><span class="post-toc-number">3.</span> <span class="post-toc-text">activity的启动流程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#事件传递及滑动冲突的处理"><span class="post-toc-number">4.</span> <span class="post-toc-text">事件传递及滑动冲突的处理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#插件化（activity如何加载及资源处理"><span class="post-toc-number">5.</span> <span class="post-toc-text">插件化（activity如何加载及资源处理)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#内存优化-，如何避免oom"><span class="post-toc-number">6.</span> <span class="post-toc-text">内存优化 ，如何避免oom</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#内存泄漏如何处理及如何排查"><span class="post-toc-number">7.</span> <span class="post-toc-text">内存泄漏如何处理及如何排查</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#handler问题"><span class="post-toc-number">8.</span> <span class="post-toc-text">handler问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#图片加载用的什么以及原理"><span class="post-toc-number">9.</span> <span class="post-toc-text">图片加载用的什么以及原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#从一堆数据里怎么查找最大的n个数"><span class="post-toc-number">10.</span> <span class="post-toc-text">从一堆数据里怎么查找最大的n个数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#快速排序"><span class="post-toc-number">11.</span> <span class="post-toc-text">快速排序</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#字符串匹配"><span class="post-toc-number">12.</span> <span class="post-toc-text">字符串匹配</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#架构"><span class="post-toc-number">13.</span> <span class="post-toc-text">架构</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-interview-1"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问</h1>
+        <div class="post-meta">
+            <time datetime="2016-12-07T10:46:41.000Z" itemprop="datePublished" class="post-time">
+  2016-12-07
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/interview/">interview</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ol>
+<li>介绍自己负责的部分，如何实现的。</li>
+<li>自定义view viewGroup</li>
+<li>activity的启动流程</li>
+<li>事件传递及滑动冲突的处理</li>
+<li>插件化（activity如何加载及资源处理</li>
+<li>内存优化 ，如何避免oom</li>
+<li>内存泄漏如何处理及如何排查</li>
+<li>handler问题</li>
+<li>图片加载用的什么以及原理</li>
+<li>从一堆数据里怎么查找最大的n个数</li>
+<li>快速排序</li>
+<li><p>字符串匹配</p>
+<a id="more"></a>
+</li>
+</ol>
+<h2 id="介绍自己负责的部分，如何实现的"><a href="#介绍自己负责的部分，如何实现的" class="headerlink" title="介绍自己负责的部分，如何实现的"></a>介绍自己负责的部分，如何实现的</h2><blockquote>
+<p>这个把自己负责的模块说清楚就好,一般有一下几个方面可以说一下，前提是不要给自己挖坑</p>
+</blockquote>
+<ol>
+<li>自己负责模块在整个项目中的角色,也就是功能描述</li>
+<li>开发前的自己的一些思考,比如对业务的抽象,接口的定义，协议的定义等等</li>
+<li>开发编码过程中遇到的难点以及坑</li>
+<li>排查问题以及结解决方式</li>
+<li>兼容性保证</li>
+<li>性能优化</li>
+<li>上线之后模块导致crash的比例</li>
+</ol>
+<h2 id="自定义view-viewGroup"><a href="#自定义view-viewGroup" class="headerlink" title="自定义view viewGroup"></a>自定义view viewGroup</h2><blockquote>
+<p>这个就是约定的几个方法,onMeasure,onLayout,onDraw,measure,layout,draw<br>同时注意写方法的调用时机以及区别,比如onMeasure是个模版方法是在measure下调用的,这个方法在viewGroup里面,<br>自定义的这些就已经足够了，如果还扩展一些更新问题，子线程能不能更新，是可以的,在ViewRootImpl没创建之前可以更新，不同sdk这个类可能名字不一样。</p>
+</blockquote>
+<h2 id="activity的启动流程"><a href="#activity的启动流程" class="headerlink" title="activity的启动流程"></a>activity的启动流程</h2><blockquote>
+<p>这个肯定不是说activity的生命周期，是启动加载过程,大致说下流程,具体的要自己看代码了，大致过程有:<br>这里可能分好几种情况,其实都差不很多，这里就说一种情况,startActivity这个怎么启动Activity的,<br>startActivity-&gt;ActivityManagerService-&gt;ActivityThread-&gt;Activity,大概参与就这几个核心类,里面经过了两层binder通信,最后路由到IApplicationThread,然后到ActivityThread中的H消息队列中启动Activity，细节很多，可以在评论询问。</p>
+</blockquote>
+<h2 id="事件传递及滑动冲突的处理"><a href="#事件传递及滑动冲突的处理" class="headerlink" title="事件传递及滑动冲突的处理"></a>事件传递及滑动冲突的处理</h2><blockquote>
+<p>事件传递理解成责任链式调用就好，也就是从最内层到外层时间委派，如果事件consume了，那么就给这个view处理，不然从外向内冒泡，<br>冲突处理举个实例就好，比如SlideMenu与banner或者ListView与Scrollview的冲突等等，说出基本思路就行，这些解决一般都是重写那几个事件方法，然后各种判断就好</p>
+</blockquote>
+<h2 id="插件化（activity如何加载及资源处理"><a href="#插件化（activity如何加载及资源处理" class="headerlink" title="插件化（activity如何加载及资源处理)"></a>插件化（activity如何加载及资源处理)</h2><blockquote>
+<p>Activity使用占坑hook加载,也可以使用静态代理，静态代理就需要自定义classloader,记住这个加载模式就行，再多细节在评论回复吧<br>，资源处理就是assetmanager的创建，然后资源冲突处理，简单的可以构建多个assetmanager就没有冲突问题，应为隔离了，如果使用一个那么<br>打包aapt定制一下就行,还有很多细节，在评论回复吧，说不完了。</p>
+</blockquote>
+<h2 id="内存优化-，如何避免oom"><a href="#内存优化-，如何避免oom" class="headerlink" title="内存优化 ，如何避免oom"></a>内存优化 ，如何避免oom</h2><blockquote>
+<p>内存优化太多要说的了，有套路的回答，基本就是避免跟gc配合好工作，比如：尽量复用对象，处理无用对象，避免内存泄漏，压缩对象等等<br>，尽量将大对象特殊处理，比如bitmap占用内存较多，可以jni层与java层配合一起，大小压缩，质量压缩，imsimplesize的大小定义，规范等等，程序中有内存管理模块，避免内存压力大的时候<br>，能够释放内存，避免oom发生的几率，还有很多方面，在评论回复吧。</p>
+</blockquote>
+<h2 id="内存泄漏如何处理及如何排查"><a href="#内存泄漏如何处理及如何排查" class="headerlink" title="内存泄漏如何处理及如何排查"></a>内存泄漏如何处理及如何排查</h2><blockquote>
+<p>内存泄漏最大的问题就是无用对象常驻内存，导致内存压力很大，最后可能导致oom发生。尽量将对象生命周期可以在控制的能力之内，具体的在回复说吧，也很多场景,比如：context 除了特殊情况用activity，其他我们没理由不用application。排查导出堆空间，然后mat分析，程序里面<br>用leackcanary定位。</p>
+</blockquote>
+<h2 id="handler问题"><a href="#handler问题" class="headerlink" title="handler问题"></a>handler问题</h2><blockquote>
+<p>这个需要回复两个基本的，首先handler的创建需要loop，loop怎么创建的，同时这个里面怎么保证loop线程安全的，还有就是消息如何分发的，也就是消息发送到接受的流程，<br>还有callback对消息处理的影响，这些足够了，还可以说可以跨进程，这样就更棒了，具体的在回复说，太多了。</p>
+</blockquote>
+<h2 id="图片加载用的什么以及原理"><a href="#图片加载用的什么以及原理" class="headerlink" title="图片加载用的什么以及原理"></a>图片加载用的什么以及原理</h2><blockquote>
+<p> 图片加载的太多了，说个自己非常熟悉的就行，不要给自己挖坑，都懂的，比如你熟悉uil，那就说具体的加载过程，<br>套路都差不多，都是创建图片task，先从缓存取出来，取不到就去网络下载，下载完之后，同时缓存起来，这里需要说下，线程池，队列，pause，resume的具体细节，比如跟view，activity的绑定关系。回复具体说，也很多</p>
+</blockquote>
+<h2 id="从一堆数据里怎么查找最大的n个数"><a href="#从一堆数据里怎么查找最大的n个数" class="headerlink" title="从一堆数据里怎么查找最大的n个数"></a>从一堆数据里怎么查找最大的n个数</h2><blockquote>
+<p>这个用归并排序，或者直接快排，没啥还说的。不会的自己google看算法，算法后面我会写出来到文章里面。</p>
+</blockquote>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><blockquote>
+<p>基本思想挖坑，分而治之，按照这个思路看代码就行</p>
+</blockquote>
+<h2 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h2><blockquote>
+<p>这个kmp算法，或者最基本的吧，不考虑时间，空间复杂度的条件下，但是不要说这个，太low了点。其实这些算法背下来就好，不是业务场景的，意义不大，但是必须要会,不然吃亏了</p>
+</blockquote>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><blockquote>
+<p>其实架构没有固定模式，能够说出自己对架构的理解就很好，比如mvp，不同人对这个理解不一样，最好的，够用的，最适合业务的才是好架构，这个也很多要说，评论说吧。</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/alog/">alog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ams/">ams</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/07/interview-1/&title=《优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/07/interview-1/&title=《优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问》 — longway's blog&source=
+介绍自己负责的部分，如何实现的。
+自定义view viewGroup
+activity的启动流程
+事件传递及滑动冲突的处理
+插件化（activity如何..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/07/interview-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问》 — longway's blog&url=http://jackwaylong.github.io/2016/12/07/interview-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/07/interview-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/06/ios-oc-1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">打破标准的第一个OC程序</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="interview-1" data-title="优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问" data-url="http://jackwaylong.github.io/2016/12/07/interview-1/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/07/interview-1/&title=《优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/07/interview-1/&title=《优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问》 — longway's blog&source=
+介绍自己负责的部分，如何实现的。
+自定义view viewGroup
+activity的启动流程
+事件传递及滑动冲突的处理
+插件化（activity如何..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/07/interview-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《优酷大神的面试题，我借此来简单分析一系，只是说些我的思路，思路对了，基本上问题不大了，还有很多细节没说，可以在评论里提问》 — longway's blog&url=http://jackwaylong.github.io/2016/12/07/interview-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/07/interview-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aQW7DMAwFUd//0u62QGtnPmkHEDVaFbFq8WWhiKSOA4/z1/j7OZl/NZOs8tiQIUPGsozzdpCwaiGm617NkSFDxj6Mq4Wv5nAwx/AvSIYMGTLS15FQ+CcyZMiQ0WecYKThpqmvDBky9mSQgHjVi2zK96u/mIvLkCFjQUYa3Df/fqW/IUOGjKUYZzhqKWjaNoijkiFDxmhGrQFZK+u/3RCVIUPGbMb9EZAXxXhZja94H8NRe6kMGTKWYjwbKFmy3+b856kMGTJGMzoF/VrLs3b5DLUwZciQMZTBraS1mZbq+Hs+sGXIkLEBo3YN4qlkNU1Z0W0RGTJkjGOQgnunnUmK/vyAiH43ZMiQMZTBG4ppIazDRsU4GTJkjGbwy1ukZNbfiPnW/OGcK0OGjKGM9GDHi2Lpxh3fEJEhQ8ZoRtoYKF4nxWlwmr4W+xsyZMhYlsELYbWLFLWBmg0yZMgYzeDbZW0bTQ98/L+K5TYZMmQszkiDqzU4+/OLVy5kyJAxiJEW19KyWmctdDSUIUPGaAYveKXL1MKKj5syZMjYgNEp0/Ownkqb0e+GDBkyRjDOcKTFslpZLU2hZciQMZvxdgOgFkqa6MqQIWMHBtlk+Wba/+aKbVEZMmRswAiyXvz0jWNfcNlChgwZMsKmZnpRjKTNB3ksQ4aM7RnBhhgmqLwsKEOGjH0YJIntPO1fyHgsF5chQ8aCjNoVh7gcBrZj0iJtNTVlyJCxHuMHouaodrRqepkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
