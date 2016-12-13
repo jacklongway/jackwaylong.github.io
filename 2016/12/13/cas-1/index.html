@@ -12,31 +12,16 @@
   
   
   <meta name="keywords" content="CAS">
-  <meta name="description" content="CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，接下来，让我们更深入的了解一下这项技术。
-
-议题大纲
-cas是什么
-cas是怎么做到无锁原子操作的
-cas跟synchroniz">
+  <meta name="description" content="CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，接下来，让我们更深入的了解一下这项技术。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CAS为什么如此的乐观了?">
 <meta property="og:url" content="http://jackwaylong.github.io/2016/12/13/cas-1/index.html">
 <meta property="og:site_name" content="longway's blog">
-<meta property="og:description" content="CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，接下来，让我们更深入的了解一下这项技术。
-
-议题大纲
-cas是什么
-cas是怎么做到无锁原子操作的
-cas跟synchroniz">
-<meta property="og:updated_time" content="2016-12-13T06:11:34.000Z">
+<meta property="og:description" content="CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，接下来，让我们更深入的了解一下这项技术。">
+<meta property="og:updated_time" content="2016-12-13T06:15:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CAS为什么如此的乐观了?">
-<meta name="twitter:description" content="CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，接下来，让我们更深入的了解一下这项技术。
-
-议题大纲
-cas是什么
-cas是怎么做到无锁原子操作的
-cas跟synchroniz">
+<meta name="twitter:description" content="CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，接下来，让我们更深入的了解一下这项技术。">
   
     <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
   
@@ -196,6 +181,7 @@ cas跟synchroniz">
             <blockquote>
 <p>CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，<br>如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，<br>接下来，让我们更深入的了解一下这项技术。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="议题大纲"><a href="#议题大纲" class="headerlink" title="议题大纲"></a>议题大纲</h2><ol>
 <li>cas是什么</li>
 <li>cas是怎么做到无锁原子操作的</li>
@@ -263,7 +249,8 @@ cas跟synchroniz">
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/13/cas-1/&title=《CAS为什么如此的乐观了?》 — longway's blog&source=developer" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/13/cas-1/&title=《CAS为什么如此的乐观了?》 — longway's blog&source=
+CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -379,7 +366,8 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/13/cas-1/&title=《CAS为什么如此的乐观了?》 — longway's blog&source=developer" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/13/cas-1/&title=《CAS为什么如此的乐观了?》 — longway's blog&source=
+CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>

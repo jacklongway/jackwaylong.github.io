@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jackwaylong.github.io/"/>
-  <updated>2016-12-13T06:11:34.000Z</updated>
+  <updated>2016-12-13T06:15:13.000Z</updated>
   <id>http://jackwaylong.github.io/</id>
   
   <author>
@@ -20,11 +20,12 @@
     <link href="http://jackwaylong.github.io/2016/12/13/cas-1/"/>
     <id>http://jackwaylong.github.io/2016/12/13/cas-1/</id>
     <published>2016-12-13T03:33:21.000Z</published>
-    <updated>2016-12-13T06:11:34.000Z</updated>
+    <updated>2016-12-13T06:15:13.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，<br>如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，<br>接下来，让我们更深入的了解一下这项技术。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="议题大纲"><a href="#议题大纲" class="headerlink" title="议题大纲"></a>议题大纲</h2><ol>
 <li>cas是什么</li>
 <li>cas是怎么做到无锁原子操作的</li>
@@ -53,7 +54,8 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，&lt;br&gt;如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但
+&lt;p&gt;CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，&lt;br&gt;如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，&lt;br&gt;接下来，让我们更深入的了解一下这项技术。&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
