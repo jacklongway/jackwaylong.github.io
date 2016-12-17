@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>重排序 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="dependencies,controlFlow,resort">
+  <meta name="description" content="首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我对每个疑问进行剖析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重排序">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/12/17/JMM-1/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我对每个疑问进行剖析。">
+<meta property="og:updated_time" content="2016-12-17T03:18:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="重排序">
+<meta name="twitter:description" content="首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我对每个疑问进行剖析。">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2016</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">重排序</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">重排序</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-17T02:50:07.000Z" itemprop="datePublished" class="page-time">
+  2016-12-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#话题大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">话题大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据依赖"><span class="post-toc-number">2.</span> <span class="post-toc-text">数据依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#as-if-serial"><span class="post-toc-number">3.</span> <span class="post-toc-text">as-if-serial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#程序顺序规则，也就是happens－before规则"><span class="post-toc-number">4.</span> <span class="post-toc-text">程序顺序规则，也就是happens－before规则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重排对多线程的影响"><span class="post-toc-number">5.</span> <span class="post-toc-text">重排对多线程的影响</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#扩展"><span class="post-toc-number">6.</span> <span class="post-toc-text">扩展</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-JMM-1"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">重排序</h1>
+        <div class="post-meta">
+            <time datetime="2016-12-17T02:50:07.000Z" itemprop="datePublished" class="post-time">
+  2016-12-17
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，<br>在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么<br>鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我<br>对每个疑问进行剖析。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="话题大纲"><a href="#话题大纲" class="headerlink" title="话题大纲"></a>话题大纲</h2><ol>
+<li>数据依赖性</li>
+<li>as-if-serial</li>
+<li>程序顺序规则，也就是happens－before规则</li>
+<li>重排对多线程的影响</li>
+</ol>
+<h2 id="数据依赖"><a href="#数据依赖" class="headerlink" title="数据依赖"></a>数据依赖</h2><p>如果两个操作访问同一个变量，且两个操作中有一个为写操作，此时这两个操作之间就存在数据依赖性，你如：<br>a=1;b=a; b依赖a的写操作。这种情况下，会阻止重排，因为重排之后，必然导致最后结果不一致，但是在很多<br>场景下，我们写的代码都有这种依赖存在。</p>
+<h2 id="as-if-serial"><a href="#as-if-serial" class="headerlink" title="as-if-serial"></a>as-if-serial</h2><p>这个规则简单的来说就是对编译器。runtime，cpu的一种约束，单线程条件下，重排之后，最后结果要一致, 这些约束并不能保证多线程环境下成立。所以在并发的环境下，需要我们自己保证这种约束。</p>
+<h2 id="程序顺序规则，也就是happens－before规则"><a href="#程序顺序规则，也就是happens－before规则" class="headerlink" title="程序顺序规则，也就是happens－before规则"></a>程序顺序规则，也就是happens－before规则</h2><ol>
+<li>A happens- before B；</li>
+<li>B happens- before C；</li>
+<li>A happens- before C；</li>
+</ol>
+<p>这里的第3个happens- before关系，是根据happens- before的传递性推导出来的。<br>这里A happens- before B，但实际执行时B却可以排在A之前执行（看上面的重排序后的执行顺序）。在第一章提到过，如果A happens- before B，JMM并不要求A一定要在B之前执行。JMM仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前。这里操作A的执行结果不需要对操作B可见；而且重排序操作A和操作B后的执行结果，与操作A和操作B按happens- before顺序执行的结果一致。在这种情况下，JMM会认为这种重排序并不非法（not illegal），JMM允许这种重排序。<br>在计算机中，软件技术和硬件技术有一个共同的目标：在不改变程序执行结果的前提下，尽可能的开发并行度。编译器和处理器遵从这一目标，从happens- before的定义我们可以看出，JMM同样遵从这一目标。</p>
+<h2 id="重排对多线程的影响"><a href="#重排对多线程的影响" class="headerlink" title="重排对多线程的影响"></a>重排对多线程的影响</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReorderExample</span> </span>&#123;</div><div class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</div><div class="line"><span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writer</span><span class="params">()</span> </span>&#123;</div><div class="line">    a = <span class="number">1</span>; <span class="comment">//1</span></div><div class="line">    flag = <span class="keyword">true</span>;<span class="comment">//2</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">Public <span class="keyword">void</span> <span class="title">reader</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (flag) &#123;<span class="comment">//3</span></div><div class="line">        <span class="keyword">int</span> i =  a * a;<span class="comment">//4</span></div><div class="line">        ……</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>多线程情况下rw操作就可能出现很多不确定性，大概有以下场景，w操作重排，r操作cpu内部重排，最后的结果不言而喻。这里我们看到是重排对多线程的影响，如果是单线程就不存在重排的概念了。</p>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><ol>
+<li>内存重排的解决方法（volatile）</li>
+<li>内存可见性与重排的关系</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/controlFlow/">controlFlow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependencies/">dependencies</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resort/">resort</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/17/JMM-1/&title=《重排序》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/17/JMM-1/&title=《重排序》 — longway's blog&source=
+首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/17/JMM-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《重排序》 — longway's blog&url=http://jackwaylong.github.io/2016/12/17/JMM-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/17/JMM-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/13/cas-1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">CAS为什么如此的乐观了?</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="JMM-1" data-title="重排序" data-url="http://jackwaylong.github.io/2016/12/17/JMM-1/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/17/JMM-1/&title=《重排序》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/17/JMM-1/&title=《重排序》 — longway's blog&source=
+首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/17/JMM-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《重排序》 — longway's blog&url=http://jackwaylong.github.io/2016/12/17/JMM-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/17/JMM-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3awXIrIQwEwPz/TzvXl0piz4h1Xi00J5e9WWgOioT4+IjH49vIn//3m/avLh4YGBi3ZTyejufPrC9xNu8PM2JgYBzA+G3ifKFJ0HyOyefFwMDASF73W1hMfm0DPQYGBsZKwE0weYr53/5vYGBg3ISRB742RCaL/tNaHAMD44aMvDT9+89v6W9gYGDcivEoR9KkbL+ZreTLezAwMLZmrDQg29I3T++GDVEMDIxNGXkJmudj+TWy9QBd7DEGBsZtGbNQ2C46L1yX2qIYGBibMmbl4my5ecLXtlcxMDBOY7RtyLbdOLuQ8WKzMDAwDmBclfbNDuySd7445sPAwNia0SZq7SXUdqGzUhYDA2NvRluO5gE037MLLnZgYGBszSiOtOKj/GF3YmH7MDAw9mbM0rv2CkWSDtZXK9o8FAMD47aM9swqoc5K3/e1RTEwMO7OaFuSOaktX9sjvxfHbRgYGBsx8jSx7RWux/hZywEDA+MERnvEv3Kgn4w6lGNgYGzKaAPitRcpEl6UGmJgYBzDSMJcEoLbxV1wrw0DA+MARtuezMNo20LIS2UMDIwTGLOSMi9Q26DcvgcDA+MExuyYPgnHs1QyCdmX3RnBwMC4FWM94bt259rjOQwMjHMY+eWJdzQjL2hLYGBgYIzKzvXiNv8VAwMDYzZlW+7OgjsGBsY5jFlK1y5x5fnLanEMDIwbMlZuauSJYBuO1zcIAwNjC8Yn4xN/rU95pREAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
