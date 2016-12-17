@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[重排序]]></title>
+      <title><![CDATA[JMM-重排序]]></title>
       <url>http://jackwaylong.github.io/2016/12/17/JMM-1/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，<br>在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么<br>鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我<br>对每个疑问进行剖析。</p>
