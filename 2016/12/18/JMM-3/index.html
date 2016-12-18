@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>JMM-final | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="final,bytecode">
+  <meta name="description" content="Java内部类final语义实现 
+
+
+本地临时变量 基本类型
+本地临时变量 引用类型
+引用字段，基本类型
+引用字段，引用类型
+引用类型，引用类型，static字段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JMM-final">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/12/18/JMM-3/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="Java内部类final语义实现 
+
+
+本地临时变量 基本类型
+本地临时变量 引用类型
+引用字段，基本类型
+引用字段，引用类型
+引用类型，引用类型，static字段">
+<meta property="og:updated_time" content="2016-12-18T04:43:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JMM-final">
+<meta name="twitter:description" content="Java内部类final语义实现 
+
+
+本地临时变量 基本类型
+本地临时变量 引用类型
+引用字段，基本类型
+引用字段，引用类型
+引用类型，引用类型，static字段">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2016</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JMM-final</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JMM-final</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-18T04:34:36.000Z" itemprop="datePublished" class="page-time">
+  2016-12-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本地临时变量-基本类型"><span class="post-toc-number">1.</span> <span class="post-toc-text">本地临时变量 基本类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本地临时变量-引用类型"><span class="post-toc-number">2.</span> <span class="post-toc-text">本地临时变量 引用类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用字段，基本类型"><span class="post-toc-number">3.</span> <span class="post-toc-text">引用字段，基本类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用字段，引用类型"><span class="post-toc-number">4.</span> <span class="post-toc-text">引用字段，引用类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用类型，引用类型，static字段"><span class="post-toc-number">5.</span> <span class="post-toc-text">引用类型，引用类型，static字段</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-JMM-3"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JMM-final</h1>
+        <div class="post-meta">
+            <time datetime="2016-12-18T04:34:36.000Z" itemprop="datePublished" class="post-time">
+  2016-12-18
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p> Java内部类final语义实现 </p>
+</blockquote>
+<ol>
+<li>本地临时变量 基本类型</li>
+<li>本地临时变量 引用类型</li>
+<li>引用字段，基本类型</li>
+<li>引用字段，引用类型</li>
+<li>引用类型，引用类型，static字段</li>
+</ol>
+<a id="more"></a>
+<h2 id="本地临时变量-基本类型"><a href="#本地临时变量-基本类型" class="headerlink" title="本地临时变量 基本类型"></a>本地临时变量 基本类型</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> <span class="keyword">int</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line"><span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        System.out.println(x);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;.run();</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line"></div><div class="line">3: bipush        10</div><div class="line"></div><div class="line">5: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V</div><div class="line"></div><div class="line">8: return</div></pre></td></tr></table></figure>
+<p>可以看出，此常量值直接被写在内部类的临时变量中，即相当于进行了一次变量copy。</p>
+<h2 id="本地临时变量-引用类型"><a href="#本地临时变量-引用类型" class="headerlink" title="本地临时变量 引用类型"></a>本地临时变量 引用类型</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> T t = <span class="keyword">new</span> T();</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line"><span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        System.out.println(t);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;.run();</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">final T val$t;</div><div class="line"></div><div class="line">    flags: ACC_FINAL, ACC_SYNTHETIC</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line">  T$1(T);</div><div class="line"></div><div class="line">    Signature: (LT;)V</div><div class="line"></div><div class="line">//构建函数的字节码</div><div class="line"></div><div class="line">         0: aload_0      </div><div class="line"></div><div class="line">         1: aload_1      </div><div class="line"></div><div class="line">         2: putfield      #1                  // Field val$t:LT;</div><div class="line"></div><div class="line">         5: aload_0      </div><div class="line"></div><div class="line">         6: invokespecial #2                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line"></div><div class="line">         9: return     </div><div class="line"></div><div class="line">//main函数字节码</div><div class="line"></div><div class="line">         0: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line"></div><div class="line">         3: aload_0      </div><div class="line"></div><div class="line">         4: getfield      #1                  // Field val$t:LT;</div><div class="line"></div><div class="line">         7: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/Object;)V</div><div class="line"></div><div class="line">        10: return</div></pre></td></tr></table></figure>
+<p>可以看出，这时自动生成了一个带有1个参数的构造函数，并且将相应的t值作为参数传递到内部类当中，同时设定final语义，即不能被内部类修改。</p>
+<p>上面的是无参构造函数，如果是一个有参数的内部类呢，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Thread thread = <span class="keyword">new</span> Thread(<span class="string">"thread-1"</span>) &#123;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">System.out.println(t);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">T$1(java.lang.String, T);</div><div class="line"></div><div class="line">  Signature: (Ljava/lang/String;LT;)V</div></pre></td></tr></table></figure>
+<p>可以看出，编译器将自动对原来调用的构造函数进行了修改，将原来只需要1个参数的构造函数 修改为传2个参数，并且同时将相应的t传递进去。</p>
+<h2 id="引用字段，基本类型"><a href="#引用字段，基本类型" class="headerlink" title="引用字段，基本类型"></a>引用字段，基本类型</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> t = <span class="number">3</span>;</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">xx</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">            System.out.println(t);</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;.run();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">T$1(T);</div><div class="line"></div><div class="line">  Signature: (LT;)V</div><div class="line"></div><div class="line">  flags:</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line">  Code:</div><div class="line"></div><div class="line">    stack=2, locals=2, args_size=2</div><div class="line"></div><div class="line">       0: aload_0      </div><div class="line"></div><div class="line">       1: aload_1      </div><div class="line"></div><div class="line">       2: putfield      #1                  // Field this$0:LT;</div><div class="line"></div><div class="line">       5: aload_0      </div><div class="line"></div><div class="line">       6: invokespecial #2                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line"></div><div class="line">       9: return</div></pre></td></tr></table></figure>
+<p>这里并没有如临时变量那样，直接在内部类中进行常量定义。为什么？因为这里的t对象随时可能被修改。</p>
+<h2 id="引用字段，引用类型"><a href="#引用字段，引用类型" class="headerlink" title="引用字段，引用类型"></a>引用字段，引用类型</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> String t = <span class="keyword">new</span> String(<span class="string">"abc"</span>);</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">xx</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">            System.out.println(t);</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;.run();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"> final T this$0;</div><div class="line"></div><div class="line">    Signature: LT;</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line">  T$1(T);</div><div class="line"></div><div class="line">//内部类构造函数</div><div class="line"></div><div class="line">         0: aload_0      </div><div class="line"></div><div class="line">         1: aload_1      </div><div class="line"></div><div class="line">         2: putfield      #1                  // Field this$0:LT;</div><div class="line"></div><div class="line">         5: aload_0      </div><div class="line"></div><div class="line">         6: invokespecial #2                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line"></div><div class="line">         9: return</div></pre></td></tr></table></figure>
+<p>这里，在内部类的构造函数中，直接将外部类的this传递进来了，因此在内部类的run方法中，对于t，将直接两层getField进行调用，即可以拿到相应的信息。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">0: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line"></div><div class="line"> 3: aload_0      </div><div class="line"></div><div class="line"> 4: getfield      #1                  // Field this$0:LT;</div><div class="line"></div><div class="line"> 7: getfield      #4                  // Field T.t:Ljava/lang/String;</div><div class="line"></div><div class="line">10: invokevirtual #5                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</div><div class="line"></div><div class="line">13: return</div></pre></td></tr></table></figure>
+<h2 id="引用类型，引用类型，static字段"><a href="#引用类型，引用类型，static字段" class="headerlink" title="引用类型，引用类型，static字段"></a>引用类型，引用类型，static字段</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> String t = <span class="keyword">new</span> String(<span class="string">"abc"</span>);</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">xx</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">System.out.println(t);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;.run();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"> final T this$0;</div><div class="line"></div><div class="line">    Signature: LT;</div><div class="line"></div><div class="line">    flags: ACC_FINAL, ACC_SYNTHETIC</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line">  T$1(T);</div><div class="line"></div><div class="line">    Signature: (LT;)V</div><div class="line"></div><div class="line">//构造函数字节码</div><div class="line"></div><div class="line">         0: aload_0      </div><div class="line"></div><div class="line">         1: aload_1      </div><div class="line"></div><div class="line">         2: putfield      #1                  // Field this$0:LT;</div><div class="line"></div><div class="line">         5: aload_0      </div><div class="line"></div><div class="line">         6: invokespecial #2                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line"></div><div class="line">         9: return   </div><div class="line"></div><div class="line">//run方法字节码</div><div class="line"></div><div class="line">         0: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line"></div><div class="line">         3: getstatic     #4                  // Field T.t:Ljava/lang/String;</div><div class="line"></div><div class="line">         6: invokevirtual #5                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</div><div class="line"></div><div class="line">         9: return</div></pre></td></tr></table></figure>
+<p>可以看出，即使是引用static字段，在内部类中仍然会保留外部类的引用，即达到引用目的。同时，在run方法内部，因为是static字段，因此将不再使用getField，而是使用getStatic来进行相应字段的引用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在整个内部类字节码的生成规则中，主要采用了修改构造函数的方式来将需要在整个内部类中引用的变量进行参数传递。并且，因为是内部类，构造函数是已知的，可以随意的修改。针对特定的场景，可以进行一定的优化，如常量化(临时变量基本类型)。<br>因为在整个JVM层，并没有针对内部类作特殊的处理，因此这些处理手法都是在编译层进行处理的。同时，在语言层，针对这些生成的信息进行指定的说明。如SYNTHETIC语义。<br>在反射字段Member层，定义了如下方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line"> * Returns &#123;<span class="doctag">@code</span> true&#125; if this member was introduced by</div><div class="line"></div><div class="line"> * the compiler; returns &#123;<span class="doctag">@code</span> false&#125; otherwise.</div><div class="line"></div><div class="line"> *</div><div class="line"></div><div class="line"> * <span class="doctag">@return</span> true if and only if this member was introduced by</div><div class="line"></div><div class="line"> * the compiler.</div><div class="line"></div><div class="line"> * <span class="doctag">@jls</span> 13.1 The Form of a Binary</div><div class="line"></div><div class="line"> * <span class="doctag">@since</span> 1.5</div><div class="line"></div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSynthetic</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure></p>
+<p>即此信息是由编译器引入的。<br>了解这些对于整个语言层有一定的理解意义，但并不代表将来这些不会会改变，了解一些实现细节有助于自己在代码实现层有进一步的思考空间，并不局限于之前所了解的信息。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bytecode/">bytecode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/final/">final</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/18/JMM-3/&title=《JMM-final》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/18/JMM-3/&title=《JMM-final》 — longway's blog&source=
+ Java内部类final语义实现 
+
+
+本地临时变量 基本类型
+本地临时变量 引用类型
+引用字段，基本类型
+引用字段，引用类型
+引用类型，引用类型，s..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/18/JMM-3/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-final》 — longway's blog&url=http://jackwaylong.github.io/2016/12/18/JMM-3/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/18/JMM-3/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/18/JMM-2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JMM-volatile</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="JMM-3" data-title="JMM-final" data-url="http://jackwaylong.github.io/2016/12/18/JMM-3/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/18/JMM-3/&title=《JMM-final》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/18/JMM-3/&title=《JMM-final》 — longway's blog&source=
+ Java内部类final语义实现 
+
+
+本地临时变量 基本类型
+本地临时变量 引用类型
+引用字段，基本类型
+引用字段，引用类型
+引用类型，引用类型，s..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/18/JMM-3/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-final》 — longway's blog&url=http://jackwaylong.github.io/2016/12/18/JMM-3/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/18/JMM-3/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACGElEQVR42u3awW4qMQwF0P7/T0+lt6sq4N54qB7JyQqJIcmZhbHjfH3F4/o3fn/+/cyjJ68H4/kMNw8MDIyPZVxPx71bbH+b7A0DA+McRhJkc14ynq+S7w0DAwOjDZd5kteui4GBgdEy8nK0xWBgYGBMitj2cG2SPr6xFsfAwPhAxqQx8O7Pf9TfwMDA+I8ZVzny2ZK1klAe7QoDA2NrRrtA/nw+2+ROxeJ7wsDA+CjGfNNrmLuSxR//GxgYGFsz8nRwvsWkzdke1WFgYJzASCZtD+snpe9i+YqBgbEpI29P5uz5AdyoFsfAwNiOkR/KJwu3aeVtxTMGBsbBjHbSJIgnjPpJDAyMrRltaMsTwUkLs10FAwPjBMZac/FFW/GmojcPxxgYGLsy3lHEtoEyYb9IYTEwMA5g5KEz2ehae3LS4MTAwDiBkf+sLVznDdGoMMbAwNiaMW8orn2bB/riWwwMjK0Za5uezHDvC8LAwNibkR+o5Y3J9ts2QD/McDEwMA5gtBtdu1SRP5+80CL3xMDA+FjGWqBMQmfLy8eLpBMDA2M7xlWONk1cu06RX8vAwMA4gdGGucl07cWOPDHFwMA4gdEG2SR0TniLrQIMDIwDGGtBsMXP/wGigzYMDIyDGS1s0gyoDwExMDAwgkRtrW1wW0mMgYFxAGOe5K21DSYvBQMD4xzGpDGQX8hor1y0x3AYGBibMr4BPLPCeA2mSdsAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
