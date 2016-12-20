@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>AccessibilityService(自动化服务)? | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="Service,AccessibilityEvent">
+  <meta name="description" content="AccessibilityService是android系统提供的一种辅助服务，google设计这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也提供了很多创新的姿势，这篇文章主要讲解一下辅助自动安装，首先要声明的是不是静默安装，这个肯定是从入门到放弃，不信可以试试。至于为什么，自己去看PackageManager这一系列的源码就知道了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AccessibilityService(自动化服务)?">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/12/20/accessibilityService-1/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="AccessibilityService是android系统提供的一种辅助服务，google设计这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也提供了很多创新的姿势，这篇文章主要讲解一下辅助自动安装，首先要声明的是不是静默安装，这个肯定是从入门到放弃，不信可以试试。至于为什么，自己去看PackageManager这一系列的源码就知道了。">
+<meta property="og:updated_time" content="2016-12-20T10:51:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AccessibilityService(自动化服务)?">
+<meta name="twitter:description" content="AccessibilityService是android系统提供的一种辅助服务，google设计这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也提供了很多创新的姿势，这篇文章主要讲解一下辅助自动安装，首先要声明的是不是静默安装，这个肯定是从入门到放弃，不信可以试试。至于为什么，自己去看PackageManager这一系列的源码就知道了。">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2016</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">AccessibilityService(自动化服务)?</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">AccessibilityService(自动化服务)?</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-20T10:24:57.000Z" itemprop="datePublished" class="page-time">
+  2016-12-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AccessibilityService-创建步骤"><span class="post-toc-number">1.</span> <span class="post-toc-text">AccessibilityService 创建步骤</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-accessibilityService-1"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">AccessibilityService(自动化服务)?</h1>
+        <div class="post-meta">
+            <time datetime="2016-12-20T10:24:57.000Z" itemprop="datePublished" class="post-time">
+  2016-12-20
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>AccessibilityService是android系统提供的一种辅助服务，google设计<br>这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也提供了很多创新的<br>姿势，这篇文章主要讲解一下辅助自动安装，首先要声明的是不是静默安装，这个<br>肯定是从入门到放弃，不信可以试试。至于为什么，自己去看PackageManager<br>这一系列的源码就知道了。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="AccessibilityService-创建步骤"><a href="#AccessibilityService-创建步骤" class="headerlink" title="AccessibilityService 创建步骤"></a>AccessibilityService 创建步骤</h1><p>创建一个类继承<code>AccessibilityService</code> 然后重写抽象方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAccessibilityEvent</span><span class="params">(AccessibilityEvent event)</span></span></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInterrupt</span><span class="params">()</span></div></pre></td></tr></table></figure></p>
+<p>其实我们最关系的是第一个抽象方法的，通过拿到<code>AccessibilityEvent</code>这个包装类<br>我们可以做很多事情，比如通过事件类型，包名，事件动作，事件类型做处理。</p>
+<p>简单代码片段:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoService</span> <span class="keyword">extends</span> <span class="title">AccessibilityService</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] FILTER = &#123;<span class="string">"下一步"</span>, <span class="string">"安装"</span>, <span class="string">"打开"</span>, <span class="string">"Next"</span>, <span class="string">"Install"</span>, <span class="string">"Open"</span>&#125;;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] ACCEPT_PACKAGENAME = &#123;<span class="string">"com.android.packageinstaller"</span>&#125;;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">acceptPackageName</span><span class="params">(CharSequence packagename)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (String pn : ACCEPT_PACKAGENAME) &#123;</div><div class="line">            <span class="keyword">if</span> (TextUtils.equals(packagename, pn)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">acceptEventType</span><span class="params">(<span class="keyword">int</span> eventType)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &amp;&amp; eventType != AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED &amp;&amp; eventType != AccessibilityEvent.TYPE_VIEW_CLICKED) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAccessibilityEvent</span><span class="params">(AccessibilityEvent event)</span> </span>&#123;</div><div class="line">        Log.e(<span class="string">"event"</span>, event.toString());</div><div class="line">        CharSequence packageName = event.getPackageName();</div><div class="line">        <span class="keyword">if</span> (!acceptPackageName(packageName)) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!acceptEventType(event.getEventType())) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//AccessibilityNodeInfo accessibilityNodeInfo = event.getSource();</span></div><div class="line">        AccessibilityNodeInfo accessibilityNodeInfo = getRootInActiveWindow();</div><div class="line">        <span class="keyword">if</span> (accessibilityNodeInfo == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (String label : FILTER) &#123;</div><div class="line">            List&lt;AccessibilityNodeInfo&gt; accessibilityNodeInfos = accessibilityNodeInfo.findAccessibilityNodeInfosByText(label);</div><div class="line">            <span class="keyword">if</span> (accessibilityNodeInfos == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span> (AccessibilityNodeInfo nodeInfo : accessibilityNodeInfos) &#123;</div><div class="line">                <span class="keyword">if</span> (nodeInfo.isClickable() &amp;&amp; nodeInfo.isEnabled()) &#123;</div><div class="line">                    nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInterrupt</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>定义xml配置信息<br>在res/xml/accessibilityservice.xml 写如下内容:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">accessibility-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">                       <span class="attr">android:accessibilityEventTypes</span>=<span class="string">"typeWindowStateChanged|typeWindowContentChanged|typeViewClicked"</span></div><div class="line">                       <span class="attr">android:accessibilityFeedbackType</span>=<span class="string">"feedbackVisual"</span></div><div class="line">                       <span class="attr">android:notificationTimeout</span>=<span class="string">"100"</span></div><div class="line">                       <span class="attr">android:accessibilityFlags</span>=<span class="string">"flagDefault"</span></div><div class="line">                       <span class="attr">android:canRetrieveWindowContent</span>=<span class="string">"true"</span></div><div class="line">                       <span class="attr">android:description</span>=<span class="string">"@string/auto_install"</span></div><div class="line">                       <span class="attr">android:canRequestTouchExplorationMode</span>=<span class="string">"true"</span></div><div class="line">        &gt;</div><div class="line"><span class="tag">&lt;/<span class="name">accessibility-service</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>具体属性含义可以去开发者官网查阅，现在也不用翻墙了，最好就不要百度了。</p>
+<p>在<code>AndroidManifest</code>注册服务<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span> <span class="attr">android:name</span>=<span class="string">".AutoService"</span></span></div><div class="line">               <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span>&gt;</div><div class="line">           <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">               <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.accessibilityservice.AccessibilityService"</span> /&gt;</span></div><div class="line">           <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.accessibilityservice"</span> <span class="attr">android:resource</span>=<span class="string">"@xml/accessibilityservice"</span> /&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这样辅助服务的流程就结束，最后记住安装之后，还要在手机里打开对应的辅助服务，才能看到效果。</p>
+<blockquote>
+<p>辅助服务的流程都一样，通过这种手段可以实现很多有意思的功能，我认为这个服务有点类似脚本，<br>可以自动化的执行一些动作，比如微信自动抢红包，语音播放等等窦都可以通过这种实现，其实只要<br>系统提供了相应事件的，我们都可以基于这些事件做一些事情。后续更丰富……</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AccessibilityEvent/">AccessibilityEvent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service/">Service</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/&title=《AccessibilityService(自动化服务)?》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/&title=《AccessibilityService(自动化服务)?》 — longway's blog&source=
+AccessibilityService是android系统提供的一种辅助服务，google设计这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AccessibilityService(自动化服务)?》 — longway's blog&url=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/18/JMM-3/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JMM-final</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="accessibilityService-1" data-title="AccessibilityService(自动化服务)?" data-url="http://jackwaylong.github.io/2016/12/20/accessibilityService-1/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/&title=《AccessibilityService(自动化服务)?》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/&title=《AccessibilityService(自动化服务)?》 — longway's blog&source=
+AccessibilityService是android系统提供的一种辅助服务，google设计这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AccessibilityService(自动化服务)?》 — longway's blog&url=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/20/accessibilityService-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3a0U7jQAwF0Pz/T5dXJGh6bY9pkU6eUDcNc4I04732dcXX49v17JP7+79//uz+5DdeGxceHh7eYOk/r2f33H/+c0H337p/WaMn4OHh4a3xksclW3ayxVcPgPyQwMPDw/tkXvLd5F+rd+Lh4eH9X171V/YK9N5rxcPDw/sbXv7oalJaheVF/OGsBQ8PD6+TlF55hPren1f6e3h4eHjjrnp1w71vg91/3gsmXjwBDw8Pb4GXb7jV+OBA/BqMJkSvGA8PD2+Bl2zf+YjAqQ19sh48PDy8PV61CE5C1bxJlocLvXXi4eHhvYvXa+dPBgLyYOJF2Y2Hh4e3xutFEvfFdLUgrkYV0crx8PDwFnj5oECvWdULEaqDWdURMTw8PLyzvHlZPA8U8qclhwoeHh7eNm8vkpiX2smrx8PDw9vm9dr21YbW5NXkMW7098HDw8Mb8/KxgPyESeKDavneHLrCw8PDW+D1xqp6zf5y47+1nivvp+Hh4eG1eJNmVb6J98B5yPuCioeHh7fAy7f4/HhIYoLeAFb1SMPDw8Pb4E3ChWqckb+OfOjqxfGAh4eHt8w7ULy2oodqIy0/KvDw8PDO8nobcTXMfbSuvLyOGmB4eHh4h3jzODUftEo2/V4YURjAwsPDw1vj5Rt9ryA+dSSUW254eHh4h3jJQieFch7vJkXzaLIMDw8P7ygvX2Ivok2WUr0nenF4eHh4a7xTYwR5iTw/KqJSGw8PD+8ob6MpVR0OyEvk8rGBh4eHt8DrBQG9JtZksKDc6OqdJHh4eHgxbxJDTJphkyg5fwIeHh7eHi9vjPXuyV/c5GT75Vt4eHh4H8CrBg1nI4nq0YKHh4f3ObzJVp60/5M7o3AZDw8Pb42XFL7VIKDajqoeBtFBgoeHh7fA6/0nf96aSha0N5iFh4eH13r+F6xj5Cn1yNdLAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
