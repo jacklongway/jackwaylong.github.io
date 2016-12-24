@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>安全那点事情 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="">
+  <meta name="description" content="安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，so 调试等,下面我就针对我每个方面的思考详细讲解一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安全那点事情">
+<meta property="og:url" content="http://jackwaylong.github.io/2016/12/22/transfer-security-1/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，so 调试等,下面我就针对我每个方面的思考详细讲解一下。">
+<meta property="og:updated_time" content="2016-12-24T14:34:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安全那点事情">
+<meta name="twitter:description" content="安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，so 调试等,下面我就针对我每个方面的思考详细讲解一下。">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2016</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">安全那点事情</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">安全那点事情</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-22T08:01:43.000Z" itemprop="datePublished" class="page-time">
+  2016-12-22
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#网络数据安全"><span class="post-toc-number">1.</span> <span class="post-toc-text">网络数据安全</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本地数据安全"><span class="post-toc-number">2.</span> <span class="post-toc-text">本地数据安全</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#网络中间劫持"><span class="post-toc-number">3.</span> <span class="post-toc-text">网络中间劫持</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运营商劫持"><span class="post-toc-number">4.</span> <span class="post-toc-text">运营商劫持</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#app反编译"><span class="post-toc-number">5.</span> <span class="post-toc-text">app反编译</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#app二次打包"><span class="post-toc-number">6.</span> <span class="post-toc-text">app二次打包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#so调试"><span class="post-toc-number">7.</span> <span class="post-toc-text">so调试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#jni层代码"><span class="post-toc-number">8.</span> <span class="post-toc-text">jni层代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java层代码"><span class="post-toc-number">9.</span> <span class="post-toc-text">java层代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">10.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-transfer-security-1"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">安全那点事情</h1>
+        <div class="post-meta">
+            <time datetime="2016-12-22T08:01:43.000Z" itemprop="datePublished" class="post-time">
+  2016-12-22
+</time>
+
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概<br>包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，<br>so 调试等,下面我就针对我每个方面的思考详细讲解一下。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="网络数据安全"><a href="#网络数据安全" class="headerlink" title="网络数据安全"></a>网络数据安全</h2><p>数据安全有两层含义:第一层含义就是数据本身是否可见，第二层含义是数据是否被篡改。数据可见也就是最基本的明文传输方式了，判断数据是否被篡改最简单方式生成数据摘要。但是我们仔细思考一下，其实网络数据传输过程中，路径是非常复杂的，通道的安全性，我们很难保证。我们一般的做法就是将传输的数据进行加密，生成摘要，然后传输给目的地。那么问题来了，怎么加密，现在我们一般也是用开源的加密算法进行加密，比如Cipher AES，那么问题又来了，加密需要对应的key，我们可以使用<br>KeyStore生成对应SecretKey然后进行加密，然而这个key是通过别名获取的<code>SecretKey secretKey = (SecretKey) keyStore.getKey(KEY_NAME, null);</code> 那么问题来了，怎么保证alias的安全尤为重要，我们想象一下，我们的加密key来自KeyStore,然而这个key是通过alias获取的，如果我们泄漏了alias那么意味着我们的密钥泄漏了，意味着可以加解密了，意味着我们的加密根本没意义了。显然是不安全的，那么我们怎么解决了？首先我们的目标肯定是要保证key安全，我们要想一切办法保证key安全，有一句话一定要记住，使用开源的加解密算法，那么我们必须保证key安全，如果使用自己的加解密算法，那么要保证自己的算法安全，或者key安全。我们可以这么实现key的安全，我相信很多人会想到把key存到so里面去，确实没错，但是又没有想过，存储必定后面我们会要读取，那么肯定提供了读取的接口，那么也就不安全了，别人拿到对应的so只要调用一下就可以获取到key了，我们再更深入的思考一下，先假设我们的app打包密钥没有泄漏，为什么首先有这个假设了，如果这个都泄漏了，那么我后面的解决方式都没有意义了，但是一般这个都不会去泄漏，安全都是相对的。我假设是一种理想状态，没有泄漏，我们都知道app打包的时候都是需要签名的，我们可以读取到对应的签名值，然后生成摘要，将这个固定值写入so代码里面，然后我们知道jni首次加载初始化的时候，首先会调用<code>JNI_OnLoad</code>这个方法进行初始化操作，那么我们可以在这个里面做认证，判断这个so的使用者是不是我们自己的app，也就在这个方法里面读取一下，我们目前运行app的签名值，然后跟写入so代码里面的值进行比较，如果不一样直接<code>exit(0)</code>。还有一种可能就是这个我们的so可能被调试，这个通过<code>AndroidManifese.xml</code>文件的<code>application</code>标签<code>debuggable＝true</code> 设定就可以调试了，导致调试者可能拿到so里面的值，然后在<code>java</code>层返回一样的值，来欺骗程序，那么怎么避免被调试了，即使调试了，也直接退出程序，同样的在初始化函数里第一行代码加上<code>checkSelfTraced()</code> 来检测是否被调试，具体代码，后面贴出来。其实这个也不难，就是去检测<code>/proc/pid/status</code>里面<code>tracePid</code>的值，如果不为<code>0</code>那么被调试了。然后在<code>JNI_On_UnLoad</code>卸载so资源。这样基本可以做到存储在so里面key的安全，这个方法相当于在接口调用层加了一个认证，保证能够正确调用接口的前提必须满足，不然接口不能正常发起调用。做到key基本安全了，那么我们就可以放心的使用开源的加解密算法了，对数据加密，然后签名。然后在网络传输。这样基本可以保证数据是安全的。</p>
+<h2 id="本地数据安全"><a href="#本地数据安全" class="headerlink" title="本地数据安全"></a>本地数据安全</h2><p>本地数据安全的含义是指，app数据存储在手机里面的数据是否安全，比如我们经常有自动登录的功能，那么就要将密码存储在本地，密码肯定不能明文存储，即使存储到私有目录<code>/data/data/packagename</code>下面，如果root了也是很容易拿到数据的。显然不安全，还有我们登录之后，服务端返回的token，uuid，等令牌，这些也不能明文存储，一但这些数据被其他人拿到，就可以使用服务端接口服务，在有效期了。也是很不安的。可以调用接口，获取对应的数据。那么问题来了，既然已经不安全，那么我们怎么做才能保证安全了，同样的方法利用网络数据安全的思想运用到本地数据安全，用key本地数据进行加密，需要的时候进行解密，加密之后，就可以存储到很多存储介质上了，比如<code>file,sp,db,usb</code>等等，但是目前市面上有的db自带加密功能，也是可以的。但是一样要保证加密key安全。</p>
+<h2 id="网络中间劫持"><a href="#网络中间劫持" class="headerlink" title="网络中间劫持"></a>网络中间劫持</h2><p>网络劫持就是中间人攻击，当我们发起一个网络请求的时候，其实网络环境是很复杂的，可能中间经过路由，交换机，等网络媒体，最后才能到达我们的目的地，那么问题来了，中间的某一个节点都有可能拦截我们请求，然后模拟返回数据给我们。那么问题来了，如果我们客户端没验证这些数据，有时即使验证了，但是是合法的，那么我们就认为数据是我们的伙伴来的，其实不是，但是我们并不知道，这样被欺骗的很厉害，有的同学会说，我们传输的数据不是加密了吗？中间者拿到数据解密不了，还是没用呀，确实，安全是相对的，假设key被泄漏，我们也不知道，那么就可能解密，这也是有可能的。那么怎么避免被劫持了，即使被劫持了，我们怎么才知道这次<code>response</code>是来自我们的好伙伴了。有两种解决方案：第一种如果我们用<code>http</code>请求，那么我们就没用ca认证这一个环节，但是我们可以模拟这个认证，也就是我们跟服务端首先约定一一些规则，一些固定参数，一些算法检验参数的合法性。这样即使中间人即使拿到数据，并且解密了，返回数据的时候，也可以验证对方身份。如果使用<code>https</code>请求，我们可用ca证书认证，或者pin认证都可以识别对方的身份。具体就是将公钥证书存储在本地，然后去认证对方。这样就可以知道自己是否被中间人劫持过。</p>
+<h2 id="运营商劫持"><a href="#运营商劫持" class="headerlink" title="运营商劫持"></a>运营商劫持</h2><p>为什么要将网络劫持和运营商劫持分开来讲解了没，我认为网络劫持还是比较好解决的，但是运营商劫持就不那么好解决。我们有时发现，<code>webview</code>加载一个网页，突然页面底部多了一个广告栏，但是我们<code>js</code>代码根本没这个逻辑，真奇怪。那这个代码怎么来的了，这个就是运营商拦截注入进来的。我们还是用网络中间劫持的解决方式去认证对方身份是不是我们的好伙伴，如果是进行进一步通信。但是这种方式好使吗？我们只能用<code>ssl</code>的方式来避免这种劫持了。</p>
+<h2 id="app反编译"><a href="#app反编译" class="headerlink" title="app反编译"></a>app反编译</h2><p>app反编译现在市面上工具很多，比如jadx,dex2jar,jdui等等，都很容易反编译看到我们的代码，即使混淆了，在一定层度<br>上也可以做到还原，那么问题来了，我们代码就不安全了，一些核心算法也就会盗版掉，通过注入一些广告或者恶意代码，然后二次打包，窃取用户信息，上传到后台。现在市面很多解决方案，比如比较牛叉的就是对<code>apk</code>进行加固。这个原理简单就是在原有apk中套一层壳，在运行的时候脱壳，然后加载。即使反编译其实看到的并不是apk本身代码，做到了apk的保护，但是这个也是相对的。</p>
+<h2 id="app二次打包"><a href="#app二次打包" class="headerlink" title="app二次打包"></a>app二次打包</h2><p>所谓二次打包就是，将已有的apk反编译，然后修改原有apk里面的资源或者代码，再签名进行发布。</p>
+<h2 id="so调试"><a href="#so调试" class="headerlink" title="so调试"></a>so调试</h2><p>so我们知道是c/c++代码生成的二进制文件，这个文件安全性还是很高的，一般很难破解，so调试就是通过运行程序的方式，然后借助第三方工具<code>ida</code>对so进行调试，调试的好处就是能够很清楚的看到内存值，就可以进行对操作进行猜测。如何避免被调试了，一般做法是在so初始化函数加上验证代码。</p>
+<blockquote>
+<p>上面说的都是一些理论，但是理论可以足已解决安全问题，不能说绝对安全，但是安全本身就是相对的。有了理论我们还必须实践，检验理论的正确性。下面给出基本key安全，防止调试的jni，java的部分代码，后面会作为一个基础库开放出来。</p>
+</blockquote>
+<h2 id="jni层代码"><a href="#jni层代码" class="headerlink" title="jni层代码"></a>jni层代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;android/log.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *kTAG = <span class="string">"sec"</span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LOGI(...) \</span></div><div class="line">  ((void)__android_log_print(ANDROID_LOG_INFO, kTAG, __VA_ARGS__))</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LOGW(...) \</span></div><div class="line">  ((void)__android_log_print(ANDROID_LOG_WARN, kTAG, __VA_ARGS__))</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LOGE(...) \</span></div><div class="line">  ((void)__android_log_print(ANDROID_LOG_ERROR, kTAG, __VA_ARGS__))</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *KEY = <span class="string">"EduigvnRM!@5269yg"</span>;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">char</span> *SIGNATURE = <span class="string">"85C3272D0145DAF5E30C55B387E5CD5B"</span>; <span class="comment">// signature to md5</span></div><div class="line"><span class="function">JNIEXPORT jstring <span class="title">ab</span><span class="params">(JNIEnv *env, jclass clz)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> (*env)-&gt;NewStringUTF(env, KEY);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> JNINativeMethod nativeMethod[] = &#123;&#123;<span class="string">"key"</span>, <span class="string">"()Ljava/lang/String;"</span>, (<span class="keyword">void</span> *) ab&#125;&#125;;</div><div class="line"><span class="keyword">static</span> <span class="keyword">char</span> *CLASSNAME = <span class="string">"com/longway/key/Key"</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> run = <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getTracePid</span><span class="params">(<span class="keyword">char</span> *line)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (line == <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">char</span> result[<span class="number">30</span>];</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(line); i++) &#123;</div><div class="line">        <span class="keyword">if</span> (count &gt;= <span class="number">29</span>) &#123;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (*line &gt;= <span class="number">48</span> &amp;&amp; *line &lt;= <span class="number">57</span>) &#123;</div><div class="line">            result[count] = *line;</div><div class="line">            count++;</div><div class="line">        &#125;</div><div class="line">        ++line;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> atoi(result);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> pid = getpid();</div><div class="line">    LOGE(<span class="string">"pid=%d"</span>, pid);</div><div class="line">    <span class="keyword">char</span> filename[<span class="number">15</span>] = &#123;<span class="string">'\0'</span>&#125;;</div><div class="line">    <span class="built_in">sprintf</span>(filename, <span class="string">"/proc/%d/status"</span>, pid);</div><div class="line">    <span class="keyword">char</span> line[<span class="number">256</span>] = &#123;<span class="string">'\0'</span>&#125;; <span class="comment">// file line???</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    FILE *file;</div><div class="line">    <span class="keyword">while</span> (run) &#123;</div><div class="line">        count = <span class="number">0</span>;</div><div class="line">        file = fopen(filename, <span class="string">"r"</span>);</div><div class="line">        <span class="keyword">while</span> (!feof(file)) &#123;</div><div class="line">            fgets(line, <span class="number">256</span>, file);</div><div class="line">            LOGE(<span class="string">"line %s"</span>, line);</div><div class="line">            <span class="keyword">if</span> (count == <span class="number">5</span>) &#123;</div><div class="line">                <span class="keyword">int</span> tracePid = getTracePid(line);</div><div class="line">                <span class="keyword">if</span> (tracePid &gt; <span class="number">0</span>) &#123;</div><div class="line">                    LOGE(<span class="string">"tracePid=%d,haha self died."</span>, tracePid);</div><div class="line">                    _exit(<span class="number">0</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            ++count;</div><div class="line">        &#125;</div><div class="line">        fclose(file);</div><div class="line">        sleep(<span class="number">5</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">pthread_t</span> pthread;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">checkSelfTraced</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> id = pthread_create(&amp;pthread, <span class="literal">NULL</span>, start, <span class="literal">NULL</span>);</div><div class="line">    <span class="keyword">if</span> (id != <span class="number">0</span>) &#123;</div><div class="line">        LOGE(<span class="string">"create pthread fail, error code %d"</span>, id);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">JNIEXPORT jint JNICALL <span class="title">JNI_OnLoad</span><span class="params">(JavaVM *vm, <span class="keyword">void</span> *reserved)</span> </span>&#123;</div><div class="line">    checkSelfTraced(); <span class="comment">// traced??????</span></div><div class="line">    JNIEnv *env;</div><div class="line">    <span class="keyword">if</span> ((*vm)-&gt;GetEnv(vm, (<span class="keyword">void</span> **) &amp;env, JNI_VERSION_1_6) != JNI_OK) &#123;</div><div class="line">        <span class="keyword">return</span> JNI_ERR; <span class="comment">// JNI version not supported.</span></div><div class="line">    &#125;</div><div class="line">    jclass clz = (*env)-&gt;FindClass(env, CLASSNAME);</div><div class="line">    <span class="keyword">if</span> (clz == <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="keyword">return</span> JNI_ERR;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ((*env)-&gt;RegisterNatives(env, clz, nativeMethod,</div><div class="line">                                <span class="keyword">sizeof</span>(nativeMethod) / <span class="keyword">sizeof</span>(nativeMethod[<span class="number">0</span>])) &lt; <span class="number">0</span>) &#123;</div><div class="line">        LOGE(<span class="string">"register native method fail."</span>);</div><div class="line">        <span class="keyword">return</span> JNI_ERR;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (env == <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="keyword">return</span> JNI_ERR;</div><div class="line">    &#125;</div><div class="line">    jmethodID method = (*env)-&gt;GetStaticMethodID(env, clz, <span class="string">"getSignature"</span>, <span class="string">"()Ljava/lang/String;"</span>);</div><div class="line">    <span class="keyword">if</span> (method == <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="keyword">return</span> JNI_ERR;</div><div class="line">    &#125;</div><div class="line">    jstring result = (*env)-&gt;CallStaticObjectMethod(env, clz, method);</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *host = (*env)-&gt;GetStringUTFChars(env, result, <span class="literal">NULL</span>);</div><div class="line">    LOGE(<span class="string">"signature:%s"</span>, host);</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">strcmp</span>(host, SIGNATURE) != <span class="number">0</span>) &#123;</div><div class="line">        LOGE(<span class="string">"haha self died."</span>);</div><div class="line">        _exit(<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    LOGE(<span class="string">"verify success."</span>);</div><div class="line">    <span class="keyword">return</span> JNI_VERSION_1_6;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">JNI_OnUnLoad</span><span class="params">(JavaVM *javaVM, <span class="keyword">void</span> *reserved)</span> </span>&#123;</div><div class="line">    pthread_detach(pthread); <span class="comment">// detach pthread</span></div><div class="line">    run = <span class="number">0</span>; <span class="comment">// stop</span></div></pre></td></tr></table></figure>
+<h2 id="java层代码"><a href="#java层代码" class="headerlink" title="java层代码"></a>java层代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Key</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"key"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        Log.e(TAG, <span class="string">"start load......"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.loadLibrary(<span class="string">"key"</span>);</div><div class="line">        &#125;<span class="keyword">catch</span> (UnsatisfiedLinkError error)&#123;</div><div class="line">            error.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">static</span> String <span class="title">key</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">// native call</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getSignature</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> AppUtils.getHostSignature(SystemServiceManager.getAppContext());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码不难理解，对代码有疑问的可以评论提出疑问。后面将会发布工程代码，敬请期待……</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>安全其实还是很多事情需要我们思考，我们需要不断的防范，才能对应一些攻击，安全与黑客永远都是对手，但是我相信，我们从自己的防范做起，还是可以拦截那些攻击者的。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/22/transfer-security-1/&title=《安全那点事情》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/22/transfer-security-1/&title=《安全那点事情》 — longway's blog&source=
+安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概包括以下几个方面: 网络数据传输安全，本地数据..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/22/transfer-security-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《安全那点事情》 — longway's blog&url=http://jackwaylong.github.io/2016/12/22/transfer-security-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/22/transfer-security-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/20/accessibilityService-1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">AccessibilityService(自动化服务)?</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="transfer-security-1" data-title="安全那点事情" data-url="http://jackwaylong.github.io/2016/12/22/transfer-security-1/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/22/transfer-security-1/&title=《安全那点事情》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/22/transfer-security-1/&title=《安全那点事情》 — longway's blog&source=
+安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概包括以下几个方面: 网络数据传输安全，本地数据..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/22/transfer-security-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《安全那点事情》 — longway's blog&url=http://jackwaylong.github.io/2016/12/22/transfer-security-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/22/transfer-security-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3awW7EIAxF0fz/T6fbSu2Q+wypirmsqlGGcGbhGtvXhdf9bf38fPz8p+/ytyxbMmTI2JZxDxd/hu//yntlyJBxAOPT63lgJZ+QwM3fK0OGDBnpdgQz/i75lgwZMmSkR0xDbS1Yy5AhQwa/TJKi2Pi4HPPiXVyGDBkbMnjV/e//fqW/IUOGjK0Yd7hqBbX5xufDqWTIkNGawQNc7SKatgemziNDhoymDH5dJAxeaCPtgWAcTYYMGa0Zte3WHnpxyU+GDBntGDVxOiQxH3Af0kcZMmS0ZtQK9LVrai2Ykh9RhgwZ5zDSVC9tHpASXnz0WuVPhgwZ2zJ4aZ63KueDeLCbDBkyWjNqBS+yKd+h9owMGTJOZtQGL3gpjRyLhOYFh5MhQ8a/Z/ASfxoEebo5NVohQ4aMYxg8KZxJ7NJ9+HCGDBkyejPmS2DpMNkVLl56kyFDRlfGOPDxS+Y4WPOwy0PwL/83ZMiQ0ZTx9uBFeq3lJbbgWitDhowWjHEYjTPN0nBGLaF8aA/IkCHjGAYJwTwco6gfJqMyZMg4h7F22ILjOezhSRkyZDRl3OFKWwK1pmZMlSFDRmtG2kqcv46mQ2BBaihDhozWDD4WxoctZkp1/MeSIUPGaQxyxJmAWGuOBlduGTJkyFjUPEhL/7xRKkOGDBkkgeNNhXSwAxUBZciQcQBjvjRWG7NY1U6QIUNGb0ZtxIEkfHxQLN252NSUIUPGfowvBJjHZeAUkL8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
