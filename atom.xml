@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jackwaylong.github.io/"/>
-  <updated>2016-12-30T09:43:09.000Z</updated>
+  <updated>2016-12-30T09:52:00.000Z</updated>
   <id>http://jackwaylong.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jackwaylong.github.io/2016/12/28/android-system-img/"/>
     <id>http://jackwaylong.github.io/2016/12/28/android-system-img/</id>
     <published>2016-12-28T02:44:14.000Z</published>
-    <updated>2016-12-30T09:43:09.000Z</updated>
+    <updated>2016-12-30T09:52:00.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般<br>我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么<br>我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们<br>就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间<br>我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了<br>今天的<code>android</code>系统中，包括<code>编译</code>,<code>打包</code>,<code>运行时</code>,<code>框架</code>,<code>安装</code>等<br>脑图。</p>
@@ -28,7 +28,7 @@
 <h2 id="apk"><a href="#apk" class="headerlink" title="apk"></a>apk</h2><h3 id="ant"><a href="#ant" class="headerlink" title="ant"></a>ant</h3><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/apk/build-ant.jpg" alt="build-ant" title="">
+                    <img src="img/apk/build-ant.jpg" alt="build-ant" title="">
                 </div>
                 <div class="image-caption">build-ant</div>
             </figure>
@@ -38,6 +38,208 @@
     
       &lt;blockquote&gt;
 &lt;p&gt;往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般&lt;br&gt;我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么&lt;br&gt;我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们&lt;br&gt;就不得不去看底层源
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://jackwaylong.github.io/2016/12/28/img/application-framework/README/"/>
+    <id>http://jackwaylong.github.io/2016/12/28/img/application-framework/README/</id>
+    <published>2016-12-28T02:42:07.000Z</published>
+    <updated>2016-12-28T02:42:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="应用框架相关"><a href="#应用框架相关" class="headerlink" title="应用框架相关"></a>应用框架相关</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#四大组件">四大组件</a><ul>
+<li><a href="#activity的生命周期">Activity的生命周期</a> </li>
+<li><a href="#activity间的数据交互">Activity间的数据交互</a> </li>
+<li><a href="#fragment的声明周期">Fragment的声明周期</a> </li>
+<li><a href="#service的生命周期">service的生命周期</a> </li>
+</ul>
+</li>
+<li><a href="">UI相关</a><ul>
+<li><a href="#view中widgets相关类的继承关系">View中widgets相关类的继承关系</a>  </li>
+<li><a href="#android事件分发机制">Android事件分发机制</a>  </li>
+</ul>
+</li>
+</ul>
+<h2 id="四大组件"><a href="#四大组件" class="headerlink" title="四大组件"></a>四大组件</h2><h3 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a>Activity的生命周期</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./activity-lifecycle.png" alt="Activity的生命周期" title="">
+                </div>
+                <div class="image-caption">Activity的生命周期</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./activity-lifecycle-2.png" alt="Activity的生命周期" title="">
+                </div>
+                <div class="image-caption">Activity的生命周期</div>
+            </figure>
+<h3 id="Activity间的数据交互"><a href="#Activity间的数据交互" class="headerlink" title="Activity间的数据交互"></a>Activity间的数据交互</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./activity-data-transfer.png" alt="Activity间的数据交互" title="">
+                </div>
+                <div class="image-caption">Activity间的数据交互</div>
+            </figure>
+<h3 id="Fragment的声明周期"><a href="#Fragment的声明周期" class="headerlink" title="Fragment的声明周期"></a>Fragment的声明周期</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./fragment-lifecycle.png" alt="Fragment的生命周期" title="">
+                </div>
+                <div class="image-caption">Fragment的生命周期</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./activity-fragment-lifecycle.png" alt="Fragment与Activity的生命周期对比" title="">
+                </div>
+                <div class="image-caption">Fragment与Activity的生命周期对比</div>
+            </figure>
+<h3 id="service的生命周期"><a href="#service的生命周期" class="headerlink" title="service的生命周期"></a>service的生命周期</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./service-lifecycle.png" alt="service的生命周期" title="">
+                </div>
+                <div class="image-caption">service的生命周期</div>
+            </figure>
+<h2 id="UI相关"><a href="#UI相关" class="headerlink" title="UI相关"></a>UI相关</h2><h3 id="View中widgets相关类的继承关系"><a href="#View中widgets相关类的继承关系" class="headerlink" title="View中widgets相关类的继承关系"></a>View中widgets相关类的继承关系</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./view-widgets-inherit.png" alt="View中widgets相关类的继承关系" title="">
+                </div>
+                <div class="image-caption">View中widgets相关类的继承关系</div>
+            </figure>
+<h3 id="Android事件分发机制"><a href="#Android事件分发机制" class="headerlink" title="Android事件分发机制"></a>Android事件分发机制</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./ui-action-down-dispatch.jpg" alt="Android事件分发机制" title="">
+                </div>
+                <div class="image-caption">Android事件分发机制</div>
+            </figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;应用框架相关&quot;&gt;&lt;a href=&quot;#应用框架相关&quot; class=&quot;headerlink&quot; title=&quot;应用框架相关&quot;&gt;&lt;/a&gt;应用框架相关&lt;/h1&gt;&lt;h2 id=&quot;目录&quot;&gt;&lt;a href=&quot;#目录&quot; class=&quot;headerlink&quot; title=&quot;目录&quot;&gt;&lt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://jackwaylong.github.io/2016/12/28/img/framework/README/"/>
+    <id>http://jackwaylong.github.io/2016/12/28/img/framework/README/</id>
+    <published>2016-12-28T02:42:07.000Z</published>
+    <updated>2016-12-28T02:42:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="系统框架相关"><a href="#系统框架相关" class="headerlink" title="系统框架相关"></a>系统框架相关</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#系统框架">系统框架</a><ul>
+<li><a href="#官方系统框架图">官方系统框架图</a></li>
+</ul>
+</li>
+<li><a href="#运行机制">运行机制</a><ul>
+<li><a href="#handler机制时序图">handler机制时序图</a></li>
+<li><a href="#handler机制UML类图">handler机制UML类图</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="系统框架"><a href="#系统框架" class="headerlink" title="系统框架"></a>系统框架</h2><h3 id="官方系统框架图"><a href="#官方系统框架图" class="headerlink" title="官方系统框架图"></a>官方系统框架图</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./framework.jpg" alt="官方系统框架图" title="">
+                </div>
+                <div class="image-caption">官方系统框架图</div>
+            </figure>
+<h2 id="运行机制"><a href="#运行机制" class="headerlink" title="运行机制"></a>运行机制</h2><h3 id="handler机制时序图"><a href="#handler机制时序图" class="headerlink" title="handler机制时序图"></a>handler机制时序图</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./handler-sequence.jpg" alt="handler机制时序图" title="">
+                </div>
+                <div class="image-caption">handler机制时序图</div>
+            </figure>
+<h3 id="handler机制UML类图"><a href="#handler机制UML类图" class="headerlink" title="handler机制UML类图"></a>handler机制UML类图</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./handler-uml.png" alt="handler机制UML类图" title="">
+                </div>
+                <div class="image-caption">handler机制UML类图</div>
+            </figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;系统框架相关&quot;&gt;&lt;a href=&quot;#系统框架相关&quot; class=&quot;headerlink&quot; title=&quot;系统框架相关&quot;&gt;&lt;/a&gt;系统框架相关&lt;/h1&gt;&lt;h2 id=&quot;目录&quot;&gt;&lt;a href=&quot;#目录&quot; class=&quot;headerlink&quot; title=&quot;目录&quot;&gt;&lt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://jackwaylong.github.io/2016/12/28/img/apk/README/"/>
+    <id>http://jackwaylong.github.io/2016/12/28/img/apk/README/</id>
+    <published>2016-12-28T02:42:07.000Z</published>
+    <updated>2016-12-28T02:42:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="APK相关"><a href="#APK相关" class="headerlink" title="APK相关"></a>APK相关</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#打包">打包</a><ul>
+<li><a href="#官方打包流程图">官方打包流程图</a></li>
+<li><a href="#详细打包流程图">详细打包流程图</a></li>
+<li><a href="#ant打包流程图">ant打包流程图</a></li>
+<li><a href="#gradle打包简介">gradle打包简介</a></li>
+</ul>
+</li>
+<li><a href="#安装卸载">安装卸载</a><ul>
+<li><a href="#apk安装过程">apk安装过程</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><h3 id="官方打包流程图"><a href="#官方打包流程图" class="headerlink" title="官方打包流程图"></a>官方打包流程图</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./build-official.png" alt="官方打包流程图" title="">
+                </div>
+                <div class="image-caption">官方打包流程图</div>
+            </figure>
+<h3 id="详细打包流程图"><a href="#详细打包流程图" class="headerlink" title="详细打包流程图"></a>详细打包流程图</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./build-detail.png" alt="详细打包流程图" title="">
+                </div>
+                <div class="image-caption">详细打包流程图</div>
+            </figure>
+<h3 id="ant打包流程图"><a href="#ant打包流程图" class="headerlink" title="ant打包流程图"></a>ant打包流程图</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./build-ant.jpg" alt="ant打包流程图" title="">
+                </div>
+                <div class="image-caption">ant打包流程图</div>
+            </figure>
+<h3 id="gradle打包简介"><a href="#gradle打包简介" class="headerlink" title="gradle打包简介"></a>gradle打包简介</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./build-gradle.png" alt="gradle打包简介" title="">
+                </div>
+                <div class="image-caption">gradle打包简介</div>
+            </figure>
+<h2 id="安装卸载"><a href="#安装卸载" class="headerlink" title="安装卸载"></a>安装卸载</h2><h3 id="apk安装过程"><a href="#apk安装过程" class="headerlink" title="apk安装过程"></a>apk安装过程</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="./install.png" alt="apk安装过程" title="">
+                </div>
+                <div class="image-caption">apk安装过程</div>
+            </figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;APK相关&quot;&gt;&lt;a href=&quot;#APK相关&quot; class=&quot;headerlink&quot; title=&quot;APK相关&quot;&gt;&lt;/a&gt;APK相关&lt;/h1&gt;&lt;h2 id=&quot;目录&quot;&gt;&lt;a href=&quot;#目录&quot; class=&quot;headerlink&quot; title=&quot;目录&quot;&gt;&lt;/a&gt;目
     
     </summary>
     
