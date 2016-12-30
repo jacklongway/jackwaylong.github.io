@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title><![CDATA[android脑图]]></title>
+      <url>http://jackwaylong.github.io/2016/12/28/android-system-img/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般<br>我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么<br>我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们<br>就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间<br>我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了<br>今天的<code>android</code>系统中，包括<code>编译</code>,<code>打包</code>,<code>运行时</code>,<code>框架</code>,<code>安装</code>等<br>脑图。</p>
+</blockquote>
+<h2 id="apk"><a href="#apk" class="headerlink" title="apk"></a>apk</h2><ol>
+<li>ant<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="../img/apk/build-ant.jpg" alt="build-ant" title="">
+                </div>
+                <div class="image-caption">build-ant</div>
+            </figure>
+</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[JMM-transient]]></title>
       <url>http://jackwaylong.github.io/2016/12/25/JMM-transient-4/</url>
       <content type="html"><![CDATA[<blockquote>
