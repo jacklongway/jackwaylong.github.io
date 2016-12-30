@@ -20,28 +20,28 @@
 <li><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/apk/build-detail.jpg" alt="build-detail" title="">
+                    <img src="/img/apk/build-detail.png" alt="build-detail" title="">
                 </div>
                 <div class="image-caption">build-detail</div>
             </figure></li>
 <li><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/apk/build-gradle.jpg" alt="build-gradle" title="">
+                    <img src="/img/apk/build-gradle.png" alt="build-gradle" title="">
                 </div>
                 <div class="image-caption">build-gradle</div>
             </figure></li>
 <li><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/apk/build-official.jpg" alt="build-official" title="">
+                    <img src="/img/apk/build-official.png" alt="build-official" title="">
                 </div>
                 <div class="image-caption">build-official</div>
             </figure></li>
 <li><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/apk/install.jpg" alt="install" title="">
+                    <img src="/img/apk/install.png" alt="install" title="">
                 </div>
                 <div class="image-caption">install</div>
             </figure>
