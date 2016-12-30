@@ -4,18 +4,128 @@
   
     
     <entry>
-      <title><![CDATA[android_system_img]]></title>
+      <title><![CDATA[android脑图]]></title>
       <url>http://jackwaylong.github.io/2016/12/28/android-system-img/</url>
       <content type="html"><![CDATA[<blockquote>
-<p>往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般<br>我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么<br>我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们<br>就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间<br>我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了<br>今天的<code>android</code>系统中，包括<code>编译</code>,<code>打包</code>,<code>运行时</code>,<code>框架</code>,<code>安装</code>等<br>脑图。</p>
+<p>往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般<br>我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么<br>我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们<br>就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间<br>我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了<br>今天的<code>android</code>系统中，包括<code>编译,打包</code>,<code>运行时</code>,<code>框架</code>,<code>安装</code>等脑图。<br><a id="more"></a></p>
 </blockquote>
-<h2 id="apk"><a href="#apk" class="headerlink" title="apk"></a>apk</h2><h3 id="ant"><a href="#ant" class="headerlink" title="ant"></a>ant</h3><figure class="image-bubble">
+<h2 id="compile"><a href="#compile" class="headerlink" title="compile"></a>compile</h2><ol>
+<li><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="/img/apk/build-ant.jpg" alt="build-ant" title="">
                 </div>
                 <div class="image-caption">build-ant</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/apk/build-detail.jpg" alt="build-detail" title="">
+                </div>
+                <div class="image-caption">build-detail</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/apk/build-gradle.jpg" alt="build-gradle" title="">
+                </div>
+                <div class="image-caption">build-gradle</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/apk/build-official.jpg" alt="build-official" title="">
+                </div>
+                <div class="image-caption">build-official</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/apk/install.jpg" alt="install" title="">
+                </div>
+                <div class="image-caption">install</div>
             </figure>
+</li>
+</ol>
+<h2 id="application-framework"><a href="#application-framework" class="headerlink" title="application-framework"></a>application-framework</h2><ol>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/application-framework/activity-data-transfer.png" alt="activity-data-transfer" title="">
+                </div>
+                <div class="image-caption">activity-data-transfer</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/application-framework/activity-fragment-lifecycle.png" alt="activity-fragment-lifecycle" title="">
+                </div>
+                <div class="image-caption">activity-fragment-lifecycle</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/application-framework/activity-lifecycle-2.png" alt="activity-lifecycle-2" title="">
+                </div>
+                <div class="image-caption">activity-lifecycle-2</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/application-framework/activity-lifecycle.png" alt="activity-lifecycle" title="">
+                </div>
+                <div class="image-caption">activity-lifecycle</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/application-framework/fragment-lifecycle.png" alt="fragment-lifecycle" title="">
+                </div>
+                <div class="image-caption">fragment-lifecycle</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/application-framework/service-lifecycle.png" alt="service-lifecycle" title="">
+                </div>
+                <div class="image-caption">service-lifecycle</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/application-framework/ui-action-down-dispatch.jpg" alt="ui-action-down-dispatch" title="">
+                </div>
+                <div class="image-caption">ui-action-down-dispatch</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/application-framework/view-widgets-inherit.png" alt="view-widgets-inherit" title="">
+                </div>
+                <div class="image-caption">view-widgets-inherit</div>
+            </figure>
+</li>
+</ol>
+<h2 id="system-framework"><a href="#system-framework" class="headerlink" title="system-framework"></a>system-framework</h2><ol>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/framework/framework.jpg" alt="framework" title="">
+                </div>
+                <div class="image-caption">framework</div>
+            </figure></li>
+<li><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/framework/handler-sequence.jpg" alt="handler-sequence.jpg" title="">
+                </div>
+                <div class="image-caption">handler-sequence.jpg</div>
+            </figure>
+</li>
+</ol>
+<blockquote>
+<p>后续会不断整理脑图…..</p>
+</blockquote>
 ]]></content>
     </entry>
     
