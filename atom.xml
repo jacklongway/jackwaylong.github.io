@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jackwaylong.github.io/"/>
-  <updated>2017-01-03T16:20:13.000Z</updated>
+  <updated>2017-01-03T16:21:02.000Z</updated>
   <id>http://jackwaylong.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/"/>
     <id>http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/</id>
     <published>2017-01-03T09:44:30.000Z</published>
-    <updated>2017-01-03T16:20:13.000Z</updated>
+    <updated>2017-01-03T16:21:02.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。</p>
@@ -36,30 +36,30 @@
 <h2 id="虚拟机栈区"><a href="#虚拟机栈区" class="headerlink" title="虚拟机栈区"></a>虚拟机栈区</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/2.png" alt="memory" title="">
+                    <img src="/img/jvm/2.png" alt="stack" title="">
                 </div>
-                <div class="image-caption">memory</div>
+                <div class="image-caption">stack</div>
             </figure>
 <h2 id="虚拟机局部变量表"><a href="#虚拟机局部变量表" class="headerlink" title="虚拟机局部变量表"></a>虚拟机局部变量表</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/3.png" alt="memory" title="">
+                    <img src="/img/jvm/3.png" alt="local" title="">
                 </div>
-                <div class="image-caption">memory</div>
+                <div class="image-caption">local</div>
             </figure>
 <h2 id="虚拟机栈对象引用方式"><a href="#虚拟机栈对象引用方式" class="headerlink" title="虚拟机栈对象引用方式"></a>虚拟机栈对象引用方式</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/4.png" alt="memory" title="">
+                    <img src="/img/jvm/4.png" alt="reference1" title="">
                 </div>
-                <div class="image-caption">memory</div>
+                <div class="image-caption">reference1</div>
             </figure>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/5.png" alt="memory" title="">
+                    <img src="/img/jvm/5.png" alt="reference2" title="">
                 </div>
-                <div class="image-caption">memory</div>
+                <div class="image-caption">reference2</div>
             </figure>
 <blockquote>
 <p>虚拟内存布局还有一个堆区，这个在这里没有画出来，因为堆区比较特殊，非常重要，对于我们理解整个虚拟机内幕都很重要，<br>那个区域必须详细讲解，必须写一篇文章来专门讲解堆区的细节。有了内存布局的认识，下面对jvm gc,class结构，class布局，class加载安全机制，class加载流程，class优化，classloader namespace，classloader模式，class生成细节，字节码指令运用等一些列进行深入分析，敬请期待……</p>
