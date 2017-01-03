@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>jvm-内存模型 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="jvm">
+  <meta name="description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm-内存模型">
+<meta property="og:url" content="http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
+<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/1.png">
+<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/2.png">
+<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/3.png">
+<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/4.png">
+<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/5.png">
+<meta property="og:updated_time" content="2017-01-03T16:20:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jvm-内存模型">
+<meta name="twitter:description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
+<meta name="twitter:image" content="http://jackwaylong.github.io/img/jvm/1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2017</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">jvm-内存模型</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">jvm-内存模型</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-03T09:44:30.000Z" itemprop="datePublished" class="page-time">
+  2017-01-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行数据内存布局"><span class="post-toc-number">1.</span> <span class="post-toc-text">运行数据内存布局</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈区"><span class="post-toc-number">2.</span> <span class="post-toc-text">虚拟机栈区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机局部变量表"><span class="post-toc-number">3.</span> <span class="post-toc-text">虚拟机局部变量表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈对象引用方式"><span class="post-toc-number">4.</span> <span class="post-toc-text">虚拟机栈对象引用方式</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-jvm-memorymodel"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">jvm-内存模型</h1>
+        <div class="post-meta">
+            <time datetime="2017-01-03T09:44:30.000Z" itemprop="datePublished" class="post-time">
+  2017-01-03
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="运行数据内存布局"><a href="#运行数据内存布局" class="headerlink" title="运行数据内存布局"></a>运行数据内存布局</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/1.png" alt="memory" title="">
+                </div>
+                <div class="image-caption">memory</div>
+            </figure>
+<h2 id="虚拟机栈区"><a href="#虚拟机栈区" class="headerlink" title="虚拟机栈区"></a>虚拟机栈区</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/2.png" alt="memory" title="">
+                </div>
+                <div class="image-caption">memory</div>
+            </figure>
+<h2 id="虚拟机局部变量表"><a href="#虚拟机局部变量表" class="headerlink" title="虚拟机局部变量表"></a>虚拟机局部变量表</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/3.png" alt="memory" title="">
+                </div>
+                <div class="image-caption">memory</div>
+            </figure>
+<h2 id="虚拟机栈对象引用方式"><a href="#虚拟机栈对象引用方式" class="headerlink" title="虚拟机栈对象引用方式"></a>虚拟机栈对象引用方式</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/4.png" alt="memory" title="">
+                </div>
+                <div class="image-caption">memory</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/5.png" alt="memory" title="">
+                </div>
+                <div class="image-caption">memory</div>
+            </figure>
+<blockquote>
+<p>虚拟内存布局还有一个堆区，这个在这里没有画出来，因为堆区比较特殊，非常重要，对于我们理解整个虚拟机内幕都很重要，<br>那个区域必须详细讲解，必须写一篇文章来专门讲解堆区的细节。有了内存布局的认识，下面对jvm gc,class结构，class布局，class加载安全机制，class加载流程，class优化，classloader namespace，classloader模式，class生成细节，字节码指令运用等一些列进行深入分析，敬请期待……</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://jackwaylong.github.io">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&source=
+世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-内存模型》 — longway's blog&url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/30/2016总结/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">总结过去,展望未来,致敬2016</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="jvm-memorymodel" data-title="jvm-内存模型" data-url="http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&source=
+世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-内存模型》 — longway's blog&url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&via=http://jackwaylong.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3a226EMAxFUf7/p+lzNSWzjw2VcDZP1cwAWalk+ZLjwNf5cX1+vv791W+u7jqeuGTIkPFaxrm8+LLSLUi36ctzZMiQsQHj6tEkOK5DMA/Q5L2Xn8uQIUPGMghyNqfKkCFDRj/gdkrcNUaGDBkyOkUsaY3xJJKUx4/U4jJkyHghg7fM/v/vR+YbMmTIeBXjDC/C46lhZyW/nixDhozRDB7gOjA+HqitR4YMGfswOuMBPjy4K2R/qcVlyJAxiMFbbPzRabut1vJDGa4MGTJGMGrxigA6pWyaJsqQIWM2I72NH/biw8g0rfzjLhkyZGzDCG67aV6aHtdA59pkyJCxAYMnc+lhrzU+DrLrgCtDhoxxjPSYBVk0D9P8jXHXUIYMGSMYPGmrhcJa246H5jj3lCFDxghGp02W9upbJ0Q6/wcZMmS8ipEmcHcVtOlBDXRmRIYMGUMZKSBN14JsFA9NL7+VIUPGUAY/4lArU9PhZbo1MmTI2IFBkrxOW59sCi9ig6MeMmTIGMdIW2lpGpeONtNNlCFDxp4MfvyiFo7vSj1lyJCxG4OPG9OlpEtMh6wyZMiYzagF2do5h1rpi54pQ4aM0Yy0QK011NIgWwvZMmTImM1Ii1U+aKztHC+YZciQsRuDB77nhgEdpAwZMmR0Qir/PBhY1l4jQ4aMzRhxQCwFYjKokCFDxj4M3qyvNfp5Q63WvJMhQ8ZsBg+j6xY/eU06Fl0HWRkyZGzA+AFy2mqYCYov9QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
