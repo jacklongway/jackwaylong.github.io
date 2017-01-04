@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jackwaylong.github.io/"/>
-  <updated>2017-01-03T16:21:02.000Z</updated>
+  <updated>2017-01-04T09:22:40.000Z</updated>
   <id>http://jackwaylong.github.io/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jvm-class生命周期</title>
+    <link href="http://jackwaylong.github.io/2017/01/04/jvm-classloader/"/>
+    <id>http://jackwaylong.github.io/2017/01/04/jvm-classloader/</id>
+    <published>2017-01-04T09:06:02.000Z</published>
+    <updated>2017-01-04T09:22:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在class文件中描述的各种信息，最终都需要被加载到虚拟机中之后，才能被运行和使用。<br>虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验，转换，解析和初始化，最终形成可以被虚拟机直接使用的java类型，这就是虚拟机的类加载机制。</p>
+<a id="more"></a>
+<h2 id="class生死大纲"><a href="#class生死大纲" class="headerlink" title="class生死大纲"></a>class生死大纲</h2><ol>
+<li>类加载的时机</li>
+<li>类加载过程</li>
+<li>验证</li>
+<li>准备</li>
+<li>解析</li>
+<li>初始化</li>
+<li>使用</li>
+<li>卸载</li>
+<li>java classloader 模型,注意不是<code>android</code>的模型</li>
+</ol>
+<h2 id="类加载的时机："><a href="#类加载的时机：" class="headerlink" title="类加载的时机："></a>类加载的时机：</h2><p>类从被加载到虚拟机内存开始，到卸载出内存为止，其生命周期包括：<br>加载（loading），验证（verification），准备(preparation)，解析(resolution)，初始化(initialization)，使用(using)，卸载（unloading）。<br>需要对类进行初始化的情况：<br>1.遇到new,jni new,jestatic,putstatic,invokestatic这四条字节码指令。<br>场景：使用new关键字实例化对象，读取或设置一个类的静态字段，调用一个类的静态方法<br>2.使用java.lang.Reflect包的方法对类进行反射调用时。<br>3.当初始化一个类的时候，如果发现其父类还没有进行过初始化。<br>4.当虚拟机启动时，用户需要指定一个要执行的主类，虚拟机会先初始化这个主类。一般是main方法，后面详细分析。</p>
+<h2 id="类加载过程："><a href="#类加载过程：" class="headerlink" title="类加载过程："></a>类加载过程：</h2><p>加载：<br>1.通过一个类的全限定名来获取定义此类的二进制字节流。这里可以是本地的或者网络的都可以。<br>2.将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构<br>3.在java堆中生成代表这个类的java.lang.Class对象，作为方法区这些数据的访问入口。<br>验证：<br>具体包括<br>1.文件格式验证；<br>2.元数据验证；<br>3.字节码验证；<br>4.符号引用验证；</p>
+<h2 id="准备："><a href="#准备：" class="headerlink" title="准备："></a>准备：</h2><p>准备阶段是正式为类变量分配内存并设置类变量初始值的阶段，这些内存都将在方法区进行分配。<br>注意：这时候进行内存分配的仅包括类变量（被static修饰的变量），而不包括实例变量，实例变量将在对象实例化的时候随着对象的实例一起被分配到java堆中。</p>
+<h2 id="解析："><a href="#解析：" class="headerlink" title="解析："></a>解析：</h2><p>虚拟机将常量池内的符号引用替换为直接引用的过程，不转换是不能使用的，因为javac是静态的，并不知道<br>运行代码，数据分配的内存分配。</p>
+<h2 id="初始化："><a href="#初始化：" class="headerlink" title="初始化："></a>初始化：</h2><p>到初始化阶段，才真正开始执行类中定义的java程序代码</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>这个阶段就是真正的运行我们的逻辑，模拟真实世界。</p>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>这个一般触发的条件很难，基本不会卸载，一但define了，也就是有些热修复方案<br>为什么要重启app的原因，这里不展开细节，后面专门讲解。卸载必须满足的条件</p>
+<ol>
+<li>加载该类的类加载器销毁了，注意namespace的影响</li>
+<li>所有基于该类的对象销毁了</li>
+<li>Class对象销毁了</li>
+</ol>
+<h2 id="java-classloader-模型"><a href="#java-classloader-模型" class="headerlink" title="java classloader 模型"></a>java classloader 模型</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/classloader.png" alt="classloader" title="">
+                </div>
+                <div class="image-caption">classloader</div>
+            </figure>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>这里只是java的基本流程，但是我们知道android是没法运行class文件的，<br>必须dx化，转换成dalvik或者art，或者混合模式下的字节码，才能运行。并且<br>移动设备对class的执行进行了深度优化，比如inline等等。这篇只讲解jvm的加载<br>，android的加载必须单独分开写，才能明白原理与区别，后续更新……</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在class文件中描述的各种信息，最终都需要被加载到虚拟机中之后，才能被运行和使用。&lt;br&gt;虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验，转换，解析和初始化，最终形成可以被虚拟机直接使用的java类型，这就是虚拟机的类加载机制。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="android" scheme="http://jackwaylong.github.io/categories/android/"/>
+    
+    
+      <category term="jvm" scheme="http://jackwaylong.github.io/tags/jvm/"/>
+    
+      <category term="class" scheme="http://jackwaylong.github.io/tags/class/"/>
+    
+  </entry>
   
   <entry>
     <title>jvm-内存模型</title>
