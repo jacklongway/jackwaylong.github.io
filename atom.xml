@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jackway.cn/"/>
-  <updated>2017-01-07T09:02:10.000Z</updated>
+  <updated>2017-01-07T10:19:56.000Z</updated>
   <id>http://www.jackway.cn/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jvm-class加载验证</title>
+    <link href="http://www.jackway.cn/2017/01/07/jvm-class-verify/"/>
+    <id>http://www.jackway.cn/2017/01/07/jvm-class-verify/</id>
+    <published>2017-01-07T09:58:52.000Z</published>
+    <updated>2017-01-07T10:19:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的隔离，互不干扰，数据安全，运行安全等安全机制，能够保证我们的程序在自身稳定的情况下，不会受到外界环境干扰，而出现进程运行异常，这篇文章从jvm加载class的角度来分析jvm内部安全体系。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="话题大纲"><a href="#话题大纲" class="headerlink" title="话题大纲"></a>话题大纲</h2><ol>
+<li>类装载器结构；</li>
+<li>class文件检验器；</li>
+<li>内置于java虚拟机（及语言）的安全特性；</li>
+<li>安全管理器及java API。</li>
+</ol>
+<h2 id="类装载器体系结构"><a href="#类装载器体系结构" class="headerlink" title="类装载器体系结构"></a>类装载器体系结构</h2><ol>
+<li>防止恶意代码去干涉善意的代码。<br>这是通过为不同类加载器提供不同的命名空间来实现的，在java虚拟机中，在同一个命名空间内的类可以直接进行交互，而不同的命名空间中类甚至不能觉察彼此的存在，除非显式地提供允许它们交互的机制。</li>
+<li>守护了被信任的类库的边界<br>虚拟机通过使用不同的类装载器装载可靠的包和不可靠的包，即所谓的双亲委派模式：在某个特定的类装载器试图以常用方式装载类型之前，它会先默认将这个任务“委派”给它的双亲，这个双亲再依次请求自己的双亲来装载这个类型。这个委派的过程一直向上继续，直到达到启动类加载器（boostrp classloader），如果一个类加载器的双亲类加载器有能力装载这个类型，则这个类加载器返回这个类型，否则这个类装载器试图自己来装载这个类型。java虚拟机只把彼此访问的特殊权限授予由同一个类装载器装载到同一个包中的类型。在允许两个类型之间对包内可见的成员（声明为受保护的或者包访问的成员）进行访问之前，虚拟机不但要确定这两个类型是否属于同一个包，还要确定它们属于同一个运行时包——即它们必须是由同一个类装载器装载的</li>
+<li>将代码归入某类（称为保护域），该类确定了代码可以进行哪些操作。</li>
+</ol>
+<h2 id="java类加载器体系"><a href="#java类加载器体系" class="headerlink" title="java类加载器体系"></a>java类加载器体系</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/jvm类加载.png" alt="classloader" title="">
+                </div>
+                <div class="image-caption">classloader</div>
+            </figure>
+<h2 id="class文件检验器"><a href="#class文件检验器" class="headerlink" title="class文件检验器"></a>class文件检验器</h2><p>和类加载器一起，class文件检验器保证了装载的class文件内容中有正确的内部结构，并且这些class文件相互间协调一致，如果class文件检验器在class文件中发生了问题，它将抛出异常。好的java编译器不应该产生畸形的class文件，但是java虚拟机并不知道某个特定的class文件的来源，所以java虚拟机的实现必须有个class文件检验器，文件检验器可以调用class文件以确保这些定义的类型可以安全的使用。java虚拟机的class文件检验器在字节码执行之前，必须完成大部分检验工作。class文件检验器需要经过四趟独立的扫描来完成其工作。第一趟扫描是在类被装载时进行的，在这次扫描中，class文件检验器检查这个class文件内部结构，以保证它可以被安全地编译。第二和第三趟扫描是在连接过程进行的，在这两次扫描中，class文件检验器确认类型数据遵从java编程语言的语义，包括检验它所包含的所有字节码的完整性，第四趟扫描是在进行动态链接的过程中解析符号引用时进行的，在这次扫描中，class文件检验器确认被引用的类、字段以及方法确实存在。</p>
+<ol>
+<li>第一趟扫描：class文件结构检查<br>对每一段被当做类型导入的字节序列，class文件检验器都会确认其是否符合class文件格式。比如是否以魔数0xCAFEBABE开头，主次版本号所代表的的版本是否被当前虚拟机支持等等，第一趟扫描的主要目的就是保证这个字节序列正确地定义了一个新类型，它必须遵从class文件的固定格式，这样它才能被编译成在方法区中的内部数据结构。第二、第三和第四趟扫描是在方法区中由实现决定的数据结构上进行的。</li>
+<li>第二趟扫描：类型数据的语义检查<br>检验一些java语言应该在编译时遵守的强制规则。比如除了Object外，所有类必须有一个父类，final类没有被子类化，常量池中的条目是合法的，而且常量池中的所有索引都指向了正确类型的常量池条目.</li>
+<li>第三趟扫描：字节码验证<br>在这趟扫描中，java虚拟机对字节流进行数据流分析，这些字节流代表的是类的方法。它确保局部变量在赋值之前不可访问，类的字段中总必须赋予正确类型的值等等。</li>
+<li>第四趟扫描：符号引用验证<br>在动态链接的过程中，如果包含在一个class文件中的符号引用被解析时，class文件检验器将进行第四趟检查。在这趟检查中，java虚拟机将追踪那些引用，从被验证的class文件到被引用的class文件，确保这个引用是正确的。</li>
+</ol>
+<h2 id="class检验模型"><a href="#class检验模型" class="headerlink" title="class检验模型"></a>class检验模型</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/jvm类检测.png" alt="class-verify" title="">
+                </div>
+                <div class="image-caption">class-verify</div>
+            </figure>
+<h2 id="java虚拟机中内置的安全特性"><a href="#java虚拟机中内置的安全特性" class="headerlink" title="java虚拟机中内置的安全特性"></a>java虚拟机中内置的安全特性</h2><p>java虚拟机装载了一个类，并且对它进行了第一到第三趟的class文件检验，这些字节码就可以被运行了。除了对符号引用的检验（class文件检查的第四趟扫描），java虚拟机在执行字节码时<br>还进行了一些内置的安全机制的操作。这些机制大多数是java类型安全的基础：</p>
+<ol>
+<li>类型安全的引用转换；</li>
+<li>结构化的内存访问（无指针算法）；</li>
+<li>自动垃圾收集；</li>
+<li>数组边界检查；</li>
+<li>空引用检查。<br>内置在java虚拟机中的另一个安全特性,并未指明运行时数据空间在java虚拟机内部分布式怎样的。如果查看class文件的内部，将看不到任何内存地址（全是符号引用和无符号数），当java虚拟机装载一个class文件是，由它决定将这些字节码以及其他从class文件中解析得到的数据放置在内存的什么地方。当虚拟机启动一个线程时，由它决定将这个线程创建java栈放到哪里。最后，java虚拟机拥有异常的结构化错误处理机制，因为java虚拟机支持异常，所以当一些违反安全的行为发生时，它会做一些结构化处理，java虚拟机将抛出一个异常或者错误，而不是崩溃。<h2 id="安全管理器和java-API"><a href="#安全管理器和java-API" class="headerlink" title="安全管理器和java API"></a>安全管理器和java API</h2>安全管理器定义了沙箱的外部边界，保护虚拟机的外部资源不被虚拟机内运行的恶意或者有漏洞的代码侵犯。javaAPI在进行一个可能不安全的操作前，总是会检查安全管理器，所以javaAPI不会在安全管理器建立的安全策略下执行被禁止的操作。具体可以参考<code>java.lang.SecurityManager</code>类。</li>
+</ol>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的隔离，互不干扰，数据安全，运行安全等安全机制，能够保证我们的程序在自身稳定的情况下，不会受到外界环境干扰，而出现进程运行异常，这篇文章从jvm加载class的角度来分析jvm内部安全体系。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="class-verify" scheme="http://www.jackway.cn/tags/class-verify/"/>
+    
+      <category term="inbox" scheme="http://www.jackway.cn/tags/inbox/"/>
+    
+      <category term="security" scheme="http://www.jackway.cn/tags/security/"/>
+    
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
+    
+  </entry>
   
   <entry>
     <title>jvm-class生命周期</title>
