@@ -34,7 +34,7 @@
 <h2 id="java-classloader-模型"><a href="#java-classloader-模型" class="headerlink" title="java classloader 模型"></a>java classloader 模型</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/classloader.png" alt="classloader" title="">
+                    <img src="https://www.processon.com/chart_image/587083e6e4b032a565f79c8c.png" alt="classloader" title="">
                 </div>
                 <div class="image-caption">classloader</div>
             </figure>
