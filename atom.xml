@@ -4,9 +4,9 @@
   <subtitle>Technology change the world</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://jackwaylong.github.io/"/>
+  <link href="http://www.jackway.cn/"/>
   <updated>2017-01-07T06:00:58.000Z</updated>
-  <id>http://jackwaylong.github.io/</id>
+  <id>http://www.jackway.cn/</id>
   
   <author>
     <name>龙伟</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>jvm-class生命周期</title>
-    <link href="http://jackwaylong.github.io/2017/01/04/jvm-classloader/"/>
-    <id>http://jackwaylong.github.io/2017/01/04/jvm-classloader/</id>
+    <link href="http://www.jackway.cn/2017/01/04/jvm-classloader/"/>
+    <id>http://www.jackway.cn/2017/01/04/jvm-classloader/</id>
     <published>2017-01-04T09:06:02.000Z</published>
     <updated>2017-01-07T06:00:58.000Z</updated>
     
@@ -63,19 +63,19 @@
     
     </summary>
     
-      <category term="jvm" scheme="http://jackwaylong.github.io/categories/jvm/"/>
+      <category term="jvm" scheme="http://www.jackway.cn/categories/jvm/"/>
     
     
-      <category term="jvm" scheme="http://jackwaylong.github.io/tags/jvm/"/>
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
     
-      <category term="class" scheme="http://jackwaylong.github.io/tags/class/"/>
+      <category term="class" scheme="http://www.jackway.cn/tags/class/"/>
     
   </entry>
   
   <entry>
     <title>jvm-内存模型</title>
-    <link href="http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/"/>
-    <id>http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/</id>
+    <link href="http://www.jackway.cn/2017/01/03/jvm-memorymodel/"/>
+    <id>http://www.jackway.cn/2017/01/03/jvm-memorymodel/</id>
     <published>2017-01-03T09:44:30.000Z</published>
     <updated>2017-01-03T16:21:02.000Z</updated>
     
@@ -131,17 +131,17 @@
     
     </summary>
     
-      <category term="jvm" scheme="http://jackwaylong.github.io/categories/jvm/"/>
+      <category term="jvm" scheme="http://www.jackway.cn/categories/jvm/"/>
     
     
-      <category term="jvm" scheme="http://jackwaylong.github.io/tags/jvm/"/>
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
     
   </entry>
   
   <entry>
     <title>总结过去,展望未来,致敬2016</title>
-    <link href="http://jackwaylong.github.io/2016/12/30/2016%E6%80%BB%E7%BB%93/"/>
-    <id>http://jackwaylong.github.io/2016/12/30/2016总结/</id>
+    <link href="http://www.jackway.cn/2016/12/30/2016%E6%80%BB%E7%BB%93/"/>
+    <id>http://www.jackway.cn/2016/12/30/2016总结/</id>
     <published>2016-12-30T13:37:24.000Z</published>
     <updated>2016-12-30T15:21:48.000Z</updated>
     
@@ -174,17 +174,17 @@
     
     </summary>
     
-      <category term="other" scheme="http://jackwaylong.github.io/categories/other/"/>
+      <category term="other" scheme="http://www.jackway.cn/categories/other/"/>
     
     
-      <category term="summary" scheme="http://jackwaylong.github.io/tags/summary/"/>
+      <category term="summary" scheme="http://www.jackway.cn/tags/summary/"/>
     
   </entry>
   
   <entry>
     <title>android脑图</title>
-    <link href="http://jackwaylong.github.io/2016/12/28/android-system-img/"/>
-    <id>http://jackwaylong.github.io/2016/12/28/android-system-img/</id>
+    <link href="http://www.jackway.cn/2016/12/28/android-system-img/"/>
+    <id>http://www.jackway.cn/2016/12/28/android-system-img/</id>
     <published>2016-12-28T02:44:14.000Z</published>
     <updated>2016-12-30T13:10:36.000Z</updated>
     
@@ -317,19 +317,19 @@
     
     </summary>
     
-      <category term="android" scheme="http://jackwaylong.github.io/categories/android/"/>
+      <category term="android" scheme="http://www.jackway.cn/categories/android/"/>
     
     
-      <category term="xmind" scheme="http://jackwaylong.github.io/tags/xmind/"/>
+      <category term="xmind" scheme="http://www.jackway.cn/tags/xmind/"/>
     
-      <category term="android-sys-img" scheme="http://jackwaylong.github.io/tags/android-sys-img/"/>
+      <category term="android-sys-img" scheme="http://www.jackway.cn/tags/android-sys-img/"/>
     
   </entry>
   
   <entry>
     <title>JMM-transient</title>
-    <link href="http://jackwaylong.github.io/2016/12/25/JMM-transient-4/"/>
-    <id>http://jackwaylong.github.io/2016/12/25/JMM-transient-4/</id>
+    <link href="http://www.jackway.cn/2016/12/25/JMM-transient-4/"/>
+    <id>http://www.jackway.cn/2016/12/25/JMM-transient-4/</id>
     <published>2016-12-25T04:01:41.000Z</published>
     <updated>2016-12-25T04:57:03.000Z</updated>
     
@@ -346,7 +346,7 @@
 <li>Parcelable</li>
 </ol>
 <blockquote>
-<p>上面5点中主要还是数据安全，跟<a href="http://www.jackway.cn/2016/12/22/transfer-security-1/" target="_blank" rel="external">安全那点事情</a>这篇文章的理论接轨，如果对数据安全不是很理解的，可以看看这篇文章，有个理论基础，然后再具体代码。其实代码不难，主要是这种解决问题的组合。</p>
+<p>上面5点中主要还是数据安全，跟<a href="http://www.jackway.cn/2016/12/22/transfer-security-1/">安全那点事情</a>这篇文章的理论接轨，如果对数据安全不是很理解的，可以看看这篇文章，有个理论基础，然后再具体代码。其实代码不难，主要是这种解决问题的组合。</p>
 </blockquote>
 <h2 id="演示基础类"><a href="#演示基础类" class="headerlink" title="演示基础类"></a>演示基础类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></div><div class="line">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String fn, String ln, <span class="keyword">int</span> a)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">this</span>.firstName = fn; <span class="keyword">this</span>.lastName = ln; <span class="keyword">this</span>.age = a;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getFirstName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> firstName; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLastName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> lastName; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> age; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> Person <span class="title">getSpouse</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> spouse; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFirstName</span><span class="params">(String value)</span> </span>&#123; firstName = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLastName</span><span class="params">(String value)</span> </span>&#123; lastName = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; age = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSpouse</span><span class="params">(Person value)</span> </span>&#123; spouse = value; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"[Person: firstName="</span> + firstName + </div><div class="line">            <span class="string">" lastName="</span> + lastName +</div><div class="line">            <span class="string">" age="</span> + age +</div><div class="line">            <span class="string">" spouse="</span> + spouse.getFirstName() +</div><div class="line">            <span class="string">"]"</span>;</div><div class="line">    &#125;    </div><div class="line"></div><div class="line">    <span class="keyword">private</span> String firstName;</div><div class="line">    <span class="keyword">private</span> String lastName;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line">    <span class="keyword">private</span> Person spouse;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="序列化允许重构"><a href="#序列化允许重构" class="headerlink" title="序列化允许重构"></a>序列化允许重构</h2><p>序列化允许一定数量的类变种，甚至重构之后也是如此，<code>ObjectInputStream</code> 还是可以很好的将其读出来。<br>Java Object Serialization 规范可以自动管理的关键任务是：</p>
@@ -376,17 +376,17 @@
     
     </summary>
     
-      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+      <category term="java" scheme="http://www.jackway.cn/categories/java/"/>
     
     
-      <category term="transient" scheme="http://jackwaylong.github.io/tags/transient/"/>
+      <category term="transient" scheme="http://www.jackway.cn/tags/transient/"/>
     
   </entry>
   
   <entry>
     <title>安全那点事情</title>
-    <link href="http://jackwaylong.github.io/2016/12/22/transfer-security-1/"/>
-    <id>http://jackwaylong.github.io/2016/12/22/transfer-security-1/</id>
+    <link href="http://www.jackway.cn/2016/12/22/transfer-security-1/"/>
+    <id>http://www.jackway.cn/2016/12/22/transfer-security-1/</id>
     <published>2016-12-22T08:01:43.000Z</published>
     <updated>2016-12-24T14:39:05.000Z</updated>
     
@@ -418,19 +418,19 @@
     
     </summary>
     
-      <category term="android" scheme="http://jackwaylong.github.io/categories/android/"/>
+      <category term="android" scheme="http://www.jackway.cn/categories/android/"/>
     
     
-      <category term="security" scheme="http://jackwaylong.github.io/tags/security/"/>
+      <category term="security" scheme="http://www.jackway.cn/tags/security/"/>
     
-      <category term="attack" scheme="http://jackwaylong.github.io/tags/attack/"/>
+      <category term="attack" scheme="http://www.jackway.cn/tags/attack/"/>
     
   </entry>
   
   <entry>
     <title>AccessibilityService(自动化服务)?</title>
-    <link href="http://jackwaylong.github.io/2016/12/20/accessibilityService-1/"/>
-    <id>http://jackwaylong.github.io/2016/12/20/accessibilityService-1/</id>
+    <link href="http://www.jackway.cn/2016/12/20/accessibilityService-1/"/>
+    <id>http://www.jackway.cn/2016/12/20/accessibilityService-1/</id>
     <published>2016-12-20T10:24:57.000Z</published>
     <updated>2016-12-20T10:57:23.000Z</updated>
     
@@ -458,19 +458,19 @@
     
     </summary>
     
-      <category term="android" scheme="http://jackwaylong.github.io/categories/android/"/>
+      <category term="android" scheme="http://www.jackway.cn/categories/android/"/>
     
     
-      <category term="Service" scheme="http://jackwaylong.github.io/tags/Service/"/>
+      <category term="Service" scheme="http://www.jackway.cn/tags/Service/"/>
     
-      <category term="AccessibilityEvent" scheme="http://jackwaylong.github.io/tags/AccessibilityEvent/"/>
+      <category term="AccessibilityEvent" scheme="http://www.jackway.cn/tags/AccessibilityEvent/"/>
     
   </entry>
   
   <entry>
     <title>JMM-final</title>
-    <link href="http://jackwaylong.github.io/2016/12/18/JMM-3/"/>
-    <id>http://jackwaylong.github.io/2016/12/18/JMM-3/</id>
+    <link href="http://www.jackway.cn/2016/12/18/JMM-3/"/>
+    <id>http://www.jackway.cn/2016/12/18/JMM-3/</id>
     <published>2016-12-18T04:34:36.000Z</published>
     <updated>2016-12-18T04:43:32.000Z</updated>
     
@@ -524,19 +524,19 @@
     
     </summary>
     
-      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+      <category term="java" scheme="http://www.jackway.cn/categories/java/"/>
     
     
-      <category term="final" scheme="http://jackwaylong.github.io/tags/final/"/>
+      <category term="final" scheme="http://www.jackway.cn/tags/final/"/>
     
-      <category term="bytecode" scheme="http://jackwaylong.github.io/tags/bytecode/"/>
+      <category term="bytecode" scheme="http://www.jackway.cn/tags/bytecode/"/>
     
   </entry>
   
   <entry>
     <title>JMM-volatile</title>
-    <link href="http://jackwaylong.github.io/2016/12/18/JMM-2/"/>
-    <id>http://jackwaylong.github.io/2016/12/18/JMM-2/</id>
+    <link href="http://www.jackway.cn/2016/12/18/JMM-2/"/>
+    <id>http://www.jackway.cn/2016/12/18/JMM-2/</id>
     <published>2016-12-18T04:18:57.000Z</published>
     <updated>2016-12-18T04:31:31.000Z</updated>
     
@@ -580,19 +580,19 @@
     
     </summary>
     
-      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+      <category term="java" scheme="http://www.jackway.cn/categories/java/"/>
     
     
-      <category term="volatile" scheme="http://jackwaylong.github.io/tags/volatile/"/>
+      <category term="volatile" scheme="http://www.jackway.cn/tags/volatile/"/>
     
-      <category term="synchronized" scheme="http://jackwaylong.github.io/tags/synchronized/"/>
+      <category term="synchronized" scheme="http://www.jackway.cn/tags/synchronized/"/>
     
   </entry>
   
   <entry>
     <title>JMM-重排序</title>
-    <link href="http://jackwaylong.github.io/2016/12/17/JMM-1/"/>
-    <id>http://jackwaylong.github.io/2016/12/17/JMM-1/</id>
+    <link href="http://www.jackway.cn/2016/12/17/JMM-1/"/>
+    <id>http://www.jackway.cn/2016/12/17/JMM-1/</id>
     <published>2016-12-17T02:50:07.000Z</published>
     <updated>2016-12-17T03:24:40.000Z</updated>
     
@@ -630,21 +630,21 @@
     
     </summary>
     
-      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+      <category term="java" scheme="http://www.jackway.cn/categories/java/"/>
     
     
-      <category term="dependencies" scheme="http://jackwaylong.github.io/tags/dependencies/"/>
+      <category term="dependencies" scheme="http://www.jackway.cn/tags/dependencies/"/>
     
-      <category term="controlFlow" scheme="http://jackwaylong.github.io/tags/controlFlow/"/>
+      <category term="controlFlow" scheme="http://www.jackway.cn/tags/controlFlow/"/>
     
-      <category term="resort" scheme="http://jackwaylong.github.io/tags/resort/"/>
+      <category term="resort" scheme="http://www.jackway.cn/tags/resort/"/>
     
   </entry>
   
   <entry>
     <title>CAS为什么如此的乐观了?</title>
-    <link href="http://jackwaylong.github.io/2016/12/13/cas-1/"/>
-    <id>http://jackwaylong.github.io/2016/12/13/cas-1/</id>
+    <link href="http://www.jackway.cn/2016/12/13/cas-1/"/>
+    <id>http://www.jackway.cn/2016/12/13/cas-1/</id>
     <published>2016-12-13T03:33:21.000Z</published>
     <updated>2016-12-13T06:15:13.000Z</updated>
     
@@ -670,7 +670,7 @@
 <h2 id="View-id的产生"><a href="#View-id的产生" class="headerlink" title="View id的产生"></a>View id的产生</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">generateViewId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (;;) &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> result = sNextGeneratedId.get(); <span class="comment">// 获取当前id</span></div><div class="line">            <span class="comment">// aapt-generated IDs have the high byte nonzero; clamp to the range under that.</span></div><div class="line">            <span class="keyword">int</span> newValue = result + <span class="number">1</span>; <span class="comment">// 新的id</span></div><div class="line">            <span class="keyword">if</span> (newValue &gt; <span class="number">0x00FFFFFF</span>) newValue = <span class="number">1</span>; <span class="comment">// Roll over to 1, not 0. // 可能跟aapt工具产生的冲突，需要回滚</span></div><div class="line">            <span class="keyword">if</span> (sNextGeneratedId.compareAndSet(result, newValue)) &#123;  <span class="comment">// 自旋设置最新值，如果失败，需要重试</span></div><div class="line">                <span class="keyword">return</span> result;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>这个是<code>android View</code>里面的一个类方法，当我们动态setId的时候，如果id无效，那么会调用这个方法自动产生一个<br>有效的id，这里用cas机制实现了，id的有效性, 同时也佩服google的工程师，考虑问题很全，这里aapt产生的id不会在<br>新值之内，做了过滤，比如系统资源0x01开头，应用资源0x7F开头，<code>0x00FFFFFF</code>这个值就是临界值，所以我们在插件开发<br>的时候，也需要兼容框架层一下，我们定制aapt也是用开始的一个字节。</p>
 <h2 id="AtomicBoolean-源码剖析"><a href="#AtomicBoolean-源码剖析" class="headerlink" title="AtomicBoolean 源码剖析"></a>AtomicBoolean 源码剖析</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AtomicBoolean</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">4654671469794556979L</span>;</div><div class="line">    <span class="comment">// setup to use Unsafe.compareAndSwapInt for updates</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe unsafe = Unsafe.getUnsafe();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> valueOffset;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            valueOffset = unsafe.objectFieldOffset</div><div class="line">                (AtomicBoolean.class.getDeclaredField(<span class="string">"value"</span>)); <span class="comment">// jni层的偏移值，为了后面的自旋比较</span></div><div class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> Error(ex); &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value; <span class="comment">// 最新值</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Creates a new &#123;<span class="doctag">@code</span> AtomicBoolean&#125; with the given initial value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> initialValue the initial value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AtomicBoolean</span><span class="params">(<span class="keyword">boolean</span> initialValue)</span> </span>&#123;</div><div class="line">        value = initialValue ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Creates a new &#123;<span class="doctag">@code</span> AtomicBoolean&#125; with initial value &#123;<span class="doctag">@code</span> false&#125;.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AtomicBoolean</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Returns the current value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span> the current value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> value != <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Atomically sets the value to the given updated value</div><div class="line">     * if the current value &#123;<span class="doctag">@code</span> ==&#125; the expected value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> expect the expected value</div><div class="line">     * <span class="doctag">@param</span> update the new value</div><div class="line">     * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if successful. False return indicates that</div><div class="line">     * the actual value was not equal to the expected value.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(<span class="keyword">boolean</span> expect, <span class="keyword">boolean</span> update)</span> </span>&#123; <span class="comment">// 这个方法是final</span></div><div class="line">        <span class="keyword">int</span> e = expect ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> u = update ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> unsafe.compareAndSwapInt(<span class="keyword">this</span>, valueOffset, e, u);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Atomically sets the value to the given updated value</div><div class="line">     * if the current value &#123;<span class="doctag">@code</span> ==&#125; the expected value.</div><div class="line">     *</div><div class="line">     * &lt;p&gt;&lt;a href="package-summary.html#weakCompareAndSet"&gt;May fail</div><div class="line">     * spuriously and does not provide ordering guarantees&lt;/a&gt;, so is</div><div class="line">     * only rarely an appropriate alternative to &#123;<span class="doctag">@code</span> compareAndSet&#125;.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> expect the expected value</div><div class="line">     * <span class="doctag">@param</span> update the new value</div><div class="line">     * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if successful</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">weakCompareAndSet</span><span class="params">(<span class="keyword">boolean</span> expect, <span class="keyword">boolean</span> update)</span> </span>&#123; <span class="comment">// 这个跟compareAndSet逻辑一样，但是不是final，意味着子类可以覆盖逻辑，进行自定义</span></div><div class="line">        <span class="keyword">int</span> e = expect ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> u = update ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> unsafe.compareAndSwapInt(<span class="keyword">this</span>, valueOffset, e, u); <span class="comment">// cas操作</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Unconditionally sets to the given value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> newValue the new value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">boolean</span> newValue)</span> </span>&#123;</div><div class="line">        value = newValue ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Eventually sets to the given value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> newValue the new value</div><div class="line">     * <span class="doctag">@since</span> 1.6</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">lazySet</span><span class="params">(<span class="keyword">boolean</span> newValue)</span> </span>&#123; <span class="comment">// 延迟设置到最新值</span></div><div class="line">        <span class="keyword">int</span> v = newValue ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        unsafe.putOrderedInt(<span class="keyword">this</span>, valueOffset, v);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Atomically sets to the given value and returns the previous value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> newValue the new value</div><div class="line">     * <span class="doctag">@return</span> the previous value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">getAndSet</span><span class="params">(<span class="keyword">boolean</span> newValue)</span> </span>&#123; <span class="comment">// 获取旧值，设置最新值</span></div><div class="line">        <span class="keyword">boolean</span> prev;</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            prev = get(); <span class="comment">// 获取旧值</span></div><div class="line">        &#125; <span class="keyword">while</span> (!compareAndSet(prev, newValue)); <span class="comment">// false 意味着有线程更新了value，需要轮询，保证数据的准确性，一致性。</span></div><div class="line">        <span class="keyword">return</span> prev;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Returns the String representation of the current value.</div><div class="line">     * <span class="doctag">@return</span> the String representation of the current value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Boolean.toString(get());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>场景还有很多,<a href="http://www.jackway.cn/2016/12/03/single/" target="_blank" rel="external">比如单例场景</a> 等等。</p>
+<p>场景还有很多,<a href="http://www.jackway.cn/2016/12/03/single/">比如单例场景</a> 等等。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>那我们到底什么时候选择cas，什么时候选择加锁了，这个没有一定，需要根据具体场景，选择合适的方式。<br>cas总体上来说，性能优越加锁。但是当资源竞争很大的时候，轮询次数增加，导致性能有点下降。移动端并发<br>数目不会很大，如果是服务端需要对cas进一步优化。</p>
 <blockquote>
 <p>cas只能保证单一变量操作的原子性，如果需要保证多个变量，那么使用对象，然后数据封装到对象进行atomic，<br><code>AtomicReference</code> 有兴趣的可以了解，还有很多数据结构实现的无锁操作，也可以去学习，了解。</p>
@@ -685,17 +685,17 @@
     
     </summary>
     
-      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+      <category term="java" scheme="http://www.jackway.cn/categories/java/"/>
     
     
-      <category term="CAS" scheme="http://jackwaylong.github.io/tags/CAS/"/>
+      <category term="CAS" scheme="http://www.jackway.cn/tags/CAS/"/>
     
   </entry>
   
   <entry>
     <title>线程启动之后可以停止吗?</title>
-    <link href="http://jackwaylong.github.io/2016/12/12/thread-stop/"/>
-    <id>http://jackwaylong.github.io/2016/12/12/thread-stop/</id>
+    <link href="http://www.jackway.cn/2016/12/12/thread-stop/"/>
+    <id>http://www.jackway.cn/2016/12/12/thread-stop/</id>
     <published>2016-12-12T06:17:50.000Z</published>
     <updated>2016-12-12T06:56:33.000Z</updated>
     
@@ -722,21 +722,21 @@
     
     </summary>
     
-      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+      <category term="java" scheme="http://www.jackway.cn/categories/java/"/>
     
     
-      <category term="thread" scheme="http://jackwaylong.github.io/tags/thread/"/>
+      <category term="thread" scheme="http://www.jackway.cn/tags/thread/"/>
     
-      <category term="runnable" scheme="http://jackwaylong.github.io/tags/runnable/"/>
+      <category term="runnable" scheme="http://www.jackway.cn/tags/runnable/"/>
     
-      <category term="stop" scheme="http://jackwaylong.github.io/tags/stop/"/>
+      <category term="stop" scheme="http://www.jackway.cn/tags/stop/"/>
     
   </entry>
   
   <entry>
     <title>git submodule</title>
-    <link href="http://jackwaylong.github.io/2016/12/08/gitsubmodule-1/"/>
-    <id>http://jackwaylong.github.io/2016/12/08/gitsubmodule-1/</id>
+    <link href="http://www.jackway.cn/2016/12/08/gitsubmodule-1/"/>
+    <id>http://www.jackway.cn/2016/12/08/gitsubmodule-1/</id>
     <published>2016-12-08T03:36:11.000Z</published>
     <updated>2016-12-08T03:45:35.000Z</updated>
     
@@ -794,19 +794,19 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="git" scheme="http://jackwaylong.github.io/categories/git/"/>
+      <category term="git" scheme="http://www.jackway.cn/categories/git/"/>
     
     
-      <category term="git" scheme="http://jackwaylong.github.io/tags/git/"/>
+      <category term="git" scheme="http://www.jackway.cn/tags/git/"/>
     
-      <category term="submodule" scheme="http://jackwaylong.github.io/tags/submodule/"/>
+      <category term="submodule" scheme="http://www.jackway.cn/tags/submodule/"/>
     
   </entry>
   
   <entry>
     <title>一线互联网公司面试简单分析</title>
-    <link href="http://jackwaylong.github.io/2016/12/07/interview-1/"/>
-    <id>http://jackwaylong.github.io/2016/12/07/interview-1/</id>
+    <link href="http://www.jackway.cn/2016/12/07/interview-1/"/>
+    <id>http://www.jackway.cn/2016/12/07/interview-1/</id>
     <published>2016-12-07T10:46:41.000Z</published>
     <updated>2016-12-08T08:03:57.000Z</updated>
     
@@ -894,19 +894,19 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="interview" scheme="http://jackwaylong.github.io/categories/interview/"/>
+      <category term="interview" scheme="http://www.jackway.cn/categories/interview/"/>
     
     
-      <category term="alog" scheme="http://jackwaylong.github.io/tags/alog/"/>
+      <category term="alog" scheme="http://www.jackway.cn/tags/alog/"/>
     
-      <category term="ams" scheme="http://jackwaylong.github.io/tags/ams/"/>
+      <category term="ams" scheme="http://www.jackway.cn/tags/ams/"/>
     
   </entry>
   
   <entry>
     <title>打破标准的第一个OC程序</title>
-    <link href="http://jackwaylong.github.io/2016/12/06/ios-oc-1/"/>
-    <id>http://jackwaylong.github.io/2016/12/06/ios-oc-1/</id>
+    <link href="http://www.jackway.cn/2016/12/06/ios-oc-1/"/>
+    <id>http://www.jackway.cn/2016/12/06/ios-oc-1/</id>
     <published>2016-12-06T13:36:07.000Z</published>
     <updated>2016-12-06T13:45:17.000Z</updated>
     
@@ -931,19 +931,19 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="ios" scheme="http://jackwaylong.github.io/categories/ios/"/>
+      <category term="ios" scheme="http://www.jackway.cn/categories/ios/"/>
     
     
-      <category term="oc" scheme="http://jackwaylong.github.io/tags/oc/"/>
+      <category term="oc" scheme="http://www.jackway.cn/tags/oc/"/>
     
-      <category term="NSString" scheme="http://jackwaylong.github.io/tags/NSString/"/>
+      <category term="NSString" scheme="http://www.jackway.cn/tags/NSString/"/>
     
   </entry>
   
   <entry>
     <title>wait和sleep 深度分析</title>
-    <link href="http://jackwaylong.github.io/2016/12/05/wait-sleep/"/>
-    <id>http://jackwaylong.github.io/2016/12/05/wait-sleep/</id>
+    <link href="http://www.jackway.cn/2016/12/05/wait-sleep/"/>
+    <id>http://www.jackway.cn/2016/12/05/wait-sleep/</id>
     <published>2016-12-05T06:08:43.000Z</published>
     <updated>2016-12-06T06:00:46.000Z</updated>
     
@@ -983,19 +983,19 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+      <category term="java" scheme="http://www.jackway.cn/categories/java/"/>
     
     
-      <category term="wait" scheme="http://jackwaylong.github.io/tags/wait/"/>
+      <category term="wait" scheme="http://www.jackway.cn/tags/wait/"/>
     
-      <category term="sleep" scheme="http://jackwaylong.github.io/tags/sleep/"/>
+      <category term="sleep" scheme="http://www.jackway.cn/tags/sleep/"/>
     
   </entry>
   
   <entry>
     <title>shareUID</title>
-    <link href="http://jackwaylong.github.io/2016/12/03/shareUID/"/>
-    <id>http://jackwaylong.github.io/2016/12/03/shareUID/</id>
+    <link href="http://www.jackway.cn/2016/12/03/shareUID/"/>
+    <id>http://www.jackway.cn/2016/12/03/shareUID/</id>
     <published>2016-12-03T05:45:14.000Z</published>
     <updated>2016-12-06T06:01:13.000Z</updated>
     
@@ -1024,19 +1024,19 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="android" scheme="http://jackwaylong.github.io/categories/android/"/>
+      <category term="android" scheme="http://www.jackway.cn/categories/android/"/>
     
     
-      <category term="shareUID" scheme="http://jackwaylong.github.io/tags/shareUID/"/>
+      <category term="shareUID" scheme="http://www.jackway.cn/tags/shareUID/"/>
     
-      <category term="Context" scheme="http://jackwaylong.github.io/tags/Context/"/>
+      <category term="Context" scheme="http://www.jackway.cn/tags/Context/"/>
     
   </entry>
   
   <entry>
     <title>SharedPreferences真的安全吗?</title>
-    <link href="http://jackwaylong.github.io/2016/12/03/safesharepreferences/"/>
-    <id>http://jackwaylong.github.io/2016/12/03/safesharepreferences/</id>
+    <link href="http://www.jackway.cn/2016/12/03/safesharepreferences/"/>
+    <id>http://www.jackway.cn/2016/12/03/safesharepreferences/</id>
     <published>2016-12-02T19:04:51.000Z</published>
     <updated>2016-12-06T06:01:32.000Z</updated>
     
@@ -1078,21 +1078,21 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="android" scheme="http://jackwaylong.github.io/categories/android/"/>
+      <category term="android" scheme="http://www.jackway.cn/categories/android/"/>
     
     
-      <category term="sharepreferences" scheme="http://jackwaylong.github.io/tags/sharepreferences/"/>
+      <category term="sharepreferences" scheme="http://www.jackway.cn/tags/sharepreferences/"/>
     
-      <category term="contentprovider" scheme="http://jackwaylong.github.io/tags/contentprovider/"/>
+      <category term="contentprovider" scheme="http://www.jackway.cn/tags/contentprovider/"/>
     
-      <category term="martixcursor" scheme="http://jackwaylong.github.io/tags/martixcursor/"/>
+      <category term="martixcursor" scheme="http://www.jackway.cn/tags/martixcursor/"/>
     
   </entry>
   
   <entry>
     <title>单例模式真的很简单吗？</title>
-    <link href="http://jackwaylong.github.io/2016/12/03/single/"/>
-    <id>http://jackwaylong.github.io/2016/12/03/single/</id>
+    <link href="http://www.jackway.cn/2016/12/03/single/"/>
+    <id>http://www.jackway.cn/2016/12/03/single/</id>
     <published>2016-12-02T18:30:04.000Z</published>
     <updated>2016-12-25T05:17:51.000Z</updated>
     
@@ -1152,23 +1152,23 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="java" scheme="http://jackwaylong.github.io/categories/java/"/>
+      <category term="java" scheme="http://www.jackway.cn/categories/java/"/>
     
     
-      <category term="volatile" scheme="http://jackwaylong.github.io/tags/volatile/"/>
+      <category term="volatile" scheme="http://www.jackway.cn/tags/volatile/"/>
     
-      <category term="synchronized" scheme="http://jackwaylong.github.io/tags/synchronized/"/>
+      <category term="synchronized" scheme="http://www.jackway.cn/tags/synchronized/"/>
     
-      <category term="single" scheme="http://jackwaylong.github.io/tags/single/"/>
+      <category term="single" scheme="http://www.jackway.cn/tags/single/"/>
     
-      <category term="enum" scheme="http://jackwaylong.github.io/tags/enum/"/>
+      <category term="enum" scheme="http://www.jackway.cn/tags/enum/"/>
     
   </entry>
   
   <entry>
     <title>揭开Gradle的神秘面纱</title>
-    <link href="http://jackwaylong.github.io/2016/11/29/gradle/"/>
-    <id>http://jackwaylong.github.io/2016/11/29/gradle/</id>
+    <link href="http://www.jackway.cn/2016/11/29/gradle/"/>
+    <id>http://www.jackway.cn/2016/11/29/gradle/</id>
     <published>2016-11-28T16:32:01.000Z</published>
     <updated>2016-11-28T17:00:38.000Z</updated>
     
@@ -1254,17 +1254,17 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="groovy" scheme="http://jackwaylong.github.io/categories/groovy/"/>
+      <category term="groovy" scheme="http://www.jackway.cn/categories/groovy/"/>
     
     
-      <category term="gradle" scheme="http://jackwaylong.github.io/tags/gradle/"/>
+      <category term="gradle" scheme="http://www.jackway.cn/tags/gradle/"/>
     
   </entry>
   
   <entry>
     <title>modularity</title>
-    <link href="http://jackwaylong.github.io/2016/11/27/modularity/"/>
-    <id>http://jackwaylong.github.io/2016/11/27/modularity/</id>
+    <link href="http://www.jackway.cn/2016/11/27/modularity/"/>
+    <id>http://www.jackway.cn/2016/11/27/modularity/</id>
     <published>2016-11-27T08:50:54.000Z</published>
     <updated>2016-11-27T09:53:21.000Z</updated>
     
@@ -1319,10 +1319,10 @@ index eb41d76,c771610..0000000
     
     </summary>
     
-      <category term="android" scheme="http://jackwaylong.github.io/categories/android/"/>
+      <category term="android" scheme="http://www.jackway.cn/categories/android/"/>
     
     
-      <category term="modularity" scheme="http://jackwaylong.github.io/tags/modularity/"/>
+      <category term="modularity" scheme="http://www.jackway.cn/tags/modularity/"/>
     
   </entry>
   

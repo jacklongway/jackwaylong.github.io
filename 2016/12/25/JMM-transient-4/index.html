@@ -15,7 +15,7 @@
   <meta name="description" content="java里面将一个对象序列化，步骤就是将要被序列化的对象实现Serializable接口，这个接口是个标志接口，跟java里面的Clonable,Closable等接口一样，没有具体的行为标准定义，就是一个描述。只有实现了序列化接口的对象，才能够序列化，但是我们还注意到序列化对象的类的内部还定义了一个serialVersionUUID,这个是做什么的了，这个可以理解为一个token，只有toke">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JMM-transient">
-<meta property="og:url" content="http://jackwaylong.github.io/2016/12/25/JMM-transient-4/index.html">
+<meta property="og:url" content="http://www.jackway.cn/2016/12/25/JMM-transient-4/index.html">
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="java里面将一个对象序列化，步骤就是将要被序列化的对象实现Serializable接口，这个接口是个标志接口，跟java里面的Clonable,Closable等接口一样，没有具体的行为标准定义，就是一个描述。只有实现了序列化接口的对象，才能够序列化，但是我们还注意到序列化对象的类的内部还定义了一个serialVersionUUID,这个是做什么的了，这个可以理解为一个token，只有toke">
 <meta property="og:updated_time" content="2016-12-25T04:57:03.000Z">
@@ -204,7 +204,7 @@
 <li>Parcelable</li>
 </ol>
 <blockquote>
-<p>上面5点中主要还是数据安全，跟<a href="http://www.jackway.cn/2016/12/22/transfer-security-1/" target="_blank" rel="external">安全那点事情</a>这篇文章的理论接轨，如果对数据安全不是很理解的，可以看看这篇文章，有个理论基础，然后再具体代码。其实代码不难，主要是这种解决问题的组合。</p>
+<p>上面5点中主要还是数据安全，跟<a href="http://www.jackway.cn/2016/12/22/transfer-security-1/">安全那点事情</a>这篇文章的理论接轨，如果对数据安全不是很理解的，可以看看这篇文章，有个理论基础，然后再具体代码。其实代码不难，主要是这种解决问题的组合。</p>
 </blockquote>
 <h2 id="演示基础类"><a href="#演示基础类" class="headerlink" title="演示基础类"></a>演示基础类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></div><div class="line">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String fn, String ln, <span class="keyword">int</span> a)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">this</span>.firstName = fn; <span class="keyword">this</span>.lastName = ln; <span class="keyword">this</span>.age = a;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getFirstName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> firstName; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLastName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> lastName; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> age; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> Person <span class="title">getSpouse</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> spouse; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFirstName</span><span class="params">(String value)</span> </span>&#123; firstName = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLastName</span><span class="params">(String value)</span> </span>&#123; lastName = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; age = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSpouse</span><span class="params">(Person value)</span> </span>&#123; spouse = value; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"[Person: firstName="</span> + firstName + </div><div class="line">            <span class="string">" lastName="</span> + lastName +</div><div class="line">            <span class="string">" age="</span> + age +</div><div class="line">            <span class="string">" spouse="</span> + spouse.getFirstName() +</div><div class="line">            <span class="string">"]"</span>;</div><div class="line">    &#125;    </div><div class="line"></div><div class="line">    <span class="keyword">private</span> String firstName;</div><div class="line">    <span class="keyword">private</span> String lastName;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line">    <span class="keyword">private</span> Person spouse;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="序列化允许重构"><a href="#序列化允许重构" class="headerlink" title="序列化允许重构"></a>序列化允许重构</h2><p>序列化允许一定数量的类变种，甚至重构之后也是如此，<code>ObjectInputStream</code> 还是可以很好的将其读出来。<br>Java Object Serialization 规范可以自动管理的关键任务是：</p>
@@ -232,7 +232,7 @@
         该内容没经过版主同意不得随意转发
     </div>
     <footer>
-        <a href="http://jackwaylong.github.io">
+        <a href="http://www.jackway.cn">
             <img src="/img/avatar.jpg" alt="龙伟">
             龙伟
         </a>
@@ -258,7 +258,7 @@
     <div class="tit">分享到：</div>
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/&title=《JMM-transient》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2016/12/25/JMM-transient-4/&title=《JMM-transient》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -268,23 +268,23 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/&title=《JMM-transient》 — longway's blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2016/12/25/JMM-transient-4/&title=《JMM-transient》 — longway's blog&source=
 java里面将一个对象序列化，步骤就是将要被序列化的对象实现Serializable接口，这个接口是个标志接口，跟java里面的Clonable,Clo..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2016/12/25/JMM-transient-4/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-transient》 — longway's blog&url=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/&via=http://jackwaylong.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-transient》 — longway's blog&url=http://www.jackway.cn/2016/12/25/JMM-transient-4/&via=http://www.jackway.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2016/12/25/JMM-transient-4/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -328,7 +328,7 @@ java里面将一个对象序列化，步骤就是将要被序列化的对象实�
 
     
 <div class="duoshuo" id="comments">
-	<div class="ds-thread" data-thread-key="JMM-transient-4" data-title="JMM-transient" data-url="http://jackwaylong.github.io/2016/12/25/JMM-transient-4/"></div>
+	<div class="ds-thread" data-thread-key="JMM-transient-4" data-title="JMM-transient" data-url="http://www.jackway.cn/2016/12/25/JMM-transient-4/"></div>
 </div>
 <script src="/js/embed.min.js?v=1.3.2"></script>
 <script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
@@ -382,7 +382,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
     <div class="tit">分享到：</div>
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/&title=《JMM-transient》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2016/12/25/JMM-transient-4/&title=《JMM-transient》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -392,23 +392,23 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/&title=《JMM-transient》 — longway's blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2016/12/25/JMM-transient-4/&title=《JMM-transient》 — longway's blog&source=
 java里面将一个对象序列化，步骤就是将要被序列化的对象实现Serializable接口，这个接口是个标志接口，跟java里面的Clonable,Clo..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2016/12/25/JMM-transient-4/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-transient》 — longway's blog&url=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/&via=http://jackwaylong.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-transient》 — longway's blog&url=http://www.jackway.cn/2016/12/25/JMM-transient-4/&via=http://www.jackway.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/25/JMM-transient-4/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2016/12/25/JMM-transient-4/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -419,7 +419,7 @@ java里面将一个对象序列化，步骤就是将要被序列化的对象实�
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACN0lEQVR42u3azW7DIBBF4bz/S7vbLAI+l8GVPBxWVUtsvlQazQ+fD17X10p/P9rD37JtyZAh47WMa7oqxxp9lu8hZ5MhQ8Y5jNGjyZ7Ri0fPSffPzyZDhgwZ86PMAyUJxCTgypAhQ0Yl4PLEjhxFhgwZMuaMNIDyZK5SHj9Si8uQIeOFDN4y+/+fH5lvyJAh41WMK1zpAHLts/GpZMiQ0ZqRtsYIj4fUoEAl1zJkyJBxAGMtgVs7KBkPzJ9zU4vLkCGjNSP4GAmCeGxQv7QhQ4aM3ox0PJCOHnkiuCF9lCFDRmtGev2CXxfjwXe+Jx4hyJAhowWj8rjKEDQtUG/+AzJkyDiAsTaMnMP49bL0KxsGXBkyZLRmlK444MYZCbtpkSxDhowTGHsvePFhZKXODlJVGTJkNGXwBhlvzKWDgbUBqgwZMroy0qKUjx7TxDENwT8yXBkyZDRlpGPIShNt1zhh+FcZMmQ0ZcQNLNDQ5+Xu2p4fb5EhQ0ZrBh86rjXrSflKvohggCpDhoymDNIIW2vG8YSyErhlyJBxDiO9WsGbZbuuU6B2mwwZMlozeJZVaeXX23A35asMGTLaMa5w8bsNvJVWHz/IkCGjN6MS5nj5mnb+HgzZMmTIeC2jEmTTVhpv6m2uxWXIkNGCUQ986TByLe0bBnoZMmTIwOMBXtDyVh2iypAhQ0Y5sUuDeDwKlSFDxgEMntKtNfqfaMPJkCHjHAYvHdMrXGk45lc9FoeaMmTIeB/jD+WQ0T/5yYsGAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aQW7DMAwEwPz/0ynQU4A2ypJ0ikYan4zGlTU60KLI2y2+7t/X4/3j9ezvP5/JR7i948LAwPhYRvL69VTW1OoUe0uDgYFxAiMf7tmv+bSqQXw9JgYGBkZva7gOsvmiYGBgYPQCbm9TmAdWDAwMjEkSW01012diveB+QS6OgYHxgYxeYeBv7t9e38DAwPj3jHvxWm/Oqkf/621fYVYYGBhbM9YTSlLHXnJbTY+jcIyBgbEpo/pvefNErxiZB/Gn3w0MDIytGb1pTdrFepvLwnkhBgbGFow8dPaSzOqSVYupGBgY5zDyUJg3TCQjV0N8VDbAwMDYjtHbwCWrMt9KFhJgDAyMrRmTBos8Wc3Zk/ExMDDOYVQT1GvDbnWDiIGBcQIjn9BVwXGesv4yGgYGxgGM/Jisl9Ym7RST5zEwMPZmVBsdqulunnxelsRiYGBsx0hen/MmT47Gx8DAOJ5R/bXXEFZt4ygHXAwMjI9l9A68elvDJBznjRdRZQMDA2MLRh4KJ4f41cJDHogxMDDOYfSmUm1OnXwTXhzGYWBgbM2YDFd+zUXHbdEGEQMDYyPGvXglk8jz5jxMv/gAYGBgbM24tp3iqpJkvigYGBjnMPIgmxcMqpvCXltYdHaIgYGxEaOc+7aezMHVoI+BgYExv+8lt4WDPwwMDIyLXjlvO3tR38DAwNiaMS8GTEoC0UTXI2NgYGzNmCSQeQFyEo6ry4SBgbER4wsIryLg4xn+rAAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

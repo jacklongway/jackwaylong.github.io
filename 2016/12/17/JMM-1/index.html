@@ -15,7 +15,7 @@
   <meta name="description" content="首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我对每个疑问进行剖析。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JMM-重排序">
-<meta property="og:url" content="http://jackwaylong.github.io/2016/12/17/JMM-1/index.html">
+<meta property="og:url" content="http://www.jackway.cn/2016/12/17/JMM-1/index.html">
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我对每个疑问进行剖析。">
 <meta property="og:updated_time" content="2016-12-17T03:24:40.000Z">
@@ -223,7 +223,7 @@
         该内容没经过版主同意不得随意转发
     </div>
     <footer>
-        <a href="http://jackwaylong.github.io">
+        <a href="http://www.jackway.cn">
             <img src="/img/avatar.jpg" alt="龙伟">
             龙伟
         </a>
@@ -249,7 +249,7 @@
     <div class="tit">分享到：</div>
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/17/JMM-1/&title=《JMM-重排序》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2016/12/17/JMM-1/&title=《JMM-重排序》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -259,23 +259,23 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/17/JMM-1/&title=《JMM-重排序》 — longway's blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2016/12/17/JMM-1/&title=《JMM-重排序》 — longway's blog&source=
 首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/17/JMM-1/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2016/12/17/JMM-1/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-重排序》 — longway's blog&url=http://jackwaylong.github.io/2016/12/17/JMM-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-重排序》 — longway's blog&url=http://www.jackway.cn/2016/12/17/JMM-1/&via=http://www.jackway.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/17/JMM-1/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2016/12/17/JMM-1/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -319,7 +319,7 @@
 
     
 <div class="duoshuo" id="comments">
-	<div class="ds-thread" data-thread-key="JMM-1" data-title="JMM-重排序" data-url="http://jackwaylong.github.io/2016/12/17/JMM-1/"></div>
+	<div class="ds-thread" data-thread-key="JMM-1" data-title="JMM-重排序" data-url="http://www.jackway.cn/2016/12/17/JMM-1/"></div>
 </div>
 <script src="/js/embed.min.js?v=1.3.2"></script>
 <script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
@@ -373,7 +373,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
     <div class="tit">分享到：</div>
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2016/12/17/JMM-1/&title=《JMM-重排序》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2016/12/17/JMM-1/&title=《JMM-重排序》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -383,23 +383,23 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2016/12/17/JMM-1/&title=《JMM-重排序》 — longway's blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2016/12/17/JMM-1/&title=《JMM-重排序》 — longway's blog&source=
 首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2016/12/17/JMM-1/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2016/12/17/JMM-1/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-重排序》 — longway's blog&url=http://jackwaylong.github.io/2016/12/17/JMM-1/&via=http://jackwaylong.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JMM-重排序》 — longway's blog&url=http://www.jackway.cn/2016/12/17/JMM-1/&via=http://www.jackway.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2016/12/17/JMM-1/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2016/12/17/JMM-1/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -410,7 +410,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3awXIrIQwEwPz/TzvXl0piz4h1Xi00J5e9WWgOioT4+IjH49vIn//3m/avLh4YGBi3ZTyejufPrC9xNu8PM2JgYBzA+G3ifKFJ0HyOyefFwMDASF73W1hMfm0DPQYGBsZKwE0weYr53/5vYGBg3ISRB742RCaL/tNaHAMD44aMvDT9+89v6W9gYGDcivEoR9KkbL+ZreTLezAwMLZmrDQg29I3T++GDVEMDIxNGXkJmudj+TWy9QBd7DEGBsZtGbNQ2C46L1yX2qIYGBibMmbl4my5ecLXtlcxMDBOY7RtyLbdOLuQ8WKzMDAwDmBclfbNDuySd7445sPAwNia0SZq7SXUdqGzUhYDA2NvRluO5gE037MLLnZgYGBszSiOtOKj/GF3YmH7MDAw9mbM0rv2CkWSDtZXK9o8FAMD47aM9swqoc5K3/e1RTEwMO7OaFuSOaktX9sjvxfHbRgYGBsx8jSx7RWux/hZywEDA+MERnvEv3Kgn4w6lGNgYGzKaAPitRcpEl6UGmJgYBzDSMJcEoLbxV1wrw0DA+MARtuezMNo20LIS2UMDIwTGLOSMi9Q26DcvgcDA+MExuyYPgnHs1QyCdmX3RnBwMC4FWM94bt259rjOQwMjHMY+eWJdzQjL2hLYGBgYIzKzvXiNv8VAwMDYzZlW+7OgjsGBsY5jFlK1y5x5fnLanEMDIwbMlZuauSJYBuO1zcIAwNjC8Yn4xN/rU95pREAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aQW6EMBAEwP3/pzfXSBGoe4wdDsUJoV0oX0ae9nw+8fUNruSXf3/z2XHh4uIuc2eI38//3t9/6+r+3oCLi3uem7/6qhgl78nff/kcFxf3ldwr+n3Je2ypuLi4r+TOPnnf/ODi4r6TmzQ/s+KVN1EP92q4uLgL3Dyl3He/Jd/FxcUdcb/llS8pf158HRcX9wi3PQJJDkpnsUj+XVxc3DPcWXHJy1nbxhQFFBcXdwN3vQwl9Dx4jXZkuLi4m7l5CNIepbRjXm1ci4uLu5ubFI6VktSWrahXw8XFPcJdGZ/a0fwMp0VwcXGPcJNXtNHnbDOEi4t7kpvg2oGtpPzloQwuLu5JblJW8s1HVIDKFuhyWgQXF3cb99moND8CyTdJG5NdXFzc2+f5xqWNUdpwpM53cXFxj3Dbo9CVA9dhUIuLi3uQ225B6kYlvopdGC4u7gbut7yScHNlFCNaBy4u7mZuW1zyaHVlXmJldAMXF/cpbt7eJOtuD2byWBYXF/c8tx3Myscs2hGuqJDh4uK+mDuLR5MFRyMXuLi4r+S2vdTKv3Bxcc9zZ8eos6XmBREXF/e/uG0pmS1vltou5bu4uLgT7g9yGSn4IabERwAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

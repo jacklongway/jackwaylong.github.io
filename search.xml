@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[jvm-class生命周期]]></title>
-      <url>http://jackwaylong.github.io/2017/01/04/jvm-classloader/</url>
+      <url>http://www.jackway.cn/2017/01/04/jvm-classloader/</url>
       <content type="html"><![CDATA[<p>在class文件中描述的各种信息，最终都需要被加载到虚拟机中之后，才能被运行和使用。<br>虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验，转换，解析和初始化，最终形成可以被虚拟机直接使用的java类型，这就是虚拟机的类加载机制。</p>
 <a id="more"></a>
 <h2 id="class生死大纲"><a href="#class生死大纲" class="headerlink" title="class生死大纲"></a>class生死大纲</h2><ol>
@@ -44,7 +44,7 @@
     
     <entry>
       <title><![CDATA[jvm-内存模型]]></title>
-      <url>http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/</url>
+      <url>http://www.jackway.cn/2017/01/03/jvm-memorymodel/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。</p>
 </blockquote>
@@ -92,7 +92,7 @@
     
     <entry>
       <title><![CDATA[总结过去,展望未来,致敬2016]]></title>
-      <url>http://jackwaylong.github.io/2016/12/30/2016%E6%80%BB%E7%BB%93/</url>
+      <url>http://www.jackway.cn/2016/12/30/2016%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>2016即将过去，此时我在想，我该写点什么好了，我该怎么总结自己这一年中的得与失了，我该怎么计划2017了，我该如何计划自己的未来了，我离自己的职业规划的目标还差多远了，那么此文不聊技术，总结自我一下。希望看到此文的同仁也会有自己的感受，也希望同仁对自己也好好的总结。</p>
 </blockquote>
@@ -117,7 +117,7 @@
     
     <entry>
       <title><![CDATA[android脑图]]></title>
-      <url>http://jackwaylong.github.io/2016/12/28/android-system-img/</url>
+      <url>http://www.jackway.cn/2016/12/28/android-system-img/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般<br>我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么<br>我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们<br>就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间<br>我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了<br>今天的<code>android</code>系统中，包括<code>编译,打包</code>,<code>运行时</code>,<code>框架</code>,<code>安装</code>等脑图。<br><a id="more"></a></p>
 </blockquote>
@@ -243,7 +243,7 @@
     
     <entry>
       <title><![CDATA[JMM-transient]]></title>
-      <url>http://jackwaylong.github.io/2016/12/25/JMM-transient-4/</url>
+      <url>http://www.jackway.cn/2016/12/25/JMM-transient-4/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>java里面将一个对象序列化，步骤就是将要被序列化的对象实现<code>Serializable</code>接口，这个接口是个标志接口，跟java里面的<code>Clonable,Closable</code>等接口一样，没有具体的行为标准定义，就是一个描述。只有实现了序列化接口的对象，才能够序列化，但是我们还注意到序列化对象的类的内部还定义了一个<code>serialVersionUUID</code>,这个是做什么的了，这个可以理解为一个token，只有token值一样的类，序列化的对象才可逆，也就是说，标志这个<code>class,Class</code>对象是否前后版本一致。注意类里面的被序列的数据只有，非<code>static</code>字段，非<code>transient</code>字段。下面重点来来讲解序列化的几种不同姿势。以及我们需要的地方，但是在<code>Android</code>里面最好用<code>Parcelable</code>接口，实现数据的序列化，这个本地性能很棒，原因是内存拷贝，前者是反射，性能当然差点哈，但是如果要将对象在网络传输，那么我们就只能用前者了。其实还有一个接口可以实现序列化，本文为了更专注序列化的几大特性来讲，不会过多介绍，后面我会提到。知道就行。</p>
 </blockquote>
@@ -257,7 +257,7 @@
 <li>Parcelable</li>
 </ol>
 <blockquote>
-<p>上面5点中主要还是数据安全，跟<a href="http://www.jackway.cn/2016/12/22/transfer-security-1/" target="_blank" rel="external">安全那点事情</a>这篇文章的理论接轨，如果对数据安全不是很理解的，可以看看这篇文章，有个理论基础，然后再具体代码。其实代码不难，主要是这种解决问题的组合。</p>
+<p>上面5点中主要还是数据安全，跟<a href="http://www.jackway.cn/2016/12/22/transfer-security-1/">安全那点事情</a>这篇文章的理论接轨，如果对数据安全不是很理解的，可以看看这篇文章，有个理论基础，然后再具体代码。其实代码不难，主要是这种解决问题的组合。</p>
 </blockquote>
 <h2 id="演示基础类"><a href="#演示基础类" class="headerlink" title="演示基础类"></a>演示基础类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></div><div class="line">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String fn, String ln, <span class="keyword">int</span> a)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">this</span>.firstName = fn; <span class="keyword">this</span>.lastName = ln; <span class="keyword">this</span>.age = a;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getFirstName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> firstName; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLastName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> lastName; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> age; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> Person <span class="title">getSpouse</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> spouse; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFirstName</span><span class="params">(String value)</span> </span>&#123; firstName = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLastName</span><span class="params">(String value)</span> </span>&#123; lastName = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; age = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSpouse</span><span class="params">(Person value)</span> </span>&#123; spouse = value; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"[Person: firstName="</span> + firstName + </div><div class="line">            <span class="string">" lastName="</span> + lastName +</div><div class="line">            <span class="string">" age="</span> + age +</div><div class="line">            <span class="string">" spouse="</span> + spouse.getFirstName() +</div><div class="line">            <span class="string">"]"</span>;</div><div class="line">    &#125;    </div><div class="line"></div><div class="line">    <span class="keyword">private</span> String firstName;</div><div class="line">    <span class="keyword">private</span> String lastName;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line">    <span class="keyword">private</span> Person spouse;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="序列化允许重构"><a href="#序列化允许重构" class="headerlink" title="序列化允许重构"></a>序列化允许重构</h2><p>序列化允许一定数量的类变种，甚至重构之后也是如此，<code>ObjectInputStream</code> 还是可以很好的将其读出来。<br>Java Object Serialization 规范可以自动管理的关键任务是：</p>
@@ -282,7 +282,7 @@
     
     <entry>
       <title><![CDATA[安全那点事情]]></title>
-      <url>http://jackwaylong.github.io/2016/12/22/transfer-security-1/</url>
+      <url>http://www.jackway.cn/2016/12/22/transfer-security-1/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概<br>包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，<br>so 调试等,下面我就针对我每个方面的思考详细讲解一下。</p>
 </blockquote>
@@ -306,7 +306,7 @@
     
     <entry>
       <title><![CDATA[AccessibilityService(自动化服务)?]]></title>
-      <url>http://jackwaylong.github.io/2016/12/20/accessibilityService-1/</url>
+      <url>http://www.jackway.cn/2016/12/20/accessibilityService-1/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>AccessibilityService是android系统提供的一种辅助服务，google设计<br>这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也提供了很多创新的<br>姿势，这篇文章主要讲解一下辅助自动安装，首先要声明的是不是静默安装，这个<br>肯定是从入门到放弃，不信可以试试。至于为什么，自己去看PackageManager<br>这一系列的源码就知道了。</p>
 </blockquote>
@@ -326,7 +326,7 @@
     
     <entry>
       <title><![CDATA[JMM-final]]></title>
-      <url>http://jackwaylong.github.io/2016/12/18/JMM-3/</url>
+      <url>http://www.jackway.cn/2016/12/18/JMM-3/</url>
       <content type="html"><![CDATA[<blockquote>
 <p> Java内部类final语义实现 </p>
 </blockquote>
@@ -365,7 +365,7 @@
     
     <entry>
       <title><![CDATA[JMM-volatile]]></title>
-      <url>http://jackwaylong.github.io/2016/12/18/JMM-2/</url>
+      <url>http://www.jackway.cn/2016/12/18/JMM-2/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>Java 语言中的 volatile 变量可以被看作是一种 “程度较轻的 synchronized”；与 synchronized 块相比，volatile 变量所需的编码较少，并且运行时开销也较少，但是它所能实现的功能也仅是 synchronized 的一部分。本文介绍了几种有效使用 volatile 变量的模式，并强调了几种不适合使用 volatile 变量的情形。</p>
 </blockquote>
@@ -401,7 +401,7 @@
     
     <entry>
       <title><![CDATA[JMM-重排序]]></title>
-      <url>http://jackwaylong.github.io/2016/12/17/JMM-1/</url>
+      <url>http://www.jackway.cn/2016/12/17/JMM-1/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，<br>在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么<br>鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我<br>对每个疑问进行剖析。</p>
 </blockquote>
@@ -431,7 +431,7 @@
     
     <entry>
       <title><![CDATA[CAS为什么如此的乐观了?]]></title>
-      <url>http://jackwaylong.github.io/2016/12/13/cas-1/</url>
+      <url>http://www.jackway.cn/2016/12/13/cas-1/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，<br>如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，<br>接下来，让我们更深入的了解一下这项技术。</p>
 </blockquote>
@@ -454,7 +454,7 @@
 <h2 id="View-id的产生"><a href="#View-id的产生" class="headerlink" title="View id的产生"></a>View id的产生</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">generateViewId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (;;) &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> result = sNextGeneratedId.get(); <span class="comment">// 获取当前id</span></div><div class="line">            <span class="comment">// aapt-generated IDs have the high byte nonzero; clamp to the range under that.</span></div><div class="line">            <span class="keyword">int</span> newValue = result + <span class="number">1</span>; <span class="comment">// 新的id</span></div><div class="line">            <span class="keyword">if</span> (newValue &gt; <span class="number">0x00FFFFFF</span>) newValue = <span class="number">1</span>; <span class="comment">// Roll over to 1, not 0. // 可能跟aapt工具产生的冲突，需要回滚</span></div><div class="line">            <span class="keyword">if</span> (sNextGeneratedId.compareAndSet(result, newValue)) &#123;  <span class="comment">// 自旋设置最新值，如果失败，需要重试</span></div><div class="line">                <span class="keyword">return</span> result;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>这个是<code>android View</code>里面的一个类方法，当我们动态setId的时候，如果id无效，那么会调用这个方法自动产生一个<br>有效的id，这里用cas机制实现了，id的有效性, 同时也佩服google的工程师，考虑问题很全，这里aapt产生的id不会在<br>新值之内，做了过滤，比如系统资源0x01开头，应用资源0x7F开头，<code>0x00FFFFFF</code>这个值就是临界值，所以我们在插件开发<br>的时候，也需要兼容框架层一下，我们定制aapt也是用开始的一个字节。</p>
 <h2 id="AtomicBoolean-源码剖析"><a href="#AtomicBoolean-源码剖析" class="headerlink" title="AtomicBoolean 源码剖析"></a>AtomicBoolean 源码剖析</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AtomicBoolean</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">4654671469794556979L</span>;</div><div class="line">    <span class="comment">// setup to use Unsafe.compareAndSwapInt for updates</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe unsafe = Unsafe.getUnsafe();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> valueOffset;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            valueOffset = unsafe.objectFieldOffset</div><div class="line">                (AtomicBoolean.class.getDeclaredField(<span class="string">"value"</span>)); <span class="comment">// jni层的偏移值，为了后面的自旋比较</span></div><div class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> Error(ex); &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value; <span class="comment">// 最新值</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Creates a new &#123;<span class="doctag">@code</span> AtomicBoolean&#125; with the given initial value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> initialValue the initial value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AtomicBoolean</span><span class="params">(<span class="keyword">boolean</span> initialValue)</span> </span>&#123;</div><div class="line">        value = initialValue ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Creates a new &#123;<span class="doctag">@code</span> AtomicBoolean&#125; with initial value &#123;<span class="doctag">@code</span> false&#125;.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AtomicBoolean</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Returns the current value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span> the current value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> value != <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Atomically sets the value to the given updated value</div><div class="line">     * if the current value &#123;<span class="doctag">@code</span> ==&#125; the expected value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> expect the expected value</div><div class="line">     * <span class="doctag">@param</span> update the new value</div><div class="line">     * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if successful. False return indicates that</div><div class="line">     * the actual value was not equal to the expected value.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(<span class="keyword">boolean</span> expect, <span class="keyword">boolean</span> update)</span> </span>&#123; <span class="comment">// 这个方法是final</span></div><div class="line">        <span class="keyword">int</span> e = expect ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> u = update ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> unsafe.compareAndSwapInt(<span class="keyword">this</span>, valueOffset, e, u);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Atomically sets the value to the given updated value</div><div class="line">     * if the current value &#123;<span class="doctag">@code</span> ==&#125; the expected value.</div><div class="line">     *</div><div class="line">     * &lt;p&gt;&lt;a href="package-summary.html#weakCompareAndSet"&gt;May fail</div><div class="line">     * spuriously and does not provide ordering guarantees&lt;/a&gt;, so is</div><div class="line">     * only rarely an appropriate alternative to &#123;<span class="doctag">@code</span> compareAndSet&#125;.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> expect the expected value</div><div class="line">     * <span class="doctag">@param</span> update the new value</div><div class="line">     * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if successful</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">weakCompareAndSet</span><span class="params">(<span class="keyword">boolean</span> expect, <span class="keyword">boolean</span> update)</span> </span>&#123; <span class="comment">// 这个跟compareAndSet逻辑一样，但是不是final，意味着子类可以覆盖逻辑，进行自定义</span></div><div class="line">        <span class="keyword">int</span> e = expect ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> u = update ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> unsafe.compareAndSwapInt(<span class="keyword">this</span>, valueOffset, e, u); <span class="comment">// cas操作</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Unconditionally sets to the given value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> newValue the new value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">boolean</span> newValue)</span> </span>&#123;</div><div class="line">        value = newValue ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Eventually sets to the given value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> newValue the new value</div><div class="line">     * <span class="doctag">@since</span> 1.6</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">lazySet</span><span class="params">(<span class="keyword">boolean</span> newValue)</span> </span>&#123; <span class="comment">// 延迟设置到最新值</span></div><div class="line">        <span class="keyword">int</span> v = newValue ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">        unsafe.putOrderedInt(<span class="keyword">this</span>, valueOffset, v);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Atomically sets to the given value and returns the previous value.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> newValue the new value</div><div class="line">     * <span class="doctag">@return</span> the previous value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">getAndSet</span><span class="params">(<span class="keyword">boolean</span> newValue)</span> </span>&#123; <span class="comment">// 获取旧值，设置最新值</span></div><div class="line">        <span class="keyword">boolean</span> prev;</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            prev = get(); <span class="comment">// 获取旧值</span></div><div class="line">        &#125; <span class="keyword">while</span> (!compareAndSet(prev, newValue)); <span class="comment">// false 意味着有线程更新了value，需要轮询，保证数据的准确性，一致性。</span></div><div class="line">        <span class="keyword">return</span> prev;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Returns the String representation of the current value.</div><div class="line">     * <span class="doctag">@return</span> the String representation of the current value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Boolean.toString(get());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>场景还有很多,<a href="http://www.jackway.cn/2016/12/03/single/" target="_blank" rel="external">比如单例场景</a> 等等。</p>
+<p>场景还有很多,<a href="http://www.jackway.cn/2016/12/03/single/">比如单例场景</a> 等等。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>那我们到底什么时候选择cas，什么时候选择加锁了，这个没有一定，需要根据具体场景，选择合适的方式。<br>cas总体上来说，性能优越加锁。但是当资源竞争很大的时候，轮询次数增加，导致性能有点下降。移动端并发<br>数目不会很大，如果是服务端需要对cas进一步优化。</p>
 <blockquote>
 <p>cas只能保证单一变量操作的原子性，如果需要保证多个变量，那么使用对象，然后数据封装到对象进行atomic，<br><code>AtomicReference</code> 有兴趣的可以了解，还有很多数据结构实现的无锁操作，也可以去学习，了解。</p>
@@ -464,7 +464,7 @@
     
     <entry>
       <title><![CDATA[线程启动之后可以停止吗?]]></title>
-      <url>http://jackwaylong.github.io/2016/12/12/thread-stop/</url>
+      <url>http://www.jackway.cn/2016/12/12/thread-stop/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>异步任务最后都会回归到Thread这个类，所以我们很有必要深入理解一下这个类，才能<br>写基础框架，才能理解目前大名鼎鼎的线程池框架，不得不佩服并发大神<a href="http://baike.baidu.com/link?url=8gNOf1rdWwWIwgTs9jiK7YPWRCWus2QJOySxomfNQrGQVr1srHi4v-4uZrCz-TUUGG4MALDNKwkLgS-HDt0X4p5SEwZByLWAAi3hUeyxr8K" target="_blank" rel="external">Doug Lea</a><br>对java并发做出的共享，也就是很多人所说，java具有先天高并发的特性。下面分析一下我们常见的场景，任务的停止处理.</p>
 </blockquote>
@@ -484,7 +484,7 @@
     
     <entry>
       <title><![CDATA[git submodule]]></title>
-      <url>http://jackwaylong.github.io/2016/12/08/gitsubmodule-1/</url>
+      <url>http://www.jackway.cn/2016/12/08/gitsubmodule-1/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>有种情况我们经常会遇到：某个工作中的项目需要包含并使用另一个项目。 也许是第三方库，或者你独立开发的，用于多个父项目的库。 现在问题来了：你想要把它们当做两个独立的项目，同时又想在一个项目中使用另一个。</p>
 </blockquote>
@@ -532,7 +532,7 @@ index eb41d76,c771610..0000000
     
     <entry>
       <title><![CDATA[一线互联网公司面试简单分析]]></title>
-      <url>http://jackwaylong.github.io/2016/12/07/interview-1/</url>
+      <url>http://www.jackway.cn/2016/12/07/interview-1/</url>
       <content type="html"><![CDATA[<ol>
 <li>介绍自己负责的部分，如何实现的。</li>
 <li>自定义view viewGroup</li>
@@ -602,7 +602,7 @@ index eb41d76,c771610..0000000
     
     <entry>
       <title><![CDATA[打破标准的第一个OC程序]]></title>
-      <url>http://jackwaylong.github.io/2016/12/06/ios-oc-1/</url>
+      <url>http://www.jackway.cn/2016/12/06/ios-oc-1/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>平时我们写程序第一个程序都是<em>hello world</em>,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符串,但是我们从程序的角度看，就是一个空虚的字符串，不能让我们想到更多，我想如果能否说一些字符串的基本操作可能更有意思，一方面是基础语法，另一方面也理解了<code>oc</code>字符串对象与<code>java</code>的不同点。</p>
 </blockquote>
@@ -619,7 +619,7 @@ index eb41d76,c771610..0000000
     
     <entry>
       <title><![CDATA[wait和sleep 深度分析]]></title>
-      <url>http://jackwaylong.github.io/2016/12/05/wait-sleep/</url>
+      <url>http://www.jackway.cn/2016/12/05/wait-sleep/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:</p>
 </blockquote>
@@ -645,7 +645,7 @@ index eb41d76,c771610..0000000
     
     <entry>
       <title><![CDATA[shareUID]]></title>
-      <url>http://jackwaylong.github.io/2016/12/03/shareUID/</url>
+      <url>http://www.jackway.cn/2016/12/03/shareUID/</url>
       <content type="html"><![CDATA[<p>shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共享，但是实现该目的也是有一定限制的，首先保证app之间的签名一致，同时shareUID值相等，才能完全无障碍访问所有资源，不然只能访问部分资源，代码，sharedPreferences等资源是没法访问到的，即使访问到的也是非安全的。<br><a id="more"></a></p>
 <h2 id="shareuid常见数据共享的方式有"><a href="#shareuid常见数据共享的方式有" class="headerlink" title="shareuid常见数据共享的方式有"></a>shareuid常见数据共享的方式有</h2><ol>
 <li>用户数据共享</li>
@@ -668,7 +668,7 @@ index eb41d76,c771610..0000000
     
     <entry>
       <title><![CDATA[SharedPreferences真的安全吗?]]></title>
-      <url>http://jackwaylong.github.io/2016/12/03/safesharepreferences/</url>
+      <url>http://www.jackway.cn/2016/12/03/safesharepreferences/</url>
       <content type="html"><![CDATA[<p>SharedPreferences是单进程线程安全,Android系统进程之间的内存是隔离的,<br>这样就导致了进程之间如果访问同一个数据文件,进行数据共享通信的时候,可能会<br>出现下面几种异常:<br><a id="more"></a></p>
 <ol>
 <li>数据不一致</li>
@@ -704,7 +704,7 @@ index eb41d76,c771610..0000000
     
     <entry>
       <title><![CDATA[单例模式真的很简单吗？]]></title>
-      <url>http://jackwaylong.github.io/2016/12/03/single/</url>
+      <url>http://www.jackway.cn/2016/12/03/single/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各种版本，这篇文章我想跟大家聊聊我心中的单例模式，同时我会给出我心目中的单例模式的各种版本，同时会给出不同版本的优缺点，以及我们最后应该选用哪个版本才是最为安全，优雅，同时性能也是比较好的，最后我想说，安全，性能是一个折中的考虑。</p>
 </blockquote>
@@ -756,7 +756,7 @@ index eb41d76,c771610..0000000
     
     <entry>
       <title><![CDATA[揭开Gradle的神秘面纱]]></title>
-      <url>http://jackwaylong.github.io/2016/11/29/gradle/</url>
+      <url>http://www.jackway.cn/2016/11/29/gradle/</url>
       <content type="html"><![CDATA[<p><img src="https://www.processon.com/chart_image/583c622fe4b0e742e43f7055.png"></p>
 <blockquote>
 <p>gradle前言</p>
@@ -833,7 +833,7 @@ index eb41d76,c771610..0000000
     
     <entry>
       <title><![CDATA[modularity]]></title>
-      <url>http://jackwaylong.github.io/2016/11/27/modularity/</url>
+      <url>http://www.jackway.cn/2016/11/27/modularity/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>主题大纲</p>
 <ol>

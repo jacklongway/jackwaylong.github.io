@@ -15,19 +15,19 @@
   <meta name="description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm-内存模型">
-<meta property="og:url" content="http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/index.html">
+<meta property="og:url" content="http://www.jackway.cn/2017/01/03/jvm-memorymodel/index.html">
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
-<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/1.png">
-<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/2.png">
-<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/3.png">
-<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/4.png">
-<meta property="og:image" content="http://jackwaylong.github.io/img/jvm/5.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/1.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/2.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/3.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/4.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/5.png">
 <meta property="og:updated_time" content="2017-01-03T16:21:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-内存模型">
 <meta name="twitter:description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
-<meta name="twitter:image" content="http://jackwaylong.github.io/img/jvm/1.png">
+<meta name="twitter:image" content="http://www.jackway.cn/img/jvm/1.png">
   
     <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
   
@@ -247,7 +247,7 @@
         该内容没经过版主同意不得随意转发
     </div>
     <footer>
-        <a href="http://jackwaylong.github.io">
+        <a href="http://www.jackway.cn">
             <img src="/img/avatar.jpg" alt="龙伟">
             龙伟
         </a>
@@ -273,7 +273,7 @@
     <div class="tit">分享到：</div>
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -283,23 +283,23 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&source=
 世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/01/03/jvm-memorymodel/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-内存模型》 — longway's blog&url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&via=http://jackwaylong.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-内存模型》 — longway's blog&url=http://www.jackway.cn/2017/01/03/jvm-memorymodel/&via=http://www.jackway.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/01/03/jvm-memorymodel/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -343,7 +343,7 @@
 
     
 <div class="duoshuo" id="comments">
-	<div class="ds-thread" data-thread-key="jvm-memorymodel" data-title="jvm-内存模型" data-url="http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/"></div>
+	<div class="ds-thread" data-thread-key="jvm-memorymodel" data-title="jvm-内存模型" data-url="http://www.jackway.cn/2017/01/03/jvm-memorymodel/"></div>
 </div>
 <script src="/js/embed.min.js?v=1.3.2"></script>
 <script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
@@ -397,7 +397,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
     <div class="tit">分享到：</div>
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&pic=http://jackwaylong.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -407,23 +407,23 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/01/03/jvm-memorymodel/&title=《jvm-内存模型》 — longway's blog&source=
 世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/01/03/jvm-memorymodel/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-内存模型》 — longway's blog&url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/&via=http://jackwaylong.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-内存模型》 — longway's blog&url=http://www.jackway.cn/2017/01/03/jvm-memorymodel/&via=http://www.jackway.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://jackwaylong.github.io/2017/01/03/jvm-memorymodel/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/01/03/jvm-memorymodel/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -434,7 +434,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3a226EMAxFUf7/p+lzNSWzjw2VcDZP1cwAWalk+ZLjwNf5cX1+vv791W+u7jqeuGTIkPFaxrm8+LLSLUi36ctzZMiQsQHj6tEkOK5DMA/Q5L2Xn8uQIUPGMghyNqfKkCFDRj/gdkrcNUaGDBkyOkUsaY3xJJKUx4/U4jJkyHghg7fM/v/vR+YbMmTIeBXjDC/C46lhZyW/nixDhozRDB7gOjA+HqitR4YMGfswOuMBPjy4K2R/qcVlyJAxiMFbbPzRabut1vJDGa4MGTJGMGrxigA6pWyaJsqQIWM2I72NH/biw8g0rfzjLhkyZGzDCG67aV6aHtdA59pkyJCxAYMnc+lhrzU+DrLrgCtDhoxxjPSYBVk0D9P8jXHXUIYMGSMYPGmrhcJa246H5jj3lCFDxghGp02W9upbJ0Q6/wcZMmS8ipEmcHcVtOlBDXRmRIYMGUMZKSBN14JsFA9NL7+VIUPGUAY/4lArU9PhZbo1MmTI2IFBkrxOW59sCi9ig6MeMmTIGMdIW2lpGpeONtNNlCFDxp4MfvyiFo7vSj1lyJCxG4OPG9OlpEtMh6wyZMiYzagF2do5h1rpi54pQ4aM0Yy0QK011NIgWwvZMmTImM1Ii1U+aKztHC+YZciQsRuDB77nhgEdpAwZMmR0Qir/PBhY1l4jQ4aMzRhxQCwFYjKokCFDxj4M3qyvNfp5Q63WvJMhQ8ZsBg+j6xY/eU06Fl0HWRkyZGzA+AFy2mqYCYov9QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3aS26DQBAFQN//0skBHMN70zgSQ7GykDOmWHT693rF18/4Oj7t/f7rGxcGBsZtGcnPf7rz6Zz3+zng+P5HKgYGxgMYnyJY/tB5YM1/K3k2DAwMjOPvJLD2FWBgYGBcG3DXaswkccTAwMBYK2KTx8pDals8X1aLY2Bg3JCRh8v///yV+QYGBsatGPMxZBtevzEixcDA2JtxVStt8tBRgZqcgIGBsTWjTdqS1tta42xtgQMDA2NvRpsO5kGzTRAnyxwYGBhPY1wbfCdrHMUAAAMDY2vG2p9Nxpn5AGCxxMXAwNiUMVl0aEcCa6dFCSsGBsamjMnYsg2Ux8jJS8TAwHgCI4ldx6F5bfA5SQT/2BnBwMDYlNE2xfJli7bBNwJgYGA8htEG2XxJYtLIOxleYmBgYMSBMi99J6nhyTkYGBgPYLSF6NqAIQ+49bIFBgbGpox2GJkEzTZ8J+H15GVhYGBszciHi5NlskniWA9TMTAwNmUUaw1Lrf8k4K6F76gWx8DA2I5x7VJFwp4X2BgYGM9h5J8XG/dLLbwilGNgYGzK+CmvtcI1KZJHC2cYGBhbM9oUrW30t99p/wHUMAwMjNsy6sbWRQsZbQmNgYGBMS9Q2zFA29Q7Cf0YGBgYF61itMtnxagAAwMDIx8llue0Ze1lqSEGBsYNGe0woC011x73+HVgYGA8h5GXjvngsz2zLV8Xh5oYGBj3Y/wCF6OTYfS55/kAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
