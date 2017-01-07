@@ -18,16 +18,16 @@
 <meta property="og:url" content="http://www.jackway.cn/2017/01/03/jvm-memorymodel/index.html">
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
-<meta property="og:image" content="http://www.jackway.cn/img/jvm/1.png">
-<meta property="og:image" content="http://www.jackway.cn/img/jvm/2.png">
-<meta property="og:image" content="http://www.jackway.cn/img/jvm/3.png">
-<meta property="og:image" content="http://www.jackway.cn/img/jvm/4.png">
-<meta property="og:image" content="http://www.jackway.cn/img/jvm/5.png">
-<meta property="og:updated_time" content="2017-01-07T07:24:24.000Z">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/jvm运行时内存布局.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/jvmstack.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/jvm变量表.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/jvm对象引用方式1.png">
+<meta property="og:image" content="http://www.jackway.cn/img/jvm/jvm对象引用方式2.png">
+<meta property="og:updated_time" content="2017-01-07T09:02:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-内存模型">
 <meta name="twitter:description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
-<meta name="twitter:image" content="http://www.jackway.cn/img/jvm/1.png">
+<meta name="twitter:image" content="http://www.jackway.cn/img/jvm/jvm运行时内存布局.png">
   
     <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
   
@@ -176,7 +176,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行数据内存布局"><span class="post-toc-number">1.</span> <span class="post-toc-text">运行数据内存布局</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈区"><span class="post-toc-number">2.</span> <span class="post-toc-text">虚拟机栈区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机局部变量表"><span class="post-toc-number">3.</span> <span class="post-toc-text">虚拟机局部变量表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈对象引用方式"><span class="post-toc-number">4.</span> <span class="post-toc-text">虚拟机栈对象引用方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">最近访客</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行数据内存布局"><span class="post-toc-number">1.</span> <span class="post-toc-text">运行数据内存布局</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈区"><span class="post-toc-number">2.</span> <span class="post-toc-text">虚拟机栈区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机变量表"><span class="post-toc-number">3.</span> <span class="post-toc-text">虚拟机变量表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈对象引用方式"><span class="post-toc-number">4.</span> <span class="post-toc-text">虚拟机栈对象引用方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">最近访客</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -204,35 +204,35 @@
 <h2 id="运行数据内存布局"><a href="#运行数据内存布局" class="headerlink" title="运行数据内存布局"></a>运行数据内存布局</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/1.png" alt="memory" title="">
+                    <img src="/img/jvm/jvm运行时内存布局.png" alt="memory" title="">
                 </div>
                 <div class="image-caption">memory</div>
             </figure>
 <h2 id="虚拟机栈区"><a href="#虚拟机栈区" class="headerlink" title="虚拟机栈区"></a>虚拟机栈区</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/2.png" alt="stack" title="">
+                    <img src="/img/jvm/jvmstack.png" alt="stack" title="">
                 </div>
                 <div class="image-caption">stack</div>
             </figure>
-<h2 id="虚拟机局部变量表"><a href="#虚拟机局部变量表" class="headerlink" title="虚拟机局部变量表"></a>虚拟机局部变量表</h2><figure class="image-bubble">
+<h2 id="虚拟机变量表"><a href="#虚拟机变量表" class="headerlink" title="虚拟机变量表"></a>虚拟机变量表</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/3.png" alt="local" title="">
+                    <img src="/img/jvm/jvm变量表.png" alt="local" title="">
                 </div>
                 <div class="image-caption">local</div>
             </figure>
 <h2 id="虚拟机栈对象引用方式"><a href="#虚拟机栈对象引用方式" class="headerlink" title="虚拟机栈对象引用方式"></a>虚拟机栈对象引用方式</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/4.png" alt="reference1" title="">
+                    <img src="/img/jvm/jvm对象引用方式1.png" alt="reference1" title="">
                 </div>
                 <div class="image-caption">reference1</div>
             </figure>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/5.png" alt="reference2" title="">
+                    <img src="/img/jvm/jvm对象引用方式2.png" alt="reference2" title="">
                 </div>
                 <div class="image-caption">reference2</div>
             </figure>
