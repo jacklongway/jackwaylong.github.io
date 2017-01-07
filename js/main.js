@@ -421,8 +421,8 @@
         Blog.page.loaded();
     });
 
-    var ignoreUnload = false;
-    $('a[href^="mailto"]').addEventListener(even, function () {
+    var ignoreUnload = false, mailLink = $('a[href^="mailto"]');
+    mailLink && mailLink.addEventListener(even, function () {
         ignoreUnload = true;
     });
     w.addEventListener('beforeunload', function (e) {

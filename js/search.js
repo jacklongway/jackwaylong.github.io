@@ -1,5 +1,5 @@
 (function() {
-
+    console.log(this);
     var G = window || this,
         even = G.BLOG.even,
         $ = G.BLOG.$,
