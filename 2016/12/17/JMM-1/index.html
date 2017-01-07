@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://www.jackway.cn/2016/12/17/JMM-1/index.html">
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我对每个疑问进行剖析。">
-<meta property="og:updated_time" content="2016-12-17T03:24:40.000Z">
+<meta property="og:updated_time" content="2017-01-07T07:23:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JMM-重排序">
 <meta name="twitter:description" content="首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我对每个疑问进行剖析。">
@@ -170,7 +170,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#话题大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">话题大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据依赖"><span class="post-toc-number">2.</span> <span class="post-toc-text">数据依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#as-if-serial"><span class="post-toc-number">3.</span> <span class="post-toc-text">as-if-serial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#程序顺序规则，也就是happens－before规则"><span class="post-toc-number">4.</span> <span class="post-toc-text">程序顺序规则，也就是happens－before规则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重排对多线程的影响"><span class="post-toc-number">5.</span> <span class="post-toc-text">重排对多线程的影响</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#扩展"><span class="post-toc-number">6.</span> <span class="post-toc-text">扩展</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#话题大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">话题大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据依赖"><span class="post-toc-number">2.</span> <span class="post-toc-text">数据依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#as-if-serial"><span class="post-toc-number">3.</span> <span class="post-toc-text">as-if-serial</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#程序顺序规则，也就是happens－before规则"><span class="post-toc-number">4.</span> <span class="post-toc-text">程序顺序规则，也就是happens－before规则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重排对多线程的影响"><span class="post-toc-number">5.</span> <span class="post-toc-text">重排对多线程的影响</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#扩展"><span class="post-toc-number">6.</span> <span class="post-toc-text">扩展</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">最近访客</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -215,7 +215,7 @@
 <li>内存重排的解决方法（volatile）</li>
 <li>内存可见性与重排的关系</li>
 </ol>
-
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
         </div>
 
         <blockquote class="post-copyright">

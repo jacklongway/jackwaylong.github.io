@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="在class文件中描述的各种信息，最终都需要被加载到虚拟机中之后，才能被运行和使用。虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验，转换，解析和初始化，最终形成可以被虚拟机直接使用的java类型，这就是虚拟机的类加载机制。">
 <meta property="og:image" content="https://www.processon.com/chart_image/587083e6e4b032a565f79c8c.png">
-<meta property="og:updated_time" content="2017-01-07T06:00:58.000Z">
+<meta property="og:updated_time" content="2017-01-07T07:24:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-class生命周期">
 <meta name="twitter:description" content="在class文件中描述的各种信息，最终都需要被加载到虚拟机中之后，才能被运行和使用。虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验，转换，解析和初始化，最终形成可以被虚拟机直接使用的java类型，这就是虚拟机的类加载机制。">
@@ -172,7 +172,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class生死大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">class生死大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类加载的时机："><span class="post-toc-number">2.</span> <span class="post-toc-text">类加载的时机：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类加载过程："><span class="post-toc-number">3.</span> <span class="post-toc-text">类加载过程：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#准备："><span class="post-toc-number">4.</span> <span class="post-toc-text">准备：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解析："><span class="post-toc-number">5.</span> <span class="post-toc-text">解析：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#初始化："><span class="post-toc-number">6.</span> <span class="post-toc-text">初始化：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">7.</span> <span class="post-toc-text">使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#卸载"><span class="post-toc-number">8.</span> <span class="post-toc-text">卸载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java-classloader-模型"><span class="post-toc-number">9.</span> <span class="post-toc-text">java classloader 模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">10.</span> <span class="post-toc-text">注意</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class生死大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">class生死大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类加载的时机："><span class="post-toc-number">2.</span> <span class="post-toc-text">类加载的时机：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类加载过程："><span class="post-toc-number">3.</span> <span class="post-toc-text">类加载过程：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#准备："><span class="post-toc-number">4.</span> <span class="post-toc-text">准备：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解析："><span class="post-toc-number">5.</span> <span class="post-toc-text">解析：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#初始化："><span class="post-toc-number">6.</span> <span class="post-toc-text">初始化：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">7.</span> <span class="post-toc-text">使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#卸载"><span class="post-toc-number">8.</span> <span class="post-toc-text">卸载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java-classloader-模型"><span class="post-toc-number">9.</span> <span class="post-toc-text">java classloader 模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">10.</span> <span class="post-toc-text">注意</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">10.1.</span> <span class="post-toc-text">最近访客</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -226,7 +226,7 @@
                 <div class="image-caption">classloader</div>
             </figure>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>这里只是java的基本流程，但是我们知道android是没法运行class文件的，<br>必须dx化，转换成dalvik或者art，或者混合模式下的字节码，才能运行。并且<br>移动设备对class的执行进行了深度优化，比如inline等等。这篇只讲解jvm的加载<br>，android的加载必须单独分开写，才能明白原理与区别，后续更新……</p>
-
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
         </div>
 
         <blockquote class="post-copyright">

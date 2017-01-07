@@ -39,7 +39,7 @@
                 <div class="image-caption">classloader</div>
             </figure>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>这里只是java的基本流程，但是我们知道android是没法运行class文件的，<br>必须dx化，转换成dalvik或者art，或者混合模式下的字节码，才能运行。并且<br>移动设备对class的执行进行了深度优化，比如inline等等。这篇只讲解jvm的加载<br>，android的加载必须单独分开写，才能明白原理与区别，后续更新……</p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -87,7 +87,7 @@
 <blockquote>
 <p>虚拟内存布局还有一个堆区，这个在这里没有画出来，因为堆区比较特殊，非常重要，对于我们理解整个虚拟机内幕都很重要，<br>那个区域必须详细讲解，必须写一篇文章来专门讲解堆区的细节。有了内存布局的认识，下面对jvm gc,class结构，class布局，class加载安全机制，class加载流程，class优化，classloader namespace，classloader模式，class生成细节，字节码指令运用等一些列进行深入分析，敬请期待……</p>
 </blockquote>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -238,7 +238,7 @@
 <blockquote>
 <p>后续会不断整理脑图…..</p>
 </blockquote>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -277,6 +277,7 @@
 <h2 id="信任，但要验证"><a href="#信任，但要验证" class="headerlink" title="信任，但要验证"></a>信任，但要验证</h2><p>认为序列化流中的数据总是与最初写到流中的数据一致，这没有问题。但是，正如一位美国前总统所说的，“信任，但要验证”。<br>对于序列化的对象，这意味着验证字段，以确保在反序列化之后它们仍具有正确的值，“以防万一”。为此，可以实现 ObjectInputValidation 接口，并覆盖 validateObject() 方法。如果调用该方法时发现某处有错误，则抛出一个 InvalidObjectException。</p>
 <h2 id="Parcelable"><a href="#Parcelable" class="headerlink" title="Parcelable"></a>Parcelable</h2><p>这个我们在组件之间传递对象数据的时候，很常见，比如intent启动一个activity然后带一些数据过去，那么我们就可以传输一个pracelabel对象过去，最开始提到,<code>android</code>里面优先使用这种序列化，在性能，内存等方面的考虑都会优越于java里面的<code>Serializable</code>方式。首先paracelable底层其实是用parcel存储数据，并且这个类也只是一个java层的包装，里面有个很重要的成员变量long类型的native引用，其实我们写数据是写在这个对象上面，这个对象是jni里面的一个对象，用c++实现的一个类<code>Parcel</code>，这里有个很有意思的技术点，就是将c＋＋一个对象转换成基本基本类型，然后存储在java层，这样我们java层拿了这个基本数据值，就很容易的创建出对应的jni对象，然后实现数据读取与存储。<code>google</code> 的这种做法非常牛逼。接下来的jni文章会重点说这种方式的具体实现。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>序列化其实其实我们想象的那么简单，只是我们使用很简单，但是里面还是很多需要我们去挖掘的，才能深入理解序列化内部，才能很好的使用，出问题可以搞定它。到此java里面的核心关键字分析<code>final,volatile,transient</code>等都分析完了，我个人觉得这是java里面最难理解的，也是最核心的，能够理解这些，并能够很好运用到java代码里面就可以了。后续会计划继续分析java里面核心的技术点，比如<code>线程，线程池，nio，io，集合，网络，gc，jvm</code>的一些核心特性等。一切都输围绕解决实际问题出发。</p>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
 ]]></content>
     </entry>
     
@@ -301,7 +302,7 @@
 <h2 id="java层代码"><a href="#java层代码" class="headerlink" title="java层代码"></a>java层代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Key</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"key"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        Log.e(TAG, <span class="string">"start load......"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.loadLibrary(<span class="string">"key"</span>);</div><div class="line">        &#125;<span class="keyword">catch</span> (UnsatisfiedLinkError error)&#123;</div><div class="line">            error.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">static</span> String <span class="title">key</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">// native call</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getSignature</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> AppUtils.getHostSignature(SystemServiceManager.getAppContext());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>代码不难理解，对代码有疑问的可以评论提出疑问。后面将会发布工程代码，敬请期待……</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>安全其实还是很多事情需要我们思考，我们需要不断的防范，才能对应一些攻击，安全与黑客永远都是对手，但是我相信，我们从自己的防范做起，还是可以拦截那些攻击者的。</p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -321,7 +322,7 @@
 <blockquote>
 <p>辅助服务的流程都一样，通过这种手段可以实现很多有意思的功能，我认为这个服务有点类似脚本，<br>可以自动化的执行一些动作，比如<code>微信自动抢红包</code>，<code>语音播放</code> 等等都可以通过这种实现，其实只要<br>系统提供了相应事件的，我们都可以基于这些事件做一些事情。后续更丰富……</p>
 </blockquote>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -360,7 +361,7 @@
 <p>可以看出，即使是引用static字段，在内部类中仍然会保留外部类的引用，即达到引用目的。同时，在run方法内部，因为是static字段，因此将不再使用getField，而是使用getStatic来进行相应字段的引用。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在整个内部类字节码的生成规则中，主要采用了修改构造函数的方式来将需要在整个内部类中引用的变量进行参数传递。并且，因为是内部类，构造函数是已知的，可以随意的修改。针对特定的场景，可以进行一定的优化，如常量化(临时变量基本类型)。<br>因为在整个JVM层，并没有针对内部类作特殊的处理，因此这些处理手法都是在编译层进行处理的。同时，在语言层，针对这些生成的信息进行指定的说明。如SYNTHETIC语义。<br>在反射字段Member层，定义了如下方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line"> * Returns &#123;<span class="doctag">@code</span> true&#125; if this member was introduced by</div><div class="line"></div><div class="line"> * the compiler; returns &#123;<span class="doctag">@code</span> false&#125; otherwise.</div><div class="line"></div><div class="line"> *</div><div class="line"></div><div class="line"> * <span class="doctag">@return</span> true if and only if this member was introduced by</div><div class="line"></div><div class="line"> * the compiler.</div><div class="line"></div><div class="line"> * <span class="doctag">@jls</span> 13.1 The Form of a Binary</div><div class="line"></div><div class="line"> * <span class="doctag">@since</span> 1.5</div><div class="line"></div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSynthetic</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure></p>
 <p>即此信息是由编译器引入的。<br>了解这些对于整个语言层有一定的理解意义，但并不代表将来这些不会会改变，了解一些实现细节有助于自己在代码实现层有进一步的思考空间，并不局限于之前所了解的信息。</p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -396,7 +397,7 @@
 <p>volatile bean 模式适用于将 JavaBeans 作为“荣誉结构”使用的框架。在 volatile bean 模式中，JavaBean 被用作一组具有 getter 和/或 setter 方法 的独立属性的容器。volatile bean 模式的基本原理是：很多框架为易变数据的持有者（例如 HttpSession）提供了容器，但是放入这些容器中的对象必须是线程安全的。<br>在 volatile bean 模式中，JavaBean 的所有数据成员都是 volatile 类型的，并且 getter 和 setter 方法必须非常普通 —— 除了获取或设置相应的属性外，不能包含任何逻辑。此外，对于对象引用的数据成员，引用的对象必须是有效不可变的。（这将禁止具有数组值的属性，因为当数组引用被声明为 volatile 时，只有引用而不是数组本身具有 volatile 语义）。对于任何 volatile 变量，不变式或约束都不能包含 JavaBean 属性。</p>
 <h2 id="开销较低的读－写锁策略"><a href="#开销较低的读－写锁策略" class="headerlink" title="开销较低的读－写锁策略"></a>开销较低的读－写锁策略</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheesyCounter</span> </span>&#123;</div><div class="line">    <span class="comment">// Employs the cheap read-write lock trick</span></div><div class="line">    <span class="comment">// All mutative operations MUST be done with the 'this' lock held</span></div><div class="line">    <span class="meta">@GuardedBy</span>(<span class="string">"this"</span>) <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> value; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">increment</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> value++;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>与锁相比，Volatile 变量是一种非常简单但同时又非常脆弱的同步机制，它在某些情况下将提供优于锁的性能和伸缩性。如果严格遵循 volatile 的使用条件 —— 即变量真正独立于其他变量和自己以前的值 —— 在某些情况下可以使用 volatile 代替 synchronized 来简化代码。然而，使用 volatile 的代码往往比使用锁的代码更加容易出错。本文介绍的模式涵盖了可以使用 volatile 代替 synchronized 的最常见的一些用例。遵循这些模式（注意使用时不要超过各自的限制）可以帮助您安全地实现大多数用例，使用 volatile 变量获得更佳性能。</p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -426,7 +427,7 @@
 <li>内存重排的解决方法（volatile）</li>
 <li>内存可见性与重排的关系</li>
 </ol>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -459,7 +460,7 @@
 <blockquote>
 <p>cas只能保证单一变量操作的原子性，如果需要保证多个变量，那么使用对象，然后数据封装到对象进行atomic，<br><code>AtomicReference</code> 有兴趣的可以了解，还有很多数据结构实现的无锁操作，也可以去学习，了解。</p>
 </blockquote>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -479,7 +480,7 @@
 <h2 id="interrupted"><a href="#interrupted" class="headerlink" title="interrupted"></a>interrupted</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = ThreadInterrupt.class.getSimpleName();</div><div class="line">   <span class="keyword">private</span> Thread mThread;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">ThreadInterrupt</span><span class="params">()</span> </span>&#123;</div><div class="line">       mThread = <span class="keyword">new</span> Thread(<span class="keyword">this</span>);</div><div class="line">       mThread.start();</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">while</span> (!Thread.currentThread().isInterrupted()) &#123;<span class="comment">// 判断是否被打断，但是不会清除打断标志</span></div><div class="line">           Log.e(TAG, <span class="string">"alive......"</span>);</div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               Thread.sleep(<span class="number">1000</span>);</div><div class="line">           &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">               e.printStackTrace();</div><div class="line">               Log.e(TAG, Thread.currentThread().interrupted() + <span class="string">""</span>);<span class="comment">// 是否打断，同时清除打断标志</span></div><div class="line">               Thread.currentThread().interrupt(); <span class="comment">// 打断复原,根据需求是否需要复原</span></div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       Log.e(TAG, <span class="string">"stop......"</span>+Thread.currentThread().interrupted()+<span class="string">"/"</span>+Thread.currentThread().interrupted()); <span class="comment">// true/false</span></div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</div><div class="line">       mThread.interrupt();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>上面两种都可以实现线程的停止,那么哪种更好了，我建议用第二种，首先无需定义额外的<br>标志，然后就是代码比较清晰，充分利用了内部特性，并且更高效，可靠。</p>
 <h2 id="为什么第一种实现不好了"><a href="#为什么第一种实现不好了" class="headerlink" title="为什么第一种实现不好了?"></a>为什么第一种实现不好了?</h2><p>首先需要定义额外标志，意味着需要额外的存储空间，同时<code>volatile</code> jdk1.5之前不可靠，意味着<br>不能真正停止任务，sleep必须等待有线程打断才可能停止任务。</p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -527,7 +528,7 @@ index eb41d76,c771610..0000000
 <h3 id="子模块技巧"><a href="#子模块技巧" class="headerlink" title="子模块技巧"></a>子模块技巧</h3><p><code>git submodule foreach &#39;git stash&#39;</code><br><code>git submodule foreach &#39;git checkout -b featureA&#39;</code><br><code>git submodule foreach &#39;git diff&#39;</code><br>有用的别名</p>
 <p>你可能想为其中一些命令设置别名，因为它们可能会非常长而你又不能设置选项作为它们的默认选项。 我们在 Git 别名 介绍了设置 Git 别名，但是如果你计划在 Git 中大量使用子模块的话，这里有一些例子。</p>
 <p><code>$ git config alias.sdiff &#39;!&#39;&quot;git diff &amp;&amp; git submodule foreach &#39;git diff&#39;&quot;</code><br><code>$ git config alias.spush &#39;push --recurse-submodules=on-demand&#39;</code><br><code>$ git config alias.supdate &#39;submodule update --remote --merge&#39;</code></p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -597,7 +598,7 @@ index eb41d76,c771610..0000000
 <h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><blockquote>
 <p>其实架构没有固定模式，能够说出自己对架构的理解就很好，比如mvp，不同人对这个理解不一样，最好的，够用的，最适合业务的才是好架构，这个也很多要说，评论说吧。</p>
 </blockquote>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -614,7 +615,7 @@ index eb41d76,c771610..0000000
 <blockquote>
 <p>oc 里面导入基础库跟java一样，只是java导入的是类或者静态方法，而oc导入的是头文件，也是是实现的声明，因为oc不开源，我们只能通过看到头文件的具体声明。其中oc里面Foundation.h 这个是基础更能核心库，后面还有uikit等核心库。<br>第一个程序看起来很简单，其实里面很多语法细节，后面慢慢来讲吧，往往简单的东西背后都是复杂。</p>
 </blockquote>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -640,7 +641,7 @@ index eb41d76,c771610..0000000
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><blockquote>
 <p>通过上面代码我们在写并发代码的时候，一定要理解场景，不然真的很危险.</p>
 </blockquote>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -663,7 +664,7 @@ index eb41d76,c771610..0000000
 <p>shareuid的前提是app已经安装到了设备中，不然是访问不了的，如果是没安装的访问，就只能用插件化的方式去加载，然后去访问了。根据自己的需求，选择对应的技术实现就好了。</p>
 </blockquote>
 <p><a href="https://github.com/jackwaylong/shareuid" target="_blank" rel="external">查看源码实例</a></p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -699,7 +700,7 @@ index eb41d76,c771610..0000000
 <p>clone项目发送pull request</p>
 </blockquote>
 <h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>SafeSharedPreferences is under the Apache license. See the <a href="https://github.com/jackwaylong/SafeSharedPreferences/blob/master/LICENSE" target="_blank" rel="external">LICENSE</a> file for details.</p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
     <entry>
@@ -751,6 +752,7 @@ index eb41d76,c771610..0000000
 </blockquote>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看似很简单一种设计模式，其实我们深入思考一下，就没那么简单了，中间有很多技术点，有很多细节需要我们去挖掘，思考，最后推荐SingletonV7版本，注意这个只是保证了对象创建安全，对象成员的安全，还需要我们自己去保证。希望阅读过这篇文章的同学，再也不要写不安全的单例对象代码了，代码改进的一小步，程序稳定，可靠的一大步。</p>
 <h2 id="可能的疑问"><a href="#可能的疑问" class="headerlink" title="可能的疑问"></a>可能的疑问</h2><p>有的同学可能会在想，客户端平台不是不建议enum吗？确实没错，那是很早以前android官网也不建议使用，但是现在你去看官网还能看到那句话吗？google已经去掉了，至于为什么去掉了，我个人认为，有几种可能的原因，第一个是目前机器的配置，现在的cpu，内存等配置跟以前都不是在一个级别上，第二个就是软件层运行时对代码优化。另外还有<code>JakeWharton</code>大神都不考虑这个了，我们还有什么理由考虑这些了，其实真的没必要考虑这个了。</p>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
 ]]></content>
     </entry>
     
@@ -828,6 +830,17 @@ index eb41d76,c771610..0000000
 <li><a href="https://github.com/jackwaylong/Gradle/archive/master.zip" target="_blank" rel="external">下载</a></li>
 <li><a href="https://github.com/jackwaylong/gradle" target="_blank" rel="external">github查看</a></li>
 </ul>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
+
+
+
+
+
+
+
+
+
 ]]></content>
     </entry>
     
@@ -862,7 +875,7 @@ index eb41d76,c771610..0000000
 <h2 id="组件化打包"><a href="#组件化打包" class="headerlink" title="组件化打包"></a>组件化打包</h2><p>组件化打包其实就是将aar进行整合，然后生成一个apk文件。这个apk可以单独加载，也可以单独运行。</p>
 <h2 id="组件化开发闭环链接系统"><a href="#组件化开发闭环链接系统" class="headerlink" title="组件化开发闭环链接系统"></a>组件化开发闭环链接系统</h2><p>组件化闭环系统基本组成:git源代码管理,maven二进制包管理,jenkins打包管理,gerrit代码审查等其他辅助系统，比如mail系统，短信系统。</p>
 <h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>同学们的疑问与解答</p>
-]]></content>
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
     </entry>
     
   

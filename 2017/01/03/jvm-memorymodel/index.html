@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/3.png">
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/4.png">
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/5.png">
-<meta property="og:updated_time" content="2017-01-03T16:21:02.000Z">
+<meta property="og:updated_time" content="2017-01-07T07:24:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-内存模型">
 <meta name="twitter:description" content="世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。">
@@ -176,7 +176,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行数据内存布局"><span class="post-toc-number">1.</span> <span class="post-toc-text">运行数据内存布局</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈区"><span class="post-toc-number">2.</span> <span class="post-toc-text">虚拟机栈区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机局部变量表"><span class="post-toc-number">3.</span> <span class="post-toc-text">虚拟机局部变量表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈对象引用方式"><span class="post-toc-number">4.</span> <span class="post-toc-text">虚拟机栈对象引用方式</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行数据内存布局"><span class="post-toc-number">1.</span> <span class="post-toc-text">运行数据内存布局</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈区"><span class="post-toc-number">2.</span> <span class="post-toc-text">虚拟机栈区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机局部变量表"><span class="post-toc-number">3.</span> <span class="post-toc-text">虚拟机局部变量表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚拟机栈对象引用方式"><span class="post-toc-number">4.</span> <span class="post-toc-text">虚拟机栈对象引用方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">最近访客</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -239,7 +239,7 @@
 <blockquote>
 <p>虚拟内存布局还有一个堆区，这个在这里没有画出来，因为堆区比较特殊，非常重要，对于我们理解整个虚拟机内幕都很重要，<br>那个区域必须详细讲解，必须写一篇文章来专门讲解堆区的细节。有了内存布局的认识，下面对jvm gc,class结构，class布局，class加载安全机制，class加载流程，class优化，classloader namespace，classloader模式，class生成细节，字节码指令运用等一些列进行深入分析，敬请期待……</p>
 </blockquote>
-
+<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
         </div>
 
         <blockquote class="post-copyright">
