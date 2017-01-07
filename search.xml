@@ -73,14 +73,14 @@
 <h2 id="虚拟机栈对象引用方式"><a href="#虚拟机栈对象引用方式" class="headerlink" title="虚拟机栈对象引用方式"></a>虚拟机栈对象引用方式</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/jvm对象引用方式1.png" alt="reference1" title="">
+                    <img src="/img/jvm/jvm栈引用方式1.png" alt="reference1" title="">
                 </div>
                 <div class="image-caption">reference1</div>
             </figure>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/jvm对象引用方式2.png" alt="reference2" title="">
+                    <img src="/img/jvm/jvm栈引用方式2.png" alt="reference2" title="">
                 </div>
                 <div class="image-caption">reference2</div>
             </figure>
