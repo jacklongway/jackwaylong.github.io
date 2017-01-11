@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jackway.cn/"/>
-  <updated>2017-01-11T14:12:21.000Z</updated>
+  <updated>2017-01-11T14:13:28.000Z</updated>
   <id>http://www.jackway.cn/</id>
   
   <author>
@@ -20,11 +20,12 @@
     <link href="http://www.jackway.cn/2017/01/11/jvm-heap/"/>
     <id>http://www.jackway.cn/2017/01/11/jvm-heap/</id>
     <published>2017-01-11T13:45:17.000Z</published>
-    <updated>2017-01-11T14:12:21.000Z</updated>
+    <updated>2017-01-11T14:13:28.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那么这篇文章，我来分析一下，jvm里面的堆以及gc，前面也说过，堆内存的重要性，堆与我们开发非常密切，如果在写程序的过程中，没有很好的利用堆内存，最为常见的问题就是内存泄漏，内存溢出等致命bug。下面我来详细分析一下jvm里面的堆与gc。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="gc分代理论"><a href="#gc分代理论" class="headerlink" title="gc分代理论"></a>gc分代理论</h2><p>大部分JVM都会采用所谓的分代收集方式去回收垃圾，什么是分代收集呢？<br>根据对象的存活周期的不同将内存划分为好几块。一般是把java堆分为新生代和老年代，这样就可以根据各个年代的特点采用最适合的收集算法。新生代中，每次垃圾收集时都发现大批对象死去，只有少量存活，那就选用复制算法。老年代因为对象存活率高，没有额外空间对它进行分配担保，那就必须使用“标记-清理”或者“标记-整理”等重量级算法来进行回收。</p>
 <p>单纯从JVM的功能考虑，并不需要新生代，完全可以针对整个堆进行操作。新生代存在的唯一理由是优化垃圾回收的性能。更具体的说，把堆划分为新生代和老年代有两个好处：</p>
 <ol>
@@ -59,7 +60,8 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那
+&lt;p&gt;前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那么这篇文章，我来分析一下，jvm里面的堆以及gc，前面也说过，堆内存的重要性，堆与我们开发非常密切，如果在写程序的过程中，没有很好的利用堆内存，最为常见的问题就是内存泄漏，内存溢出等致命bug。下面我来详细分析一下jvm里面的堆与gc。&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
@@ -134,13 +136,13 @@
     </summary>
     
     
-      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
-    
       <category term="class-verify" scheme="http://www.jackway.cn/tags/class-verify/"/>
     
       <category term="inbox" scheme="http://www.jackway.cn/tags/inbox/"/>
     
       <category term="security" scheme="http://www.jackway.cn/tags/security/"/>
+    
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
     
   </entry>
   
