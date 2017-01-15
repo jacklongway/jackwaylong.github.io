@@ -162,6 +162,57 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-jvm-class内部结构"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time datetime="2017-01-15T06:24:26.000Z" itemprop="datePublished" class="post-time">
+  2017-01-15
+</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/01/15/jvm-class内部结构/">jvm-class内部结构深度揭秘</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent" >
+
+    
+        
+前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心最上层的源码编写，那有同学可能会疑惑，既然开发工具都帮我完成了，我们还有必要去了解内部吗？我们用过classloader加载一下不就好了吗？是的，说的很对，几乎99%的场景下，我们都是这样，但是假如一天遇到需要我们修改class内部结构的需求，那这时类加载就帮我们不了了，我们能够去完成需求的前提是，对class结构有一定的了解，不管如何，最为用java语言开发的开发者，都建议多少深入研究一下class的内部结构，这样不仅仅对写上层代码有帮助，更有助于我们对我们写的程序的把控，做到心理有底的代码必定bug会降到最低，说了这么多，这篇就来简单分析一下class内部的存储逻辑，jvm怎么能够识别class文件的。
+
+    
+
+        <a href="/2017/01/15/jvm-class内部结构/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-sdk-design-rules"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -608,57 +659,6 @@ java里面将一个对象序列化，步骤就是将要被序列化的对象实�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/attack/">attack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/security/">security</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-accessibilityService-1"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time datetime="2016-12-20T10:24:57.000Z" itemprop="datePublished" class="post-time">
-  2016-12-20
-</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/12/20/accessibilityService-1/">AccessibilityService(自动化服务)?</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent" >
-
-    
-        
-AccessibilityService是android系统提供的一种辅助服务，google设计这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也提供了很多创新的姿势，这篇文章主要讲解一下辅助自动安装，首先要声明的是不是静默安装，这个肯定是从入门到放弃，不信可以试试。至于为什么，自己去看PackageManager这一系列的源码就知道了。
-
-    
-
-        <a href="/2016/12/20/accessibilityService-1/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AccessibilityEvent/">AccessibilityEvent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service/">Service</a></li></ul>
 
     </div>
     

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jackway.cn/"/>
-  <updated>2017-01-12T05:42:05.000Z</updated>
+  <updated>2017-01-15T14:45:54.000Z</updated>
   <id>http://www.jackway.cn/</id>
   
   <author>
@@ -14,6 +14,169 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jvm-class内部结构深度揭秘</title>
+    <link href="http://www.jackway.cn/2017/01/15/jvm-class%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84/"/>
+    <id>http://www.jackway.cn/2017/01/15/jvm-class内部结构/</id>
+    <published>2017-01-15T06:24:26.000Z</published>
+    <updated>2017-01-15T14:45:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们<br>并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们<br>都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，<br>也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心最上层的源码编写，那有同学可能<br>会疑惑，既然开发工具都帮我完成了，我们还有必要去了解内部吗？我们用过classloader加载一下不就好了吗？<br>是的，说的很对，几乎99%的场景下，我们都是这样，但是假如一天遇到需要我们修改class内部结构的需求，那<br>这时类加载就帮我们不了了，我们能够去完成需求的前提是，对class结构有一定的了解，不管如何，最为用java<br>语言开发的开发者，都建议多少深入研究一下class的内部结构，这样不仅仅对写上层代码有帮助，更有助于我们<br>对我们写的程序的把控，做到心理有底的代码必定bug会降到最低，说了这么多，这篇就来简单分析一下class内部<br>的存储逻辑，jvm怎么能够识别class文件的。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="class文件组成"><a href="#class文件组成" class="headerlink" title="class文件组成"></a>class文件组成</h2><blockquote>
+<p> 在分析之前，我们首先要明白class文件的组成，其实我们分析每个文件都一样，必须先对文件的规范有一定<br> 的认知，我们才能继续去分析，class文件我们明确一下几点就好了。</p>
+</blockquote>
+<ol>
+<li>class文件是有8个字节为基础的字节流构成的，这些字节流之间都严格按照规定的顺序排列，并且字节之间不存在任何空隙，对于超过8个字节的数据，将按 照Big-Endian的顺序存储的，也就是说高位字节存储在低的地址上面，而低位字节存储到高地址上面，其实这也是class文件要跨平台的关键，因为 PowerPC架构的处理采用Big-Endian的存储顺序，而x86系列的处理器则采用Little-Endian的存储顺序，因此为了Class文 件在各中处理器架构下保持统一的存储顺序，虚拟机规范必须对起进行统一。</li>
+<li>class文件结构采用类似C语言的结构体来存储数据的，主要有两类数据项，无符号数和表，无符号数用来表述数字，索引引用以及字符串等，比如 u1,u2,u4,u8分别代表1个字节，2个字节，4个字节，8个字节的无符号数，而表是有多个无符号数以及其它的表组成的复合结构。可能大家看到这里 对无符号数和表到底是上面也不是很清楚，不过不要紧，等下面实例的时候，我会再以实例来解释。</li>
+</ol>
+<p>ps: 如果大家对字节序不是很理解的可以看看阿里阮一峰大神的这篇关于<a href="http://www.ruanyifeng.com/blog/2016/11/byte-order.html" target="_blank" rel="external">子节序</a>的介绍，说的很清晰，相信小伙伴一看就会明白，但是还是建议，先理解子节序然后看后面的分析。</p>
+<blockquote>
+<p>classfile内部抽象数据结构</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/classfile.png" alt="classfile" title="">
+                </div>
+                <div class="image-caption">classfile</div>
+            </figure>
+<p>上面的字段信息，相信小伙伴们一看就会理解的，其实就是一个数据模型描述，跟我们在平时开发写的实体类没有本质的区别，只是我们写的是业务层数据，而这个是底层数据结构的定义，含义不太一样，我们只要理解不同点就好了，这里我提醒小伙伴一个值得注意的就是常量池，为什么单独说这个，因为这个跟其他数组不太一样，我们知道数组大小是不可变的，是连续的，是读性能最好的等特性，不一样的是常量池真正存储的有效数据是池的长度－1，第一次可以理解为保留空间，不存储池的任何信息。<br>下面就详细的分析数据结构中的每一个字段的具体细节。</p>
+<ol>
+<li>u4(4个字节) magic 这个是魔数，可以理解为一个固定的数值，不同文件的这个值不一样，目的是为了，软件能够识别对    应文件，并能都执行，class就行jvm能够识别的，只要符合class协议定义的，jvm都能够去执行，比如png就是图片软    件以识别的，jvm能识别png吗？这个当然不行的，jvm是专为class服务的，后面有兴趣的可以写一个识别png的虚拟    机, 开玩笑，说这么多，只是希望大家明白一点，文件标志的意义。</li>
+<li>u4  minor_version 表示class文件的次版本号</li>
+<li>u2 major_version 表示class文件的主版本号，注意为啥要这些字段信息了，是为了兼容，jvm是下兼容的系统，意思就    是1.6的jvm可以很好的运行1.5编译器编译的class文件。</li>
+<li>u2 constant_pool_count 表示常量池的数量。这里我们需要重点来说一下常量池是什么东西，请大家不要与Jvm内存模    型的运行时常量池混淆了，Class文件中常量池主要存储了字 面量以及符号引用，其中字面量主要包括字符串，final    常的值或者某个属性的初始值等等，而符号引用主要存储类和接口的全限定名称，字段的名称以及描 述符，方法的名称    以描述符，这里名称可能大家都容易理解，至于描述符的概念，放到下面说字段表以及方法表的时候再说。另外大家都知    道vm的内存模型中 有堆，栈，方法区，程序计数器构成，而方法区中又存在一块区域叫运行时常量池，运行时常量池中存    放东西其实也就是编译器长生的各种字面量以及符号引用， 只不过运行时常量池具有动态性，它可以在运行的时候向其    中加其它的常量进去，最具代表性的就是String的<code>intern</code>方法，说到这里，我相信很多小伙伴对intern这个方法不    是理解，不要急，现在简单理解从将符串放进常量池就好，后面分析<code>String</code>典型系列的时候，会深入分析这个方法到底    jvm为我们做了什么，以及应用    场的问题，解决方案等。这里不展开分析，自己心里纪录一下就好。</li>
+<li>cp_info 表示常量池，这里面就存在了上面说的各种各样的字面量和符号引用。放到常量池的中数据项在The Java     Vrtual Machine Specification Java SE 7 Edition 中一共有14个常量，每一种常量都是一个表，并且每种常    量用一个公共的部分tag来表示是哪种类型的常量。</li>
+<li>常量池中不同的类型，通过tag来区分，tag对应的不同类型下表:<br> CONSTANT_Utf8_info      tag标志位为1,   UTF-8编码的字符串<br> CONSTANT_Integer_info  tag标志位为3， 整形字面量<br> CONSTANT_Float_info     tag标志位为4， 浮点型字面量<br> CONSTANT_Long_info     tag标志位为5， 长整形字面量<br> CONSTANT_Double_info  tag标志位为6， 双精度字面量<br> CONSTANT_Class_info    tag标志位为7， 类或接口的符号引用<br> CONSTANT_String_info    tag标志位为8，字符串类型的字面量<br> CONSTANT_Fieldref_info  tag标志位为9,  字段的符号引用<br> CONSTANT_Methodref_info  tag标志位为10，类中方法的符号引用<br> CONSTANT_InterfaceMethodref_info tag标志位为11, 接口中方法的符号引用<br> CONSTANT_NameAndType_info tag 标志位为12，字段和方法的名称以及类型的符号引用<br> 有了这个表，我们就可以很好的分析出class常量池信息了。</li>
+<li>u2 access_flags 表示类或者接口的访问信息, 图例如下: <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/classfile-acc.png" alt="classfile" title="">
+                </div>
+                <div class="image-caption">classfile</div>
+            </figure></li>
+<li>u2 this_class 表示类的常量池索引，指</li>
+<li>向常量池中CONSTANT_Class_info的常量</li>
+<li>u2 super_class 表示超类的索引，指向常量池中CONSTANT_Class_info的常量</li>
+<li>u2 interface_counts 表示接口的数量</li>
+<li>u2 interface[interface_counts]表示接口表，它里面每一项都指向常量池中CONSTANT_Class_info常量</li>
+<li>u2 fields_count field_info fields[fields_count]表示字段表的信息。<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/classfile-fieldinfo.png" alt="classfile" title="">
+                </div>
+                <div class="image-caption">classfile</div>
+            </figure>
+上图中access_flags表示字段的访问表示，比如字段是public,private，protect 等，name_index表示字段名     称，指向常量池中类型是CONSTANT_UTF8_info的常量，descriptor_index表示字段的描述符，它也指向常量池中类型    为 CONSTANT_UTF8_info的常量，attributes_count表示字段表中的属性表的数量，而属性表是则是一种用与描述字    段，方法以及 类的属性的可扩展的结构，不同版本的Java虚拟机所支持的属性表的数量是不同的。</li>
+<li>u2 methods_count表示方法表的数量<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/classfile-methodinfo.png" alt="classfile" title="">
+                </div>
+                <div class="image-caption">classfile</div>
+            </figure>
+其中access_flags表示方法的访问表示，name_index表示名称的索引，descriptor_index表示方法的描述 符，    attributes_count以及attribute_info类似字段表中的属性表，只不过字段表和方法表中属性表中的属性是不同的，    比如方法 表中就Code属性，表示方法的代码，而字段表中就没有Code属性。其中具体Class中到底有多少种属性，等到    Class文件结构中的属性表的时候再说说。</li>
+<li>attribute_count表示属性表的数量，说到属性表，我们需要明确以下几点：<ul>
+<li>属性表存在于Class文件结构的最后，字段表，方法表以及Code属性中，也就是说属性表中也可以存在属性表</li>
+<li>属性表的长度是不固定的，不同的属性，属性表的长度是不同的</li>
+</ul>
+</li>
+</ol>
+<h2 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.longway.test;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">implements</span> <span class="title">ITest</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VALUE = <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ITest</span></span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对应的字节码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">cafe babe 0000 0034 0013 0a00 0300 0f07</div><div class="line">0010 0700 1107 0012 0100 0556 414c 5545</div><div class="line">0100 0149 0100 0d43 6f6e 7374 616e 7456</div><div class="line">616c 7565 0300 0000 0101 0006 3c69 6e69</div><div class="line">743e 0100 0328 2956 0100 0443 6f64 6501</div><div class="line">000f 4c69 6e65 4e75 6d62 6572 5461 626c</div><div class="line">6501 000a 536f 7572 6365 4669 6c65 0100</div><div class="line">0954 6573 742e 6a61 7661 0c00 0900 0a01</div><div class="line">0015 636f 6d2f 6c6f 6e67 7761 792f 7465</div><div class="line">7374 2f54 6573 7401 0010 6a61 7661 2f6c</div><div class="line">616e 672f 4f62 6a65 6374 0100 1663 6f6d</div><div class="line">2f6c 6f6e 6777 6179 2f74 6573 742f 4954</div><div class="line">6573 7400 2100 0200 0300 0100 0400 0100</div><div class="line">1a00 0500 0600 0100 0700 0000 0200 0800</div><div class="line">0100 0100 0900 0a00 0100 0b00 0000 1d00</div><div class="line">0100 0100 0000 052a b700 01b1 0000 0001</div><div class="line">000c 0000 0006 0001 0000 0002 0001 000d</div><div class="line">0000 0002 000e</div></pre></td></tr></table></figure></p>
+<p>下面我就来按照上面的结构规范来分析字节码，让我们从根本上认识class的内部。让我们从次揭开class的面纱，不再<br>认为字节码有多神奇，其实就是有序字节存储。只是具有jvm的规范，要jvm去执行当然满足jvm的要求。在分析之前，首先<br>介绍一个命令的使用<code>javap -verbose classname.class</code> 这个就是字节码反编译命令，通过这个命令，我们能够很<br>清晰的明白字节码内部存储，以及字节码指令，这里说到指令，后面文章会单独来分析，jvm能够识别的指令集，注意不是cpu<br>指令集，这两者还是有很大区别的。下面我对上面的class文件执行javap命令，输出的信息如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">Classfile /Users/longway/Documents/gitRepository/blog/source/java/Test.class</div><div class="line">  Last modified 2017-1-15; size 278 bytes  // 最后修改时间</div><div class="line">  MD5 checksum 19286a103ea3a625ab3b4a3932fec15e // 文件的摘要值</div><div class="line">  Compiled from &quot;Test.java&quot; // 源文件</div><div class="line">public class com.longway.test.Test implements com.longway.test.ITest // 类常量信息</div><div class="line">  minor version: 0 // 次版本号</div><div class="line">  major version: 52 // 主版本号</div><div class="line">  flags: ACC_PUBLIC, ACC_SUPER // 访问标志符</div><div class="line">Constant pool: // 常量池信息</div><div class="line">   #1 = Methodref          #3.#15         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V // 方法引用</div><div class="line">   #2 = Class              #16            // com/longway/test/Test // classinfo</div><div class="line">   #3 = Class              #17            // java/lang/Object</div><div class="line">   #4 = Class              #18            // com/longway/test/ITest</div><div class="line">   #5 = Utf8               VALUE // 字面量</div><div class="line">   #6 = Utf8               I // int</div><div class="line">   #7 = Utf8               ConstantValue</div><div class="line">   #8 = Integer            1</div><div class="line">   #9 = Utf8               &lt;init&gt;</div><div class="line">  #10 = Utf8               ()V</div><div class="line">  #11 = Utf8               Code</div><div class="line">  #12 = Utf8               LineNumberTable</div><div class="line">  #13 = Utf8               SourceFile</div><div class="line">  #14 = Utf8               Test.java</div><div class="line">  #15 = NameAndType        #9:#10         // &quot;&lt;init&gt;&quot;:()V // 名字和类型</div><div class="line">  #16 = Utf8               com/longway/test/Test</div><div class="line">  #17 = Utf8               java/lang/Object</div><div class="line">  #18 = Utf8               com/longway/test/ITest</div><div class="line">&#123;</div><div class="line">  public com.longway.test.Test();</div><div class="line">    descriptor: ()V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=1, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         4: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 2: 0</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;Test.java&quot;</div></pre></td></tr></table></figure>
+<p>我们从输出的信息很清晰的可以看到，class文件的主体结构，我已经对应的写了注释，在这里不分析这个文件的细节，后面在分析字节码的时候，再来详细分析，这篇主要还是从根本认识字节码组成，对于后续的学习打下坚实的基础。说了这么多，下面进入实战环节。首先我们按照classfile的组成来分析。其实也不难，就是固定套路。自己学着分析一片基本就会了。</p>
+<ol>
+<li>cafe babe 这四个字节我们知道就是魔术，开发八杯，java的超燃咖啡杯。说到这个，我们不得不去看一下java的发明    者，很性感。想看的就点击一下<a href="http://baike.baidu.com/link?url=NoEkbHsswoK480HCE-teCVnBW1B1p_uLwPoR4-Shljk_IWTBEvlh2Uyeo3olJOWR3nGCXzAwutJF_mIPs4SG5xv60DJJwOOrfyUsf_n575DQTlA6i0hvM8yZyqLRDrcUloFpMcdyb7KVb-o7bOekKJl5m4C9UArN0DOVLYtPxZVGeoFSyR8b72LdaZA-KpzEKtJff_IoiqH11g9p3ykXxK" target="_blank" rel="external">James Gosling</a> 这个人真的很伟大。其他就不说了。后续的文章还会提到很多    java牛人，比如并发专家，这个人我想只要看过jdk源码的人，对他都不会陌生，他对java的贡献真的太大了。可以说没    他，java不会发展这么快。</li>
+<li>0x0000 次版本为0</li>
+<li>0x0034 主版本为52</li>
+<li>0x0013 常量池大小19，注意真正有效的数据只有18个，0号元素为预留空间</li>
+<li>0x0a tag值10 通过查表知道，是代表常量池方法引用信息，结构如下: <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/constantspool-methodrefinfo.png" alt="constantspool-methodref" title="">
+                </div>
+                <div class="image-caption">constantspool-methodref</div>
+            </figure>
+ u1 tag 意思是tag的描述占用一个字节,无符号，也就可以表示256中可能<br> u2 class_index 对应CONSTANT_Class_info 中的信息<br> u2 name_and_type_index 对应CONSTANT_NameAndType_info中的信息<br> 上面字节码中: tag为<code>10</code> 不多解释<br> class_index 0x0003数值是3也就是对应池里面的第三个我们查表得知结果为：<code>java/lang/Object</code><br> name_and_type_index 0x000f数值是15也是对应池里面的的第15个通过查表得知结果为: <code>&lt;init&gt;()V</code></li>
+<li>0x07 tag值7,跟前面分析类似，查表得知为CONSTANT_Class_info，结构如下:<br> u2 class_name 0x0010 数值是16也就对应池里面的第16个数据，我们查表得知结果为: <code>com/longway/test/    Test</code></li>
+<li>0x07 tag值7,    跟前面分析类似，查表得知为CONSTANT_Class_info，结构如下:<br> u2 class_name 0x0011 数值是17也就对应池里面的第16个数据，我们查表得知结果为:<br> <code>java/lang/Object</code></li>
+<li>0x07 tag值7，跟前面分析类似，查表得知为CONSTANT_Class_info，结构如下:<br> u2 class_name 0x0012 数值是18也就对应池里面的第16个数据，我们查表得知结果为:<br> <code>com/longway/test/ITest</code></li>
+<li>0x01 tag值1， UTF-8编码的字符串，结构如下:<br>u1 tag<br>u2 bytes 长度 0x0005值为5个字节<br>u1 字节数据 <code>56 414c 5545</code>转换成十进制对应<code>86 65 76 85 69</code> 然后查询ascii表就可以得到结果为<code>VALUE</code></li>
+<li><code>0100 0149</code> 对应结果<code>I</code></li>
+<li><code>0100 0d43 6f6e 7374 616e 7456 616c 7565</code> 对应<code>ConstantValue</code></li>
+<li>0x03 tag值3 CONSTANT_Integer_info,结构如下:<br>u1 tag<br>u4 bytes 对应的值<code>0300 0000 01</code> 值就是<code>1</code></li>
+<li><code>01 0006 3c69 6e69 743e</code> 对应ascii值为<code>&lt;init&gt;</code></li>
+<li><code>0100 0328 2956</code> 对应ascii值为<code>()V</code></li>
+<li><code>0100 0443 6f64 65</code> 对应ascii值为<code>Code</code>    </li>
+<li><code>01 000f 4c69 6e65 4e75 6d62 6572 5461 626c 65</code> 对应ascii值为<code>LineNumberTable</code></li>
+<li><code>01 000a 536f 7572 6365 4669 6c65</code> 对应ascii值为<code>SourceFile</code></li>
+<li><code>0100 0954 6573 742e 6a61 7661</code> 对应ascii值为<code>Test.java</code></li>
+<li>0x0c CONSTANT_NameAndType_info tag 结构如下<br>tag<br>name 00 09 对应值<code>&lt;init&gt;</code><br>type 00 0a 对应值<code>()V</code></li>
+<li><code>01 0015 636f 6d2f 6c6f 6e67 7761 792f 7465 7374 2f54 6573 74</code>对应ascii值为<code>com/longway/test/Test</code></li>
+<li><code>01 0010 6a61 7661 2f6c 616e 672f 4f62 6a65 6374</code> 对应ascii值为<code>java/lang/Object</code></li>
+<li><code>0100 1663 6f6d 2f6c 6f6e 6777 6179 2f74 6573 742f 4954 6573 74</code> 对应ascii值为<code>com/longway/test/ITest</code></li>
+<li>u2 access_flags 0x0021 对应<code>ACC_PUBLIC|ACC_SUPER</code></li>
+<li>u2 this class 0x0002 对应<code>com/longway/test/Test</code></li>
+<li>u2 super class 0x0003 对应<code>java/lang/Object</code></li>
+<li>u2 inerfaces_count 0x0001一个接口</li>
+<li>u2 interface[1] 0x0004对应值为<code>com/longway/test/ITest</code></li>
+<li>u2 fields_count 0x0001 有一个字段</li>
+<li>field_info 结构如下:<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/classfile-fieldinfo.png" alt="fieldinfo" title="">
+                </div>
+                <div class="image-caption">fieldinfo</div>
+            </figure>
+u2 access_flags 访问标志 <code>001a</code>==&gt;<code>ACC_PRIVATE|ACC_STATIC|ACC_FINAL</code><br> u2 name_index 名字索引 0x0005==&gt;<code>VALUE</code><br> u2 descriptor_index 描述索引 0x0006==&gt;<code>I</code>==&gt;<code>int</code>(integer)<br> u2 attributes_conut 0x0001 对应一个属性<br>attribute_info attributes[attributes_conut]<br> u2 attribute_name_index 0x0007==&gt;<code>ConstantValue</code><br> u4 attrubute_length 0x00000002<br> u1 info 0x0008 ==&gt;<code>1</code><br> <img src="/img/jvm/acc_field.png" alt="acc-field"> <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/field-type.png" alt="field-type" title="">
+                </div>
+                <div class="image-caption">field-type</div>
+            </figure></li>
+<li>u2 methods_count 0x0001对应一个方法</li>
+<li>method_info结构如下:<br> <img src="/img/jvm/classfile-methodinfo.png" alt="methon-info"><br> u2 access_flags 0x0001==&gt;<code>ACC_PUBLIC</code><br> u2 name_index 0x0009==&gt;<code>&lt;init&gt;</code><br> u2 descriptor_index 0x000a==&gt;<code>()V</code><br> u2 attributes_count 0x0001对应一个属性<br> attribute_info attributes[attributes_count]<br> <img src="/img/jvm/acc_method.png" alt="methon-info"><br> u2 attribute_name_index 0x000b<br> u4 attribute_length 0x0000001d<br> u2 max_stack 0x0001<br> u2 max_locals 0x0001 //slot是虚拟机为局部变量分配内存的最小单元，在运行时，对于不超过     32位类型的数据类型，比如 byte,char,int等占用1个slot，而double和Long这种64位的数据类型则需要分配2     个slot，另外max_locals的值并 不是所有局部变量所需要的内存数量之和，因为slot是可以重用的，当局部变量     超过了它的作用域以后，局部变量所占用的slot就会被重用<br> u4 code_length 0x00000005<br> u1 code[code_length] 2a b7 00 01 b1<br> u2 exception_table_length 0x00 没有异常信息<br> {<pre><code>u2 start_pc
+u2 end_pc
+u2 handler_pc
+u2 catch_type
+</code></pre> } exception_table[exception_table_length]<br> u2 attributes_count 0x0001 有一个属性<br> attribute_info attributes[attributes_count] 0x000c==&gt;<code>LineNumberTable</code><br> LineNumberTable 结构如下:<br> <img src="/img/jvm/acc_method.png" alt="methon-info"><br> u2 attribute_name_index 0x000c==&gt;<code>LineNumberTable</code><br> u4 attribute_length 0x00000006<br> u2 line_number_table_length 0x0001<br> {<pre><code>u2 start_pc
+u2 line_number
+</code></pre> }line_number_table[line_number_table_length] <code>0000</code>==&gt;<code>0002</code>字节码行号对应源代码，这对于定位     代码很有作用<br> <img src="/img/jvm/acc_method.png" alt="methon-info"></li>
+<li>u2 attributes_count 0x0001 一个属性长度</li>
+<li>attributes_info attributes[attributes_count] <code>000d</code>==&gt;<code>SourceFile</code><br>我们再来简单的看一下SourceFile数据结构:<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/jvm/sourcefile.png" alt="methon-info" title="">
+                </div>
+                <div class="image-caption">methon-info</div>
+            </figure>
+u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_length 0x00000002 除了之前的offset的剩余长度<br>u2 sourcefile_index 0x000e==&gt;<code>Test.java</code><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>通过分析class的内部存储，我们对class的结构有了基本的认识，但是我还是希望小伙伴们自己分析一片，这样可能对class的结构理解更深刻，在实际运用过程中也会更加得心应手，分析完，并不代表就结束了，这仅仅分析了class而已，虚拟机加载完class到内存，然后按照我们的分析方式解析，分配内存，然后解析语义，然后还需进行编译才能去执行。这也就是class跨平台的原因，编译一次，到处运行，只要满足jvm规范，屏蔽底层细节。有了class结构的认知，下篇带领大家一起深入jvm内幕，也就是jvm最后一篇，也是最为重要的，在实际应用中用的最多的，比如2016年最火爆的技术，实时热修复线上bug技术，热更技术，有些技术用到asm这个工具实现编译时透明插入代码的。这里用到的技术就是对class文件操作，hook对应的指令，插入指令，达到变更操作行为的目的。所以我们还是很有必要对jvm指令深入理解一下，jvm指令不多，我们分析class结构的时候，看到code属性里面有个code指令集，占用一个字节，也就是说，jvm指令集的全集256个。分析class确实比较耗时间，但是从中可以明白很多一些设计思想，特别可以理解底层协议设计，设局结构设计等等。敬请期待下篇jvm指令解析……</li>
+</ol>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们&lt;br&gt;并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们&lt;br&gt;都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，&lt;br&gt;也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心最上层的源码编写，那有同学可能&lt;br&gt;会疑惑，既然开发工具都帮我完成了，我们还有必要去了解内部吗？我们用过classloader加载一下不就好了吗？&lt;br&gt;是的，说的很对，几乎99%的场景下，我们都是这样，但是假如一天遇到需要我们修改class内部结构的需求，那&lt;br&gt;这时类加载就帮我们不了了，我们能够去完成需求的前提是，对class结构有一定的了解，不管如何，最为用java&lt;br&gt;语言开发的开发者，都建议多少深入研究一下class的内部结构，这样不仅仅对写上层代码有帮助，更有助于我们&lt;br&gt;对我们写的程序的把控，做到心理有底的代码必定bug会降到最低，说了这么多，这篇就来简单分析一下class内部&lt;br&gt;的存储逻辑，jvm怎么能够识别class文件的。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="jvm" scheme="http://www.jackway.cn/categories/jvm/"/>
+    
+    
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
+    
+      <category term="class" scheme="http://www.jackway.cn/tags/class/"/>
+    
+  </entry>
   
   <entry>
     <title>sdk-design-rules</title>
