@@ -463,13 +463,13 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     </summary>
     
     
-      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
-    
       <category term="class-verify" scheme="http://www.jackway.cn/tags/class-verify/"/>
     
       <category term="inbox" scheme="http://www.jackway.cn/tags/inbox/"/>
     
       <category term="security" scheme="http://www.jackway.cn/tags/security/"/>
+    
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
     
   </entry>
   
