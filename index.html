@@ -162,6 +162,57 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-jvm-字节码指令-1"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time datetime="2017-01-18T14:17:45.000Z" itemprop="datePublished" class="post-time">
+  2017-01-18
+</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/01/18/jvm-字节码指令-1/">jvm-字节码指令(1)</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent" >
+
+    
+        
+上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件结构都是按照字节有序的排序在文件中，所以了解class文件的结构是我们进行这篇字节码指令解析的前提，如果你还没有对class结构有所了解，可以先查看class结构这篇文章，对class有个初步的认识，这样再看字节码就相对好理解，jvm字节码指令的占用空间就一个byte,意味着字节码指令最多256个，无符号数据范围0-255,我们在上篇class结构的Code属性里面就看到对用的指令，只是指令操作码是以二进制出现，对应我们查表就知道对应指令的含义，说了这么多，还是那句话talking is a cheap,show me code.这篇文章，讲解最基础的指令，也是为了后续复杂组合打下基础。
+
+    
+
+        <a href="/2017/01/18/jvm-字节码指令-1/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-jvm-class内部结构"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -608,57 +659,6 @@ java里面将一个对象序列化，步骤就是将要被序列化的对象实�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/transient/">transient</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-transfer-security-1"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time datetime="2016-12-22T08:01:43.000Z" itemprop="datePublished" class="post-time">
-  2016-12-22
-</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/12/22/transfer-security-1/">安全那点事情</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent" >
-
-    
-        
-安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，so 调试等,下面我就针对我每个方面的思考详细讲解一下。
-
-    
-
-        <a href="/2016/12/22/transfer-security-1/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/attack/">attack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/security/">security</a></li></ul>
 
     </div>
     

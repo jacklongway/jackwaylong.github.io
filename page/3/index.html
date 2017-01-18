@@ -162,6 +162,63 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-wait-sleep"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time datetime="2016-12-05T06:08:43.000Z" itemprop="datePublished" class="post-time">
+  2016-12-05
+</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/12/05/wait-sleep/">wait和sleep 深度分析</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent" >
+
+    
+        
+首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:
+
+
+wait是Object中的方法,sleep是Thread中的方法
+wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用
+wait释放锁,sleep不释放锁
+wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源
+
+    
+
+        <a href="/2016/12/05/wait-sleep/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sleep/">sleep</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wait/">wait</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-shareUID"
   class="article-card article-type-post" itemprop="blogPost">
 

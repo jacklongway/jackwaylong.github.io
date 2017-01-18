@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>jvm-字节码指令(1) | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="jvm">
+  <meta name="description" content="上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件结构都是按照字节有序的排序在文件中，所以了解class文件的结构是我们进行这篇字节码指令解析的前提，如果你还没有对class结构有所了解，可以先查看class结构这篇文章，对class有个初步的认识，这样再看字节码就相对好理解，jvm字节码指令的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm-字节码指令(1)">
+<meta property="og:url" content="http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件结构都是按照字节有序的排序在文件中，所以了解class文件的结构是我们进行这篇字节码指令解析的前提，如果你还没有对class结构有所了解，可以先查看class结构这篇文章，对class有个初步的认识，这样再看字节码就相对好理解，jvm字节码指令的">
+<meta property="og:image" content="https://www.processon.com/chart_image/587f7d26e4b087b1161396d5.png">
+<meta property="og:updated_time" content="2017-01-18T15:20:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jvm-字节码指令(1)">
+<meta name="twitter:description" content="上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件结构都是按照字节有序的排序在文件中，所以了解class文件的结构是我们进行这篇字节码指令解析的前提，如果你还没有对class结构有所了解，可以先查看class结构这篇文章，对class有个初步的认识，这样再看字节码就相对好理解，jvm字节码指令的">
+<meta name="twitter:image" content="https://www.processon.com/chart_image/587f7d26e4b087b1161396d5.png">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2017</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">jvm-字节码指令(1)</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">jvm-字节码指令(1)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-18T14:17:45.000Z" itemprop="datePublished" class="page-time">
+  2017-01-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#变量"><span class="post-toc-number">1.</span> <span class="post-toc-text">变量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">2.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">3.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-jvm-字节码指令-1"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">jvm-字节码指令(1)</h1>
+        <div class="post-meta">
+            <time datetime="2017-01-18T14:17:45.000Z" itemprop="datePublished" class="post-time">
+  2017-01-18
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件结构都是按照字节有序的排序在文件中，所以了解class文件的结构是我们进行这篇字节码指令解析的前提，如果你还没有对class结构有所了解，可以先查看<a href="http://www.jackway.cn/2017/01/15/jvm-class%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84/">class结构</a>这篇文章，对class有个初步的认识，这样再看字节码就相对好理解，jvm字节码指令的占用空间就一个byte,意味着字节码指令最多256个，无符号数据范围0-255,我们在上篇class结构的Code属性里面就看到对用的指令，只是指令操作码是以二进制出现，对应我们查表就知道对应指令的含义，说了这么多，还是那句话talking is a cheap,show me code.这篇文章，讲解最基础的指令，也是为了后续复杂组合打下基础。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>我们都知道，不管什么语言，最基础的数据载体就是变量，显然程序中一切行为的操作都是基于数据，也就是基于变量操作，那么我们java中到底有哪些变量了，java里面大致可以分两大类:</p>
+<ol>
+<li>基础变量<ul>
+<li>char</li>
+<li>long</li>
+<li>short</li>
+<li>int</li>
+<li>float</li>
+<li>double</li>
+</ul>
+</li>
+<li>引用变量<ul>
+<li>对象类型</li>
+<li>数组</li>
+</ul>
+</li>
+</ol>
+<p>首先我们知道，从class结构分析中我们了解变量的存储是基于<code>slot</code>的，不超过<strong>32</strong>位的数据，占用<strong>一个</strong>slot，<strong>64</strong>的占用<strong>2个</strong>slot,<strong>引用类型</strong>也是占用一个<code>slot</code><br>比如我们定义一个基础变量:<br><code>int x = 10</code>;<br>对应的字节码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">0: bipush 10</div><div class="line">1: istore_0</div></pre></td></tr></table></figure></p>
+<p><code>bipush</code> 这个指令就是将10入操作栈,<code>istore_0</code>然后pop出并且存储到局部变量表中,对应的操作图示如下:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.processon.com/chart_image/587f7d26e4b087b1161396d5.png" alt="variable" title="">
+                </div>
+                <div class="image-caption">variable</div>
+            </figure>
+<p>后面任何指令都是入栈，出栈的流程，只是有些指令操作起来比较复杂而已，我相信只要理解了基本的指令，其他指令也就是一些组合，并不会有很大的难度。我们再来看一个实例变量的字节码操作指令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">public class com.example.MyClass</div><div class="line">  minor version: 0</div><div class="line">  major version: 51</div><div class="line">  flags: ACC_PUBLIC, ACC_SUPER</div><div class="line">Constant pool:</div><div class="line">   #1 = Methodref          #4.#20         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #2 = Fieldref           #3.#21         // com/example/MyClass.a:I</div><div class="line">   #3 = Class              #22            // com/example/MyClass</div><div class="line">   #4 = Class              #23            // java/lang/Object</div><div class="line">   #5 = Utf8               a</div><div class="line">   #6 = Utf8               I</div><div class="line">   #7 = Utf8               &lt;init&gt;</div><div class="line">   #8 = Utf8               ()V</div><div class="line">   #9 = Utf8               Code</div><div class="line">  #10 = Utf8               LineNumberTable</div><div class="line">  #11 = Utf8               LocalVariableTable</div><div class="line">  #12 = Utf8               this</div><div class="line">  #13 = Utf8               Lcom/example/MyClass;</div><div class="line">  #14 = Utf8               main</div><div class="line">  #15 = Utf8               ([Ljava/lang/String;)V</div><div class="line">  #16 = Utf8               args</div><div class="line">  #17 = Utf8               [Ljava/lang/String;</div><div class="line">  #18 = Utf8               SourceFile</div><div class="line">  #19 = Utf8               MyClass.java</div><div class="line">  #20 = NameAndType        #7:#8          // &quot;&lt;init&gt;&quot;:()V</div><div class="line">  #21 = NameAndType        #5:#6          // a:I</div><div class="line">  #22 = Utf8               com/example/MyClass</div><div class="line">  #23 = Utf8               java/lang/Object</div><div class="line">&#123;</div><div class="line">  public com.example.MyClass();</div><div class="line">    descriptor: ()V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         4: aload_0</div><div class="line">         5: iconst_1</div><div class="line">         6: putfield      #2                  // Field a:I</div><div class="line">         9: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 3: 0</div><div class="line">        line 4: 4</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0      10     0  this   Lcom/example/MyClass;</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=0, locals=1, args_size=1</div><div class="line">         0: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 7: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       1     0  args   [Ljava/lang/String;</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;MyClass.java&quot;</div></pre></td></tr></table></figure>
+<p>我们重点看看Code属性就好了，我们知道是了变量的初始化其实实在构造函数进行的，首先我们看到<code>aload_0</code> 这个指令，这个指令就是将局部变量表中<code>this</code>(实例方法隐含参数)指针push到栈, 然后接下来执行<code>invokespecial</code> 这个就是调用父类的构造方法，在这里就是指向<code>Constant pool #1</code> 也就是<code>Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</code> 然后再次将<code>this</code>指针入栈,然后执行<code>iconst_1</code> 将1常量push到栈,然后<code>putfield</code> pop栈顶的值，写入<code>Constant pool #1</code> 对应的变量中，在这个实例也就是<code>Field a:I</code>,最后<code>return</code> 整个实例变量的赋值流程就完成了，写到这里，我想说，其实分析这个过程，很有利于我们对上层类加载，在初始化类的时候整个流程的理解很有帮助。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章主要目的是让大家明白指令的工作方式，基础操作变量的指令，以及内部执行逻辑，并没有写很复杂的指令，比如控制指令，逻辑指令，比较指令等等指令组合，其实这些都不很难，我们有了指令的认识，后续再看其他指令就很好理解，同时指令虽然最多256个，不算多，也不算少，在此我建议小伙伴们在分析指令，自己写的时候，可以查阅<a href="">jvm指令文档</a>这样更好理解，同时也是记忆的一种方式，看多了，自然就会了，也就不用查阅文档了。这篇文章主要是指令入门，后续讲解更多的指令操作，以及指令的灵活使用，我们都知道的，为了避免class打上preverify标志，同时也为了开发人员的透明开发，我们实现插件的方式去hook gradle任务，然后通过在每个class文件中插入一段代码，这个也就是热修复中插桩的一种方式。这里就需要直接修改字节码，加入对应的字节码指令。所以对字节码的指令了解是很有必要的。下篇继续分析jvm指令，大概还会写3篇相关指令的文章，然后一个asm实例，用这种方式实现方法执行时间统计，aop操作等。以前我们都是通过代理的方式，其实是比较繁琐的。敬请期待接下来更精彩的文章……</p>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://www.jackway.cn">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/&title=《jvm-字节码指令(1)》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/&title=《jvm-字节码指令(1)》 — longway's blog&source=
+上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-字节码指令(1)》 — longway's blog&url=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/&via=http://www.jackway.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/01/15/jvm-class内部结构/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">jvm-class内部结构深度揭秘</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="jvm-字节码指令-1" data-title="jvm-字节码指令(1)" data-url="http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/&title=《jvm-字节码指令(1)》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/&title=《jvm-字节码指令(1)》 — longway's blog&source=
+上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-字节码指令(1)》 — longway's blog&url=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/&via=http://www.jackway.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHUlEQVR42u3aQW7DMAwEwPz/0y7Qc+PuUnEAy6NTEBiSxweCFPl6xev4Xe/+OU7X+W7v9nldsTAwMG7LSF7i/LDz5xP8Bz4QBgbGAxjtkeebnn+CJFrm74aBgYHRBsr1sIuBgYGxHnBnieN61YmBgYGRbHd+QH5Ndv7k5bU4BgbGDRntwd/8fWF/AwMD4yaMo1xJyZoE0zy5jN4KAwNja0ab5OUHt+F1JSXFwMDYm9Ee3w6NrYyI5QMZGBgYz2HMasY2+LYNhrolgIGBsR1jNlRxXYNztgMGBsbejCSly1O0PInMP9BwWgQDA2Mjxmyoqx35ap8ckjAwMLZmzF7imw3ONm3FwMDYibEy7pC3PPPn2x0wMDCexsgbinkZ3LYf8vfBwMB4JiNvMa4H0JUrvKizgYGBsR1jpbycJXltkRwFXAwMjE0Z+WFJMTlLAfMgXpyCgYGxKeOKgbA2WK8UwBgYGM9hzLZeuaRrd/snJcXAwNiO8dkLtdkAWRvii9kQDAyMjRjrpHxoY/0j/vEMBgbG1oy8yGyTubagndWnbxNEDAyMjRhHudrrtrw5mlMxMDCexmiDXVt2zgrXWaDHwMDYm9EG2fUL/TxMFy0HDAyMBzDaoYphp7QMykVSiIGBgTG6Glv5BHkpi4GBgZGQ2rGwT41xDFNDDAyM2zLaK/7hSERw0daOaGBgYDyB8anGwKwXMSMNMRgYGPdj/ADM5APxzfxzLgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>
