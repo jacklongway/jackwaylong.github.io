@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>jvm-字节码指令(2) | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="jvm">
+  <meta name="description" content="上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm-字节码指令(2)">
+<meta property="og:url" content="http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输">
+<meta property="og:updated_time" content="2017-01-22T11:26:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jvm-字节码指令(2)">
+<meta name="twitter:description" content="上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jackwaylong" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2017</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">jvm-字节码指令(2)</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">jvm-字节码指令(2)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-01-22T10:20:31.000Z" itemprop="datePublished" class="page-time">
+  2017-01-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指令大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">指令大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#int-条件判断（if－else）"><span class="post-toc-number">2.</span> <span class="post-toc-text">int-条件判断（if－else）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#float-条件判断（if－else）"><span class="post-toc-number">3.</span> <span class="post-toc-text">float-条件判断（if－else）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分支指令（switch）"><span class="post-toc-number">4.</span> <span class="post-toc-text">分支指令（switch）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">5.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-jvm-字节码指令-2-结构指令"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">jvm-字节码指令(2)</h1>
+        <div class="post-meta">
+            <time datetime="2017-01-22T10:20:31.000Z" itemprop="datePublished" class="post-time">
+  2017-01-22
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输入，还是系统内部触发，最后必定涉及到数据操作，那么数据操作，程序结构在字节码层面是如何实现的，这篇文章就分析，数据判断，程序结构等指令，也是非常重要的，不管一个程序多么的复杂，我说过必定都是由数据，以及数据的操作指令组成，只有基础指令掌握的扎实了，我们才能解决复杂的问题，说了这么多，秀下面还是用图文的方式来进行指令分析。</p>
+</blockquote>
+<h2 id="指令大纲"><a href="#指令大纲" class="headerlink" title="指令大纲"></a>指令大纲</h2><ol>
+<li>条件判断（if－else）</li>
+<li>分支指令（switch）</li>
+</ol>
+<h2 id="int-条件判断（if－else）"><a href="#int-条件判断（if－else）" class="headerlink" title="int-条件判断（if－else）"></a>int-条件判断（if－else）</h2><p>所谓的条件判断只有3种可能，假如定义a,b两个变量，可能的结果由a<b,a>b,a=b,没有其他可能了，我们写java源码可以这么写:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> a=<span class="number">10</span>,b=<span class="number">20</span>;</div><div class="line"><span class="keyword">if</span>(a&gt;=b)&#123;</div><div class="line">	<span class="keyword">return</span> a;</div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span> b;</div></pre></td></tr></table></figure></b,a></p>
+<p>对应的字节码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">0: bipush        10</div><div class="line">       2: istore_1</div><div class="line">       3: bipush        20</div><div class="line">       5: istore_2</div><div class="line">       6: iload_1</div><div class="line">       7: iload_2</div><div class="line">       8: if_icmplt     13</div><div class="line">      11: iload_1</div><div class="line">      12: ireturn</div><div class="line">      13: iload_2</div><div class="line">      14: ireturn</div></pre></td></tr></table></figure></p>
+<p>这里只贴出了code属性的字节码，因为我们只关心这些，其中code属性中有些对常量池的引用等属性的引用，我们这里不关心这些，直接跳过。首先我们来看<code>bipush</code> 这个指令就是将10常量push到栈顶，<code>istore_1</code>将栈定pop也就是10存储在第二个变量里面，注意变量表的结构类似数组。<code>bipush</code>将20 push到栈顶，<code>istore_2</code> 将栈顶pop也就是20存储在第三个变量里面，<code>iload_1</code> 将变量2push到栈顶，<code>iload_2</code> 将变量3push到栈顶, <code>if_icmplt</code> 比较栈顶的2个值，注意这里的比较跟我们java源码的比较逻辑刚好相反，注意就好了，如果小于那么执行<code>iload_1</code> 将变量2push到栈顶，然后return, 否则跳转到<code>iload_2</code> 将3变量push到栈顶，然后return; 整个流程来看，字节码的执行还是很严格的，也是很符合我们的思维逻辑的，字节码多看就会了，初次接触可能会有些蒙，看了几次之后就好了。</p>
+<h2 id="float-条件判断（if－else）"><a href="#float-条件判断（if－else）" class="headerlink" title="float-条件判断（if－else）"></a>float-条件判断（if－else）</h2><p>上面分析的是int的条件判断，接下来分析float的，有的同学可能会有疑问，不都是比较吗？为啥要分开来写了，确实，我开始也是有这些疑问，那是我们没有明白一个很重要的点，int要么成功执行，要么直接抛出NumberFormatException，但是浮点类型也有这两点性质，还有一点就是NAN值，其实还有无穷大属性，NAN根本是没有比较意义的，NAN的含义是不是一个数字，我们想想，不是一个数字的数，我们去比较有没有意义了，但是这种情况确实存在，那么我们程序也要处理，那么字节码怎么处理了，字节码这样处理，将比较结果push到栈顶，比较结果的值只有1,0,-1 3种可能，也就是开始说的，比较只可能出现的结果，那么这样就好处了，将栈顶跟0比较，就可以得到结果，如果是NAN规定将1push到栈，后面的操作指令跟int一样了，这里知道不同点就好，float比较指令用的:<code>fcmpl</code>,<code>ifle</code> 根据条件执行。double跟float一样，都是浮点类型，这里就不讲解了。</p>
+<h2 id="分支指令（switch）"><a href="#分支指令（switch）" class="headerlink" title="分支指令（switch）"></a>分支指令（switch）</h2><p>分支指令在我们开发中，也是非常常见的，但是不同jdk版本对分支常量的支持力度不太一样，最明显的就是后续版本jdk对String提供了支持，看上去是一个对象的比较，其实背后还是基本的比较组合实现的。分支指令可能对不同代码属性有不同的表现，这个是编译器决定的，也就是在编译的时候，可能对我们的代码进行优化，根据空间，时间的折中考虑，来决定用什么指令实现分支，jvm里面有两种分支指令: <code>tableSwitch</code>和<code>lookupswitch</code> 第一个就是table形式，跟数组一样，满足数组所有特性，我们最容易想到的数组特性就是查找最有，下表定位可以找到对应的数值，所以在数据跨度不是很大的情况下，<code>tableSwitch</code> 指令可以达到时间，空间的最有，但是如果跨度大了，就会浪费很多的存储空间。所以就有<code>lookupswitch</code><br>指令来实现，这个指令分支值也是排序的，也可以用不同的排序算法来实现最优查找，在一定时间复杂度内，不会需要额外的存储空间。对这两种指令的选择，由编译器决定，来优化。下面来看一个实例，更清晰的认识，这两种指令的实现方式, 源码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> (<span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="number">3</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p>对应的字节码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">0: iconst_1</div><div class="line">        1: lookupswitch  &#123; // 2</div><div class="line">                      1: 28</div><div class="line">                      3: 31</div><div class="line">                default: 34</div><div class="line">           &#125;</div><div class="line">       28: goto          34</div><div class="line">       31: goto          34</div><div class="line">       34: return</div></pre></td></tr></table></figure></p>
+<p>我们看到这里用的<code>lookupswitch</code> 这条指令，<code>1:28</code> 跳转到28行执行goto指令，<code>goto</code> 在我们开发中是不建议直接使用的因为会打乱程序结构，而在字节码中经常看到，直接实现跳转，goto 34 这条指令就是指定跳转的行号这里就是跳到34行，然后执行return。我们知道switch都有个default指令，也就是没有匹配的时候，默认的执行指令，这里直接return。</p>
+<blockquote>
+<p>说到这里我们应该明白了数据的比较，分支处理指令，这是实现复杂指令的根基，一定要好好的体会，后续对象操作指令，其实也很类似，只是对象的操作比这更复杂些，涉及到引用链，其实也不难，今天就写这么多，下篇继续分析，分支指令的String处理方式，以及循环结构的指令处理，明白了这些，指令的基本操作到此就结束了，后续会有几篇讲解，一些对象上的指令，比如对象的操作，也就是方法的调用，对象字段的操作，包括实例字段，静态字段。敬请期待后续的分析……</p>
+</blockquote>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://www.jackway.cn">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/&title=《jvm-字节码指令(2)》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/&title=《jvm-字节码指令(2)》 — longway's blog&source=developer" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-字节码指令(2)》 — longway's blog&url=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/&via=http://www.jackway.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/01/18/jvm-字节码指令-1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">jvm-字节码指令(1)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="jvm-字节码指令-2-结构指令" data-title="jvm-字节码指令(2)" data-url="http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/&title=《jvm-字节码指令(2)》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/&title=《jvm-字节码指令(2)》 — longway's blog&source=developer" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jvm-字节码指令(2)》 — longway's blog&url=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/&via=http://www.jackway.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3a0U4kMQwEQP7/p7nXk047220nsCfVPCEYsqkgxcb211f8fP/1JO/8++arn27ePPbg4eHhLbb+vHS7uVefNXv/eT8v18HDw8O7xsuXft7W8xHMwkYeJPDw8PA+k5d/fH6V5yk7Hh4e3v/LS0hJMp0XNfDw8PA+jZcUI57fTxLrdrvPx3241oKHh4c3yVqLpX/36yv9PTw8PLx1V3129eejBnljbPbg4eHh3eC16ewpalvwne0TDw8P7x4vHw5oC7j5kNYsSBTtMTw8PLxDvBzQtsHyImzLyJNyPDw8vNu8A//2r0sSbcL9BomHh4d3gdduogXnwwd5Wl8EBjw8PLwLvHzp2fhUnjq3jbFo9AoPDw/vAq9NZPNFZ9/fj4Xh4eHh/SQvT53zMkGLnDW96sPCw8PDW/DyUkJS1di3x/ICcV1lwcPDwzvEy8cF9tXionAQl4yjmi0eHh7ej/PaYsSsPdYeaH5MeHh4eGd5SdqaFyPyksSmapKXm/Hw8PBu8JIAMLvE88Q3gbUJ/ZsYiIeHh7fgzRbdpMLJ9d223F7+Fh4eHt4FXpIK58Fjn5pvjubNrvDw8PAO8drLN6+Rnv0LtMk0Hh4e3j1eu2jb/t+MduVBK4p4eHh4eJd57aBA207L+1OzFt2bwICHh4d3iLe54vNwMgtF+QE1uTYeHh7elrdpR50q+OaDWQUeDw8P70d4yXDApkQ7O6Dh/Y+Hh4d3lPddPqeOIyEdOA48PDy8C7xZwSIv/s6+3gwTJKELDw8Pb89rg8GNi37WiovCBh4eHt413qwI27bHZkFo9bt4eHh4H8CbtcGSRtqsWFyMq+Lh4eH9Ki9PbZP3Zw2zKHTh4eHhXePl13f701UpoWxu1QMEeHh4eCNeO9LUptr55Z6XOY7B8PDw8DreH5UOkpewO0HoAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>

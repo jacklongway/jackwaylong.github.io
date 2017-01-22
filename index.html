@@ -162,6 +162,56 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-jvm-字节码指令-2-结构指令"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time datetime="2017-01-22T10:20:31.000Z" itemprop="datePublished" class="post-time">
+  2017-01-22
+</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/01/22/jvm-字节码指令-2-结构指令/">jvm-字节码指令(2)</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent" >
+
+    
+        
+上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事...
+    
+
+        <a href="/2017/01/22/jvm-字节码指令-2-结构指令/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-jvm-字节码指令-1"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -608,57 +658,6 @@ java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-sys-img/">android-sys-img</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xmind/">xmind</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-JMM-transient-4"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time datetime="2016-12-25T04:01:41.000Z" itemprop="datePublished" class="post-time">
-  2016-12-25
-</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/12/25/JMM-transient-4/">JMM-transient</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent" >
-
-    
-        
-java里面将一个对象序列化，步骤就是将要被序列化的对象实现Serializable接口，这个接口是个标志接口，跟java里面的Clonable,Closable等接口一样，没有具体的行为标准定义，就是一个描述。只有实现了序列化接口的对象，才能够序列化，但是我们还注意到序列化对象的类的内部还定义了一个serialVersionUUID,这个是做什么的了，这个可以理解为一个token，只有token值一样的类，序列化的对象才可逆，也就是说，标志这个class,Class对象是否前后版本一致。注意类里面的被序列的数据只有，非static字段，非transient字段。下面重点来来讲解序列化的几种不同姿势。以及我们需要的地方，但是在Android里面最好用Parcelable接口，实现数据的序列化，这个本地性能很棒，原因是内存拷贝，前者是反射，性能当然差点哈，但是如果要将对象在网络传输，那么我们就只能用前者了。其实还有一个接口可以实现序列化，本文为了更专注序列化的几大特性来讲，不会过多介绍，后面我会提到。知道就行。
-
-    
-
-        <a href="/2016/12/25/JMM-transient-4/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/transient/">transient</a></li></ul>
 
     </div>
     
