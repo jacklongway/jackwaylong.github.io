@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jackway.cn/"/>
-  <updated>2017-01-22T11:28:19.000Z</updated>
+  <updated>2017-01-22T11:29:28.000Z</updated>
   <id>http://www.jackway.cn/</id>
   
   <author>
@@ -20,11 +20,12 @@
     <link href="http://www.jackway.cn/2017/01/22/jvm-%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4-2-%E7%BB%93%E6%9E%84%E6%8C%87%E4%BB%A4/"/>
     <id>http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/</id>
     <published>2017-01-22T10:20:31.000Z</published>
-    <updated>2017-01-22T11:28:19.000Z</updated>
+    <updated>2017-01-22T11:29:28.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输入，还是系统内部触发，最后必定涉及到数据操作，那么数据操作，程序结构在字节码层面是如何实现的，这篇文章就分析，数据判断，程序结构等指令，也是非常重要的，不管一个程序多么的复杂，我说过必定都是由数据，以及数据的操作指令组成，只有基础指令掌握的扎实了，我们才能解决复杂的问题，说了这么多，下面详细进行指令分析。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="指令大纲"><a href="#指令大纲" class="headerlink" title="指令大纲"></a>指令大纲</h2><ol>
 <li>条件判断（if－else）</li>
 <li>分支指令（switch）</li>
@@ -47,7 +48,8 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致
+&lt;p&gt;上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输入，还是系统内部触发，最后必定涉及到数据操作，那么数据操作，程序结构在字节码层面是如何实现的，这篇文章就分析，数据判断，程序结构等指令，也是非常重要的，不管一个程序多么的复杂，我说过必定都是由数据，以及数据的操作指令组成，只有基础指令掌握的扎实了，我们才能解决复杂的问题，说了这么多，下面详细进行指令分析。&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
@@ -506,13 +508,13 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     </summary>
     
     
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
+    
       <category term="class-verify" scheme="http://www.jackway.cn/tags/class-verify/"/>
     
       <category term="inbox" scheme="http://www.jackway.cn/tags/inbox/"/>
     
       <category term="security" scheme="http://www.jackway.cn/tags/security/"/>
-    
-      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
     
   </entry>
   
