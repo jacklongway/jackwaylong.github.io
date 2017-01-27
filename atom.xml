@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jackway.cn/"/>
-  <updated>2017-01-22T11:29:28.000Z</updated>
+  <updated>2017-01-27T00:37:50.000Z</updated>
   <id>http://www.jackway.cn/</id>
   
   <author>
@@ -14,6 +14,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2017我你前行</title>
+    <link href="http://www.jackway.cn/2017/01/27/new-2017/"/>
+    <id>http://www.jackway.cn/2017/01/27/new-2017/</id>
+    <published>2017-01-27T00:27:57.000Z</published>
+    <updated>2017-01-27T00:37:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>2017我你前行，祝愿所有的小伙伴新的一年有新的收获, 鸡年好运~</p>
+</blockquote>
+<a id="more"></a>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/other/chicken.jpeg" alt="chicken" title="">
+                </div>
+                <div class="image-caption">chicken</div>
+            </figure>
+<p>[福]新年快乐![福]</p>
+<p>[福]身体健康![福]</p>
+<p>[福]步步高升![福]</p>
+<p>[福]事业有成![福]</p>
+<p>[福]财源广进![福]</p>
+<p>[福]心想事成![福]</p>
+<p>[福]万事如意![福]</p>
+<p><img src="/img/other/red_bag.JPG" alt="red bag">;</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;2017我你前行，祝愿所有的小伙伴新的一年有新的收获, 鸡年好运~&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="other" scheme="http://www.jackway.cn/categories/other/"/>
+    
+    
+      <category term="2017" scheme="http://www.jackway.cn/tags/2017/"/>
+    
+  </entry>
   
   <entry>
     <title>jvm-字节码指令(2)</title>
@@ -508,13 +551,13 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     </summary>
     
     
-      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
-    
       <category term="class-verify" scheme="http://www.jackway.cn/tags/class-verify/"/>
     
       <category term="inbox" scheme="http://www.jackway.cn/tags/inbox/"/>
     
       <category term="security" scheme="http://www.jackway.cn/tags/security/"/>
+    
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
     
   </entry>
   
