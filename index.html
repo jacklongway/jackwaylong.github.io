@@ -162,6 +162,57 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-classloader"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time datetime="2017-02-06T12:48:24.000Z" itemprop="datePublished" class="post-time">
+  2017-02-06
+</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/02/06/classloader/">深入分析classloader</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent" >
+
+    
+        
+classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词就很通俗的说明了是class加载器，不能加载其它，可能有能有疑问，不是可以加载资源和so吗？确实没错，classloader是代码，资源大管家，注意这里的资源不是android里面的assetsmanager，比如加载文件，最为常见的是加载配置文件，属性文件，写后台的很常见，我们写客户端的基本很少用到，既然classloader能做这么多事情，那么问题来了，我们在android代码的时候根本没有用到了，class也加载进来了，对象也创建出来了，这是什么原因了。是的，我们想想，如果我们平时开发每创建一个对象都要手动classloader加载，肯定是很繁琐的。这个流程系统接管了，所以导致很多同学对class的加载流程不是很明白，即使在网上看了一些文档，也没有根本理解原理。那么这篇文章我就跟同学们较为全面，深入的讲解，让我们能真正的理解的classloader的加载机制，命名空间，隔离行等特性。
+
+    
+
+        <a href="/2017/02/06/classloader/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/classloader/">classloader</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-new-2017"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -609,57 +660,6 @@ java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-2016总结"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time datetime="2016-12-30T13:37:24.000Z" itemprop="datePublished" class="post-time">
-  2016-12-30
-</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/other/">other</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/12/30/2016总结/">总结过去,展望未来,致敬2016</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent" >
-
-    
-        
-2016即将过去，此时我在想，我该写点什么好了，我该怎么总结自己这一年中的得与失了，我该怎么计划2017了，我该如何计划自己的未来了，我离自己的职业规划的目标还差多远了，那么此文不聊技术，总结自我一下。希望看到此文的同仁也会有自己的感受，也希望同仁对自己也好好的总结。
-
-    
-
-        <a href="/2016/12/30/2016总结/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
 
     </div>
     
