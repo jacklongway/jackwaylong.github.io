@@ -55,7 +55,7 @@
                 </div>
                 <div class="image-caption">define-classloader</div>
             </figure></p>
-<h2 id="classloader的运用场景"><a href="#classloader的运用场景" class="headerlink" title="classloader的运用场景"></a>classloader的运用场景</h2><p>classloader场景就太多了，比如插件开发，热修复，主题包，so修复等等都可以用这个实现，只有深入理解了classloader，我们很多高难度的场景才能对付。其实静下心来也不难理解。</p>
+<h2 id="classloader的运用场景"><a href="#classloader的运用场景" class="headerlink" title="classloader的运用场景"></a>classloader的运用场景</h2><p>classloader场景就太多了，比如插件开发，热修复，so修复等等都可以用这个实现，只有深入理解了classloader，我们很多高难度的场景才能对付。其实静下心来也不难理解。</p>
 <h2 id="classloader常见问题以及解决方法"><a href="#classloader常见问题以及解决方法" class="headerlink" title="classloader常见问题以及解决方法"></a>classloader常见问题以及解决方法</h2><p>classloader我们在真正项目运用过程中肯定会遇到一些坑，比如不同的os的classloader被定制的面目全非，最坑的是阿里云的类加载器，这里就不过多吐槽，在插件化的时候，一定要单独处理对待，它的待遇就是不一样，还有360自家系统的classloader也要单独处理，其实这些都不难，就是坑，发现一个埋一个就好，理解原理了之后，后续问题基本都可以解决，只是可能有时麻烦点。这里的问题大多数是classloader内部的数据结构被改了。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来看classloader涉及到的东西还是很多的，我们平时开发可能很少注意，希望通过本篇文章，希望大家对classloader的应用层面有个好的理解，能够在以后的项目中遇到问题之后，用已有积累的知识点，快速解决问题。前面的文章分析了class的加载，也就是classloader真正加载class的生命周期，这篇是进一步的外部层面的补充。本来打算这篇是继续分析class的字节循环指令的，由于有同学对classloader不是很理解，就有了这篇文章的分析，下篇还是会按照正常套路分析字节码指令，敬请期待……</p>
 <h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
