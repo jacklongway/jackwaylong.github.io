@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title><![CDATA[star模型]]></title>
+      <url>http://www.jackway.cn/2017/03/04/star-%E6%A8%A1%E5%9E%8B/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交流了一下，如何才能保证工作高质量完成的同时，自己的技术同时得到了提高。我就说了star模型，今天借此这个机会，和大家一起聊聊这个经典模型，其实我们所有的事情，如果按照这个模型套路靠拢，最终的结果肯定不会太差，但是也未必一定成功。不成功不代表失败，失败有很多因素。下面用拆分模型的方式分析这个模型我们所要知道哪些因素。</p>
+</blockquote>
+<h2 id="star模型图"><a href="#star模型图" class="headerlink" title="star模型图"></a>star模型图</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.processon.com/chart_image/58bad08be4b0015fb3bac26b.png" alt="star" title="">
+                </div>
+                <div class="image-caption">star</div>
+            </figure>
+<p>这个模型很简单，只要我们真正理解了这个状态图，其实我们在做很多事情都有了方向，都知道自己要做什么了，就不会盲目，不会迷茫的做一些事情。下面详细分析这四种状态，然后结合实际的问题用这种模型进行验证。</p>
+<ol>
+<li>场景<br>所谓场景就是我们经常所有的背景，一切事情的产生都有它的背景，不会凭空产生，跟我们以前书本学到的唯物主义类似，明白了背景之后，我们需要进一步分析，在当前背景下，我们已经有什么，没有什么。</li>
+<li>目标<br>目标就是在场景的推动下，我们最终期望的结果。这个阶段只是一种理想化的结果，为了进一步明确，接下来我们需要做什么,怎么做。</li>
+<li>动作<br>有了目标，我们需要进一步将目标量化，验证目标的可行性，然后接下来将目标拆分，得到task集合，其中每个task，可能包含很多action，process，为了每个task的风险可控，在这个过程可能需要进行调研，调研过程必定会产生很多task，对每个task进行记录，然后归档，最终完成task，重复这个过程，整个动作就done</li>
+<li>结果<br>结果就是对前面3个状态的验证，最终结果一定要明确，在什么场景下，完成了什么task，实现了什么target，带来了多大的效益，收获了什么，心路历程的总结，走了什么弯路，哪方面做得不够好，缺少哪方面的基础能力，最好都能形成wiki文档，这样既是一种对问题的深入思考，也是避免重复的问题再次出现，其实也是一种经验总结。</li>
+</ol>
+<h2 id="star案例"><a href="#star案例" class="headerlink" title="star案例"></a>star案例</h2><p>比如我们学习android里面的view，首先我们要知道view的场景，这个场景不难发现就是用户需要交互入口，我们的最终目标就是能够在手机上绘制出view，然后绑定实践，这样才能提供用户接口。为了实现这个目标，首先我们需要抽象，view是什么，view如何绘制到屏幕上，怎么给view绑定事件。这里就产生了3个task。最后分别执行这一系列的任务，中间可能还有很多子task，最后都done，然后验证最终结果，是不是满足了用户接口，最后写wiki总结，反复思考。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不管是在学习一门技术，还是做一项调研，还是分析一个产品，star模型都可以很好的指导我们，希望小伙伴们后面用这种模型尝试的分析，我相信这种模型带来的效果是很明显的。</p>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[jvm-字节码指令(3)]]></title>
       <url>http://www.jackway.cn/2017/02/12/jvm-%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4-3/</url>
       <content type="html"><![CDATA[<blockquote>
