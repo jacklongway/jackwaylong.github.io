@@ -162,139 +162,16 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
-            <article id="post-groovy编译解密"
+            <article id="post-JMM-1"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:20:40.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2016-12-17T02:50:07.000Z" itemprop="datePublished" class="post-time">
+  2016-12-17
 </time>
 
         
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/groovy编译解密/">groovy编译解密</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent" >
-
-    
-        
-    
-
-        <a href="/2017/02/18/groovy编译解密/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-groovy语言DSL特性"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time datetime="2017-02-18T02:20:22.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
-</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/groovy语言DSL特性/">groovy语言DSL特性</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent" >
-
-    
-        
-    
-
-        <a href="/2017/02/18/groovy语言DSL特性/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-groovy与java的区别以及联系"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time datetime="2017-02-18T02:19:34.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
-</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/groovy与java的区别以及联系/">groovy与java的区别以及联系</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent" >
-
-    
-        
-    
-
-        <a href="/2017/02/18/groovy与java的区别以及联系/" class="post-more waves-effect waves-button">
-            阅读全文...
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-jvm-字节码指令-3"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time datetime="2017-02-12T13:33:14.000Z" itemprop="datePublished" class="post-time">
-  2017-02-12
-</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
 
 
 
@@ -305,7 +182,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/12/jvm-字节码指令-3/">jvm-字节码指令(3)</a>
+      <a class="post-title-link" href="/2016/12/17/JMM-1/">JMM-重排序</a>
     </h3>
   
 
@@ -316,18 +193,18 @@
 
     
         
-上上篇字节码分析了判断，基本类型的分支指令，这篇主要分析分支种一种比较特殊的也是java7种新添加的分支类型String，在以前的jdk版本中是不支持String的，String看似是一种对象的分支，其实背后却是用了比较复杂的指令集完成的，这里会用到equals,hashcode，这两个是一对协议方法，由于本篇重点不是分析这两个方法，暂且知道这两个方法的用途就好了，还有结构指令中常用的循环指令，while,do while,for 指令集。指令不多，但是经过组合，就可以实现很复杂的功能，其实函数就是一系列指令集的组装，才具备了行为的能力。下面就分别详细的分析这些指令集，其中会涉及一些指令，不理解的可以查阅jvm指令规范文档，上面介绍的很详细。
+首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我对每个疑问进行剖析。
 
     
 
-        <a href="/2017/02/12/jvm-字节码指令-3/" class="post-more waves-effect waves-button">
+        <a href="/2016/12/17/JMM-1/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/controlFlow/">controlFlow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependencies/">dependencies</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resort/">resort</a></li></ul>
 
     </div>
     
@@ -336,16 +213,16 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-classloader"
+            <article id="post-cas-1"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-06T12:48:24.000Z" itemprop="datePublished" class="post-time">
-  2017-02-06
+        <time datetime="2016-12-13T03:33:21.000Z" itemprop="datePublished" class="post-time">
+  2016-12-13
 </time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
 
 
 
@@ -356,7 +233,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/06/classloader/">深入分析classloader</a>
+      <a class="post-title-link" href="/2016/12/13/cas-1/">CAS为什么如此的乐观了?</a>
     </h3>
   
 
@@ -367,18 +244,18 @@
 
     
         
-classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词就很通俗的说明了是class加载器，不能加载其它，可能有能有疑问，不是可以加载资源和so吗？确实没错，classloader是代码，资源大管家，注意这里的资源不是android里面的assetsmanager，比如加载文件，最为常见的是加载配置文件，属性文件，写后台的很常见，我们写客户端的基本很少用到，既然classloader能做这么多事情，那么问题来了，我们在android代码的时候根本没有用到了，class也加载进来了，对象也创建出来了，这是什么原因了。是的，我们想想，如果我们平时开发每创建一个对象都要手动classloader加载，肯定是很繁琐的。这个流程系统接管了，所以导致很多同学对class的加载流程不是很明白，即使在网上看了一些文档，也没有根本理解原理。那么这篇文章我就跟同学们较为全面，深入的讲解，让我们能真正的理解的classloader的加载机制，命名空间，隔离行等特性。
+CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，接下来，让我们更深入的了解一下这项技术。
 
     
 
-        <a href="/2017/02/06/classloader/" class="post-more waves-effect waves-button">
+        <a href="/2016/12/13/cas-1/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/classloader/">classloader</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CAS/">CAS</a></li></ul>
 
     </div>
     
@@ -387,16 +264,16 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-new-2017"
+            <article id="post-thread-stop"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-01-27T00:27:57.000Z" itemprop="datePublished" class="post-time">
-  2017-01-27
+        <time datetime="2016-12-12T06:17:50.000Z" itemprop="datePublished" class="post-time">
+  2016-12-12
 </time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/other/">other</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
 
 
 
@@ -407,7 +284,7 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/27/new-2017/">2017我你前行</a>
+      <a class="post-title-link" href="/2016/12/12/thread-stop/">线程启动之后可以停止吗?</a>
     </h3>
   
 
@@ -418,18 +295,20 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
     
         
-2017我你前行，祝愿所有的小伙伴新的一年有新的收获, 鸡年好运~
+异步任务最后都会回归到Thread这个类，所以我们很有必要深入理解一下这个类，才能写基础框架，才能理解目前大名鼎鼎的线程池框架，不得不佩服并发大神Doug Lea对java并发做出的共享，也就是很多人所说，java具有先天高并发的特性。下面分析一下我们常见的场景，任务的停止处理.
 
+stop 有作用吗?
+肯定是不好使的, 抛出UnsupportedOperationException,并且...
     
 
-        <a href="/2017/01/27/new-2017/" class="post-more waves-effect waves-button">
+        <a href="/2016/12/12/thread-stop/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2017/">2017</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/runnable/">runnable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stop/">stop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/thread/">thread</a></li></ul>
 
     </div>
     
@@ -438,16 +317,16 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-jvm-字节码指令-2-结构指令"
+            <article id="post-gitsubmodule-1"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-01-22T10:20:31.000Z" itemprop="datePublished" class="post-time">
-  2017-01-22
+        <time datetime="2016-12-08T03:36:11.000Z" itemprop="datePublished" class="post-time">
+  2016-12-08
 </time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/git/">git</a></li></ul>
 
 
 
@@ -458,7 +337,7 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/22/jvm-字节码指令-2-结构指令/">jvm-字节码指令(2)</a>
+      <a class="post-title-link" href="/2016/12/08/gitsubmodule-1/">git submodule</a>
     </h3>
   
 
@@ -469,18 +348,20 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
     
         
-上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输入，还是系统内部触发，最后必定涉及到数据操作，那么数据操作，程序结构在字节码层面是如何实现的，这篇文章就分析，数据判断，程序结构等指令，也是非常重要的，不管一个程序多么的复杂，我说过必定都是由数据，以及数据的操作指令组成，只有基础指令掌握的扎实了，我们才能解决复杂的问题，说了这么多，下面详细进行指令分析。
+有种情况我们经常会遇到：某个工作中的项目需要包含并使用另一个项目。 也许是第三方库，或者你独立开发的，用于多个父项目的库。 现在问题来了：你想要把它们当做两个独立的项目，同时又想在一个项目中使用另一个。
 
+我们举一个例子。 假设你正在开发一个网站然后创建了 Atom 订阅。 你决定使用一个库，而不是写自己的 Atom 生成代码。 你可能不得不通过 CPAN 安装或 Ruby gem 来包含共享库中的代码，或者将源代码直接拷贝到自己的项目中。 如果将这个库包含进来，那么无论用何种方式都很难定制它，部署则更加困难，因为你必须确保每一个客户端都包含该库。 如果将代码复制到自己的项目中，那么你做的任何自定义修改都会使合并上游的改动变得困难。
+Git 通过子模块来解决这个问题。 子模块允许你将一个 Git 仓库作为另一个 Git 仓库的子目录。 它能让你将另一个仓库克隆到自己的项目中，同时还保持提交的独立。
     
 
-        <a href="/2017/01/22/jvm-字节码指令-2-结构指令/" class="post-more waves-effect waves-button">
+        <a href="/2016/12/08/gitsubmodule-1/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/submodule/">submodule</a></li></ul>
 
     </div>
     
@@ -489,16 +370,16 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-jvm-字节码指令-1"
+            <article id="post-interview-1"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-01-18T14:17:45.000Z" itemprop="datePublished" class="post-time">
-  2017-01-18
+        <time datetime="2016-12-07T10:46:41.000Z" itemprop="datePublished" class="post-time">
+  2016-12-07
 </time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/interview/">interview</a></li></ul>
 
 
 
@@ -509,7 +390,7 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/18/jvm-字节码指令-1/">jvm-字节码指令(1)</a>
+      <a class="post-title-link" href="/2016/12/07/interview-1/">一线互联网公司面试简单分析</a>
     </h3>
   
 
@@ -520,18 +401,28 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
     
         
-上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件结构都是按照字节有序的排序在文件中，所以了解class文件的结构是我们进行这篇字节码指令解析的前提，如果你还没有对class结构有所了解，可以先查看class结构这篇文章，对class有个初步的认识，这样再看字节码就相对好理解，jvm字节码指令的占用空间就一个byte,意味着字节码指令最多256个，无符号数据范围0-255,我们在上篇class结构的Code属性里面就看到对用的指令，只是指令操作码是以二进制出现，对应我们查表就知道对应指令的含义，说了这么多，还是那句话talking is a cheap,show me code.这篇文章，讲解最基础的指令，也是为了后续复杂组合打下基础。
-
+介绍自己负责的部分，如何实现的。
+自定义view viewGroup
+activity的启动流程
+事件传递及滑动冲突的处理
+插件化（activity如何加载及资源处理
+内存优化 ，如何避免oom
+内存泄漏如何处理及如何排查
+handler问题
+图片加载用的什么以及原理
+从一堆数据里怎么查找最大的n个数
+快速排序
+字符串匹配
     
 
-        <a href="/2017/01/18/jvm-字节码指令-1/" class="post-more waves-effect waves-button">
+        <a href="/2016/12/07/interview-1/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/alog/">alog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ams/">ams</a></li></ul>
 
     </div>
     
@@ -540,16 +431,16 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-jvm-class内部结构"
+            <article id="post-ios-oc-1"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-01-15T06:24:26.000Z" itemprop="datePublished" class="post-time">
-  2017-01-15
+        <time datetime="2016-12-06T13:36:07.000Z" itemprop="datePublished" class="post-time">
+  2016-12-06
 </time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ios/">ios</a></li></ul>
 
 
 
@@ -560,7 +451,7 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/15/jvm-class内部结构/">jvm-class内部结构深度揭秘</a>
+      <a class="post-title-link" href="/2016/12/06/ios-oc-1/">打破标准的第一个OC程序</a>
     </h3>
   
 
@@ -571,18 +462,18 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
     
         
-前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心最上层的源码编写，那有同学可能会疑惑，既然开发工具都帮我完成了，我们还有必要去了解内部吗？我们用过classloader加载一下不就好了吗？是的，说的很对，几乎99%的场景下，我们都是这样，但是假如一天遇到需要我们修改class内部结构的需求，那这时类加载就帮我们不了了，我们能够去完成需求的前提是，对class结构有一定的了解，不管如何，最为用java语言开发的开发者，都建议多少深入研究一下class的内部结构，这样不仅仅对写上层代码有帮助，更有助于我们对我们写的程序的把控，做到心理有底的代码必定bug会降到最低，说了这么多，这篇就来简单分析一下class内部的存储逻辑，jvm怎么能够识别class文件的。
+平时我们写程序第一个程序都是hello world,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符串,但是我们从程序的角度看，就是一个空虚的字符串，不能让我们想到更多，我想如果能否说一些字符串的基本操作可能更有意思，一方面是基础语法，另一方面也理解了oc字符串对象与java的不同点。
 
     
 
-        <a href="/2017/01/15/jvm-class内部结构/" class="post-more waves-effect waves-button">
+        <a href="/2016/12/06/ios-oc-1/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSString/">NSString</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oc/">oc</a></li></ul>
 
     </div>
     
@@ -591,16 +482,16 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-sdk-design-rules"
+            <article id="post-wait-sleep"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-01-12T03:17:05.000Z" itemprop="datePublished" class="post-time">
-  2017-01-12
+        <time datetime="2016-12-05T06:08:43.000Z" itemprop="datePublished" class="post-time">
+  2016-12-05
 </time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/sdk/">sdk</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
 
 
 
@@ -611,7 +502,7 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/12/sdk-design-rules/">sdk-design-rules</a>
+      <a class="post-title-link" href="/2016/12/05/wait-sleep/">wait和sleep 深度分析</a>
     </h3>
   
 
@@ -622,18 +513,173 @@ classloader我相信大家都很明白能做什么事情，不能做什么事情
 
     
         
-Twitter 的 Fabric 是知名的注重质量的 SDK，并已部署在数十亿的设备。在这次dev 演讲中，来自 Twitter 的 Ty Smith，揭示了 Fabric 团队创建他们 Fabric 的各种原则，特别是在 Android 方面。通过深入参与技术决策团队，Ty 了解到很多信息，他展示了团队在创建这个 SDK 过程中，学到的各种经验心得，关于稳定性、性能、SDK 体积控制、以及对于一些特殊情况的处理这些方面。无论你现在或将来想要建设一个 SDK，通过这次演讲你应该能收益很多关于设计 SDK 的伟大想法。
+首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:
+
+
+wait是Object中的方法,sleep是Thread中的方法
+wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用
+wait释放锁,sleep不释放锁
+wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源
 
     
 
-        <a href="/2017/01/12/sdk-design-rules/" class="post-more waves-effect waves-button">
+        <a href="/2016/12/05/wait-sleep/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
     </div>
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sdk/">sdk</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sleep/">sleep</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wait/">wait</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-shareUID"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time datetime="2016-12-03T05:45:14.000Z" itemprop="datePublished" class="post-time">
+  2016-12-03
+</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/12/03/shareUID/">shareUID</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent" >
+
+    
+        shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共享，但是实现该目的也是有一定限制的，首先保证app之间的签名一致，同时shareUID值相等，才能完全无障碍访问所有资源，不然只能访问部分资源，代码，sharedPreferences等资源是没法访问到的，即使访问到的也是非安全的。
+    
+
+        <a href="/2016/12/03/shareUID/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Context/">Context</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shareUID/">shareUID</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-safesharepreferences"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time datetime="2016-12-02T19:04:51.000Z" itemprop="datePublished" class="post-time">
+  2016-12-03
+</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/12/03/safesharepreferences/">SharedPreferences真的安全吗?</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent" >
+
+    
+        SharedPreferences是单进程线程安全,Android系统进程之间的内存是隔离的,这样就导致了进程之间如果访问同一个数据文件,进行数据共享通信的时候,可能会出现下面几种异常:
+    
+
+        <a href="/2016/12/03/safesharepreferences/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/contentprovider/">contentprovider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/martixcursor/">martixcursor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sharepreferences/">sharepreferences</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-single"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time datetime="2016-12-02T18:30:04.000Z" itemprop="datePublished" class="post-time">
+  2016-12-03
+</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/12/03/single/">单例模式真的很简单吗？</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent" >
+
+    
+        
+单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各种版本，这篇文章我想跟大家聊聊我心中的单例模式，同时我会给出我心目中的单例模式的各种版本，同时会给出不同版本的优缺点，以及我们最后应该选用哪个版本才是最为安全，优雅，同时性能也是比较好的，最后我想说，安全，性能是一个折中的考虑。
+
+    
+
+        <a href="/2016/12/03/single/" class="post-more waves-effect waves-button">
+            阅读全文...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/enum/">enum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/single/">single</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/synchronized/">synchronized</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
 
     </div>
     
@@ -646,7 +692,7 @@ Twitter 的 Fabric 是知名的注重质量的 SDK，并已部署在数十亿的
     
 <nav id="page-nav">
     <div class="inner">
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
     </div>
 </nav>
 

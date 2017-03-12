@@ -262,15 +262,17 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-插件开发需要具备的知识与思维"
+            <article id="post-jvm-字节码指令-3"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:28:03.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2017-02-12T13:33:14.000Z" itemprop="datePublished" class="post-time">
+  2017-02-12
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
 
 
     </div>
@@ -280,7 +282,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/插件开发需要具备的知识与思维/">插件开发需要具备的知识与思维</a>
+      <a class="post-title-link" href="/2017/02/12/jvm-字节码指令-3/">jvm-字节码指令(3)</a>
     </h3>
   
 
@@ -291,11 +293,19 @@
 
     
         
+上上篇字节码分析了判断，基本类型的分支指令，这篇主要分析分支种一种比较特殊的也是java7种新添加的分支类型String，在以前的jdk版本中是不支持String的，String看似是一种对象的分支，其实背后却是用了比较复杂的指令集完成的，这里会用到equals,hashcode，这两个是一对协议方法，由于本篇重点不是分析这两个方法，暂且知道这两个方法的用途就好了，还有结构指令中常用的循环指令，while,do while,for 指令集。指令不多，但是经过组合，就可以实现很复杂的功能，其实函数就是一系列指令集的组装，才具备了行为的能力。下面就分别详细的分析这些指令集，其中会涉及一些指令，不理解的可以查阅jvm指令规范文档，上面介绍的很详细。
+
     
 
-        <a href="/2017/02/18/插件开发需要具备的知识与思维/" class="post-more waves-effect waves-button">
+        <a href="/2017/02/12/jvm-字节码指令-3/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
     </div>
     
 </article>
@@ -303,15 +313,17 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-插件开发的套路"
+            <article id="post-classloader"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:27:44.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2017-02-06T12:48:24.000Z" itemprop="datePublished" class="post-time">
+  2017-02-06
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
 
 
     </div>
@@ -321,7 +333,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/插件开发的套路/">插件开发的套路</a>
+      <a class="post-title-link" href="/2017/02/06/classloader/">深入分析classloader</a>
     </h3>
   
 
@@ -332,11 +344,19 @@
 
     
         
+classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词就很通俗的说明了是class加载器，不能加载其它，可能有能有疑问，不是可以加载资源和so吗？确实没错，classloader是代码，资源大管家，注意这里的资源不是android里面的assetsmanager，比如加载文件，最为常见的是加载配置文件，属性文件，写后台的很常见，我们写客户端的基本很少用到，既然classloader能做这么多事情，那么问题来了，我们在android代码的时候根本没有用到了，class也加载进来了，对象也创建出来了，这是什么原因了。是的，我们想想，如果我们平时开发每创建一个对象都要手动classloader加载，肯定是很繁琐的。这个流程系统接管了，所以导致很多同学对class的加载流程不是很明白，即使在网上看了一些文档，也没有根本理解原理。那么这篇文章我就跟同学们较为全面，深入的讲解，让我们能真正的理解的classloader的加载机制，命名空间，隔离行等特性。
+
     
 
-        <a href="/2017/02/18/插件开发的套路/" class="post-more waves-effect waves-button">
+        <a href="/2017/02/06/classloader/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/classloader/">classloader</a></li></ul>
+
     </div>
     
 </article>
@@ -344,15 +364,17 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-as插件开发详解"
+            <article id="post-new-2017"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:27:33.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2017-01-27T00:27:57.000Z" itemprop="datePublished" class="post-time">
+  2017-01-27
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/other/">other</a></li></ul>
+
 
 
     </div>
@@ -362,7 +384,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/as插件开发详解/">as插件开发详解</a>
+      <a class="post-title-link" href="/2017/01/27/new-2017/">2017我你前行</a>
     </h3>
   
 
@@ -373,11 +395,19 @@
 
     
         
+2017我你前行，祝愿所有的小伙伴新的一年有新的收获, 鸡年好运~
+
     
 
-        <a href="/2017/02/18/as插件开发详解/" class="post-more waves-effect waves-button">
+        <a href="/2017/01/27/new-2017/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2017/">2017</a></li></ul>
+
     </div>
     
 </article>
@@ -385,15 +415,17 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-gradle插件开发详解"
+            <article id="post-jvm-字节码指令-2-结构指令"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:27:24.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2017-01-22T10:20:31.000Z" itemprop="datePublished" class="post-time">
+  2017-01-22
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
 
 
     </div>
@@ -403,7 +435,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/gradle插件开发详解/">gradle插件开发详解</a>
+      <a class="post-title-link" href="/2017/01/22/jvm-字节码指令-2-结构指令/">jvm-字节码指令(2)</a>
     </h3>
   
 
@@ -414,11 +446,19 @@
 
     
         
+上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输入，还是系统内部触发，最后必定涉及到数据操作，那么数据操作，程序结构在字节码层面是如何实现的，这篇文章就分析，数据判断，程序结构等指令，也是非常重要的，不管一个程序多么的复杂，我说过必定都是由数据，以及数据的操作指令组成，只有基础指令掌握的扎实了，我们才能解决复杂的问题，说了这么多，下面详细进行指令分析。
+
     
 
-        <a href="/2017/02/18/gradle插件开发详解/" class="post-more waves-effect waves-button">
+        <a href="/2017/01/22/jvm-字节码指令-2-结构指令/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
     </div>
     
 </article>
@@ -426,15 +466,17 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-gradle版本跟踪与插件版本的跟踪以及bug的issue"
+            <article id="post-jvm-字节码指令-1"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:26:54.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2017-01-18T14:17:45.000Z" itemprop="datePublished" class="post-time">
+  2017-01-18
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
 
 
     </div>
@@ -444,7 +486,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/gradle版本跟踪与插件版本的跟踪以及bug的issue/">gradle版本跟踪与插件版本的跟踪以及bug的issue</a>
+      <a class="post-title-link" href="/2017/01/18/jvm-字节码指令-1/">jvm-字节码指令(1)</a>
     </h3>
   
 
@@ -455,11 +497,19 @@
 
     
         
+上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件结构都是按照字节有序的排序在文件中，所以了解class文件的结构是我们进行这篇字节码指令解析的前提，如果你还没有对class结构有所了解，可以先查看class结构这篇文章，对class有个初步的认识，这样再看字节码就相对好理解，jvm字节码指令的占用空间就一个byte,意味着字节码指令最多256个，无符号数据范围0-255,我们在上篇class结构的Code属性里面就看到对用的指令，只是指令操作码是以二进制出现，对应我们查表就知道对应指令的含义，说了这么多，还是那句话talking is a cheap,show me code.这篇文章，讲解最基础的指令，也是为了后续复杂组合打下基础。
+
     
 
-        <a href="/2017/02/18/gradle版本跟踪与插件版本的跟踪以及bug的issue/" class="post-more waves-effect waves-button">
+        <a href="/2017/01/18/jvm-字节码指令-1/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
     </div>
     
 </article>
@@ -467,15 +517,17 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-gradle运行报告详解"
+            <article id="post-jvm-class内部结构"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:26:10.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2017-01-15T06:24:26.000Z" itemprop="datePublished" class="post-time">
+  2017-01-15
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
 
 
     </div>
@@ -485,7 +537,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/gradle运行报告详解/">gradle运行报告详解</a>
+      <a class="post-title-link" href="/2017/01/15/jvm-class内部结构/">jvm-class内部结构深度揭秘</a>
     </h3>
   
 
@@ -496,11 +548,19 @@
 
     
         
+前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心最上层的源码编写，那有同学可能会疑惑，既然开发工具都帮我完成了，我们还有必要去了解内部吗？我们用过classloader加载一下不就好了吗？是的，说的很对，几乎99%的场景下，我们都是这样，但是假如一天遇到需要我们修改class内部结构的需求，那这时类加载就帮我们不了了，我们能够去完成需求的前提是，对class结构有一定的了解，不管如何，最为用java语言开发的开发者，都建议多少深入研究一下class的内部结构，这样不仅仅对写上层代码有帮助，更有助于我们对我们写的程序的把控，做到心理有底的代码必定bug会降到最低，说了这么多，这篇就来简单分析一下class内部的存储逻辑，jvm怎么能够识别class文件的。
+
     
 
-        <a href="/2017/02/18/gradle运行报告详解/" class="post-more waves-effect waves-button">
+        <a href="/2017/01/15/jvm-class内部结构/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
     </div>
     
 </article>
@@ -508,15 +568,17 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-gradle持续集成需要关心的问题"
+            <article id="post-sdk-design-rules"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:25:45.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2017-01-12T03:17:05.000Z" itemprop="datePublished" class="post-time">
+  2017-01-12
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/sdk/">sdk</a></li></ul>
+
 
 
     </div>
@@ -526,7 +588,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/gradle持续集成需要关心的问题/">gradle持续集成需要关心的问题</a>
+      <a class="post-title-link" href="/2017/01/12/sdk-design-rules/">sdk-design-rules</a>
     </h3>
   
 
@@ -537,11 +599,19 @@
 
     
         
+Twitter 的 Fabric 是知名的注重质量的 SDK，并已部署在数十亿的设备。在这次dev 演讲中，来自 Twitter 的 Ty Smith，揭示了 Fabric 团队创建他们 Fabric 的各种原则，特别是在 Android 方面。通过深入参与技术决策团队，Ty 了解到很多信息，他展示了团队在创建这个 SDK 过程中，学到的各种经验心得，关于稳定性、性能、SDK 体积控制、以及对于一些特殊情况的处理这些方面。无论你现在或将来想要建设一个 SDK，通过这次演讲你应该能收益很多关于设计 SDK 的伟大想法。
+
     
 
-        <a href="/2017/02/18/gradle持续集成需要关心的问题/" class="post-more waves-effect waves-button">
+        <a href="/2017/01/12/sdk-design-rules/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sdk/">sdk</a></li></ul>
+
     </div>
     
 </article>
@@ -549,15 +619,17 @@
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-gradle与shell结合产生的碰撞火花"
+            <article id="post-jvm-heap"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time datetime="2017-02-18T02:25:28.000Z" itemprop="datePublished" class="post-time">
-  2017-02-18
+        <time datetime="2017-01-11T13:45:17.000Z" itemprop="datePublished" class="post-time">
+  2017-01-11
 </time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
+
 
 
     </div>
@@ -567,7 +639,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/02/18/gradle与shell结合产生的碰撞火花/">gradle与shell结合产生的碰撞火花</a>
+      <a class="post-title-link" href="/2017/01/11/jvm-heap/">jvm-(heap-gc)</a>
     </h3>
   
 
@@ -578,11 +650,19 @@
 
     
         
+前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那么这篇文章，我来分析一下，jvm里面的堆以及gc，前面也说过，堆内存的重要性，堆与我们开发非常密切，如果在写程序的过程中，没有很好的利用堆内存，最为常见的问题就是内存泄漏，内存溢出等致命bug。下面我来详细分析一下jvm里面的堆与gc。
+
     
 
-        <a href="/2017/02/18/gradle与shell结合产生的碰撞火花/" class="post-more waves-effect waves-button">
+        <a href="/2017/01/11/jvm-heap/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gc/">gc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/">heap</a></li></ul>
+
     </div>
     
 </article>
@@ -594,7 +674,7 @@
     
 <nav id="page-nav">
     <div class="inner">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
     </div>
 </nav>
 
