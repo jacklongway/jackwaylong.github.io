@@ -4,6 +4,58 @@
   
     
     <entry>
+      <title><![CDATA[Android中的Loader异步加载架构分析]]></title>
+      <url>http://www.jackway.cn/2017/03/12/Loader/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>相信大家对android中的Loader不陌生，我也相信对于很多同学很陌生，可能从写android起，到现在可能都不知道loader到底是什么玩意，其实我以前也没了解过，经过看google todo架构的loader实现之后，发现loader我一直在用，只是以前都是自己写的，不是用的系统自带的loader，我对google的任何实现都很好奇的，不管是什么方向，所以我就详细的分析一下loader的实现思路以及原理，分析过程中注意到了loader跟FragmentActivity进行了生命周期绑定，于是猜想loader的牛逼之处就是实现了数据异步自动化的管理，我们写的框架都是自己管理声明周期，然后在内部处理，loader利用sdk平台特性绑定，好处很多。既然loader这么厉害，那么这篇文章和同学们一起深入分析loader，在以后的开发中，可以适当的使用，体会google设计的思想。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="loader的组成"><a href="#loader的组成" class="headerlink" title="loader的组成"></a>loader的组成</h2><ol>
+<li>LoaderManager(loader管理器，提供行为模版)</li>
+<li>LoaderManagerImpl(loader管理器的实现，提供对loader真正的管理能力)</li>
+<li>Loader(加载器模版定义者)</li>
+<li>AsynsTaskLoader(加载器基本功能具体实现者)</li>
+<li>LoadTask(实际上是一个AsyncTask)</li>
+<li>CursorLoader(实现数据库访问的loader,异步loader实现者)</li>
+</ol>
+<h2 id="loader臆想图"><a href="#loader臆想图" class="headerlink" title="loader臆想图"></a>loader臆想图</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.processon.com/chart_image/58c50724e4b070abda1d8619.png" alt="loader-xmind" title="">
+                </div>
+                <div class="image-caption">loader-xmind</div>
+            </figure>
+<p>这个图表达就是从使用者，到管理者，到使用者之间的转换需要的对象。</p>
+<h2 id="loader类图"><a href="#loader类图" class="headerlink" title="loader类图"></a>loader类图</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/android/loader.png" alt="loader-class" title="">
+                </div>
+                <div class="image-caption">loader-class</div>
+            </figure>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>由于类图里面的属性与方法比较多，这里省略了字段的类型，方法参数，返回值等元素，绘制类图主要目的是理解loader架构里面的类的关系，知道关系了，通过查阅代码就知道类的细节了，但是我这里是偷懒的做法了，在公开场合分享的时候，最好还是把类里面的信息尽量的描述清楚，这样不用看代码，直接看图就可以知道整个系统在做些什么事情，这里还需要说明一下，类的关系大概有：</p>
+<ol>
+<li>继承</li>
+<li>实现</li>
+<li>依赖</li>
+<li>关联</li>
+<li>组合</li>
+<li>聚合<br>这六种关系，其中前面三种我们很好区分，因为是语法层面的约束，但是后面三种可能不是很好区分，其实这几种并没有严格的区分定义，我们尽量体会语义上的区别，我们可以根据语义的强烈进行区分，组合&gt;聚合&gt;关联。</li>
+</ol>
+<h2 id="loader时序图"><a href="#loader时序图" class="headerlink" title="loader时序图"></a>loader时序图</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/android/LoaderSequenceDiagram.png" alt="loader-sequence" title="">
+                </div>
+                <div class="image-caption">loader-sequence</div>
+            </figure>
+<p>时序图简单的分析了loader整个架构的调用链，注意这里只是描述的核心调用，其实里面还有很多细节处理，但是时序图没法完全体现，需要通过阅读代码了解细节。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面对loader的介绍，同学们应该对loader有了基本的认识，最好自己对着上面的讲解自己跟一下代码的调用，了解一下里面的处理细节，学习google设计架构的严谨思想与技巧。文章开始我说过，类似loader的实现方式很多，但是loader是最好的实现，因为具有先天的生命周期绑定。但是loader也有不足之处，比如loader生命周期方法并发调用是不支持的，注意这里不是并发执行任务。所以我们在自己实现的时候注意一下就好。最后还是希望大家自己看一下代码，这样在使用过程中才能更自信。</p>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[star模型]]></title>
       <url>http://www.jackway.cn/2017/03/04/star-%E6%A8%A1%E5%9E%8B/</url>
       <content type="html"><![CDATA[<blockquote>
@@ -27,6 +79,132 @@
 <h2 id="star案例"><a href="#star案例" class="headerlink" title="star案例"></a>star案例</h2><p>比如我们学习android里面的view，首先我们要知道view的场景，这个场景不难发现就是用户需要交互入口，我们的最终目标就是能够在手机上绘制出view，然后绑定事件，这样才能提供用户接口。为了实现这个目标，首先我们需要抽象，view是什么，view如何绘制到屏幕上，怎么给view绑定事件。这里就产生了3个task。最后分别执行这一系列的任务，中间可能还有很多子task，最后都done，然后验证最终结果，是不是满足了用户接口，最后写wiki总结，反复思考。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不管是在学习一门技术，还是做一项调研，还是分析一个产品，star模型都可以很好的指导我们，希望小伙伴们后面用这种模型尝试的分析，我相信这种模型带来的效果是很明显的。</p>
 <h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[插件开发需要具备的知识与思维]]></title>
+      <url>http://www.jackway.cn/2017/02/18/%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E9%9C%80%E8%A6%81%E5%85%B7%E5%A4%87%E7%9A%84%E7%9F%A5%E8%AF%86%E4%B8%8E%E6%80%9D%E7%BB%B4/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[插件开发的套路]]></title>
+      <url>http://www.jackway.cn/2017/02/18/%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9A%84%E5%A5%97%E8%B7%AF/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[as插件开发详解]]></title>
+      <url>http://www.jackway.cn/2017/02/18/as%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E8%AF%A6%E8%A7%A3/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle插件开发详解]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E8%AF%A6%E8%A7%A3/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle版本跟踪与插件版本的跟踪以及bug的issue]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E7%89%88%E6%9C%AC%E8%B7%9F%E8%B8%AA%E4%B8%8E%E6%8F%92%E4%BB%B6%E7%89%88%E6%9C%AC%E7%9A%84%E8%B7%9F%E8%B8%AA%E4%BB%A5%E5%8F%8Abug%E7%9A%84issue/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle运行报告详解]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E8%BF%90%E8%A1%8C%E6%8A%A5%E5%91%8A%E8%AF%A6%E8%A7%A3/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle持续集成需要关心的问题]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E9%9C%80%E8%A6%81%E5%85%B3%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle与shell结合产生的碰撞火花]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E4%B8%8Eshell%E7%BB%93%E5%90%88%E4%BA%A7%E7%94%9F%E7%9A%84%E7%A2%B0%E6%92%9E%E7%81%AB%E8%8A%B1/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle与py结合产生的碰撞火花]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E4%B8%8Epy%E7%BB%93%E5%90%88%E4%BA%A7%E7%94%9F%E7%9A%84%E7%A2%B0%E6%92%9E%E7%81%AB%E8%8A%B1/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle与git工作流的结合]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E4%B8%8Egit%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84%E7%BB%93%E5%90%88/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle如何对付市场部的多业态需求]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E5%A6%82%E4%BD%95%E5%AF%B9%E4%BB%98%E5%B8%82%E5%9C%BA%E9%83%A8%E7%9A%84%E5%A4%9A%E4%B8%9A%E6%80%81%E9%9C%80%E6%B1%82/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle定制化渠道包的解决方案]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E5%AE%9A%E5%88%B6%E5%8C%96%E6%B8%A0%E9%81%93%E5%8C%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle不同渠道打包方式]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E4%B8%8D%E5%90%8C%E6%B8%A0%E9%81%93%E6%89%93%E5%8C%85%E6%96%B9%E5%BC%8F/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle打包详解]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E6%89%93%E5%8C%85%E8%AF%A6%E8%A7%A3/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle任务模型]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E4%BB%BB%E5%8A%A1%E6%A8%A1%E5%9E%8B/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle构建任务的分析]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E6%9E%84%E5%BB%BA%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%88%86%E6%9E%90/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle文档如何阅读]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E6%96%87%E6%A1%A3%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gradle与groovy的联系]]></title>
+      <url>http://www.jackway.cn/2017/02/18/gradle%E4%B8%8Egroovy%E7%9A%84%E8%81%94%E7%B3%BB/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[groovy编译解密]]></title>
+      <url>http://www.jackway.cn/2017/02/18/groovy%E7%BC%96%E8%AF%91%E8%A7%A3%E5%AF%86/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[groovy语言DSL特性]]></title>
+      <url>http://www.jackway.cn/2017/02/18/groovy%E8%AF%AD%E8%A8%80DSL%E7%89%B9%E6%80%A7/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[groovy与java的区别以及联系]]></title>
+      <url>http://www.jackway.cn/2017/02/18/groovy%E4%B8%8Ejava%E7%9A%84%E5%8C%BA%E5%88%AB%E4%BB%A5%E5%8F%8A%E8%81%94%E7%B3%BB/</url>
+      <content type="html"></content>
     </entry>
     
     <entry>
