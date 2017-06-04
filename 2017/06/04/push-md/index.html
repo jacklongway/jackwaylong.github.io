@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://www.jackway.cn/2017/06/04/push-md/index.html">
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。">
-<meta property="og:updated_time" content="2017-06-04T06:43:37.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:04:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对工信部对android推送通道规范化的一些思考">
 <meta name="twitter:description" content="最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。">
@@ -170,7 +170,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android系统后台机制"><span class="post-toc-number">1.</span> <span class="post-toc-text">android系统后台机制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设备干扰"><span class="post-toc-number">2.</span> <span class="post-toc-text">设备干扰</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#用户情绪干扰"><span class="post-toc-number">3.</span> <span class="post-toc-text">用户情绪干扰</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#返璞归真"><span class="post-toc-number">4.</span> <span class="post-toc-text">返璞归真</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">5.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android系统后台机制"><span class="post-toc-number">1.</span> <span class="post-toc-text">android系统后台机制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设备干扰"><span class="post-toc-number">2.</span> <span class="post-toc-text">设备干扰</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#用户情绪干扰"><span class="post-toc-number">3.</span> <span class="post-toc-text">用户情绪干扰</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#返璞归真"><span class="post-toc-number">4.</span> <span class="post-toc-text">返璞归真</span></a></li></ol>
         </nav>
     </aside>
     
@@ -199,7 +199,7 @@
 <h2 id="设备干扰"><a href="#设备干扰" class="headerlink" title="设备干扰"></a>设备干扰</h2><p>设备是一个物理设备，而app是一个虚拟服务，一个设备可以有很多服务，如果每个app都是后台服务，那设备的消耗将是非常的大，同时有一些app在后台进行的一些不仅仅是本地服务，还可能是一些远程服务，这样一来将导致用户设备不仅仅电量不够用，而且流量也不够用，还会将用户的隐私信息通过后台push通道发送到云端，这些行为其实都是非常可怕的，这样一来，只要用户有手机，就知道用户的行为，虽然这个跟目前用户画像技术很吻合，但是这种画像不是用户行为，是后台行为，必须要静止这种操作的出现。</p>
 <h2 id="用户情绪干扰"><a href="#用户情绪干扰" class="headerlink" title="用户情绪干扰"></a>用户情绪干扰</h2><p>现在用户的很多日常都离不开手机，不仅仅工作，生活，几乎所有一切都离不开手机，这样一来泛滥的推送手机给用户，会给用户带来很多困扰，况且有的推送过来之后，还有一个小小的声音片段，我们想想如果后台不断的推送广告信息，用户是什么感受，会严重影响用户对app的使用好感。我们应该尽量避免这种影响用户情趣的操作，用户至上，用户最具有价值，只有有了用户，我们所做的一切才能让给我们带来价值。技术仅仅是一个解决问题的工具，我们要做的就是使用这个工具做更多用户认可的事情，而不是影响用户的事情。</p>
 <h2 id="返璞归真"><a href="#返璞归真" class="headerlink" title="返璞归真"></a>返璞归真</h2><p>不管从上面的几点来说，还是从工信部这一举措来说，我们都应该统一push通道，公用系统push通道，由系统统一push出入口，这样我们就可以避免那些非法的后台服务，从而有效的控制后台服务。同时我们还可以对出入口的信息进行检测与过滤等一些列行为的拦截。最后我相信android的推送行为也会像苹果的apns一样，基于硬件机制与系统软件栈机制提供push服务。希望android的未来生态越来越好，寄语今年io大会的一句话，希望mobile first to ai first 成功过渡的过程中，android 生态越来越好。</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
         </div>
 
         <blockquote class="post-copyright">

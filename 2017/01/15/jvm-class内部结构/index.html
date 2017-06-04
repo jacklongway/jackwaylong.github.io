@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/acc_method.png">
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/acc_method.png">
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/sourcefile.png">
-<meta property="og:updated_time" content="2017-01-15T14:45:54.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:03:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-class内部结构深度揭秘">
 <meta name="twitter:description" content="前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心">
@@ -184,7 +184,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class文件组成"><span class="post-toc-number">1.</span> <span class="post-toc-text">class文件组成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实例分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">实例分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">4.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class文件组成"><span class="post-toc-number">1.</span> <span class="post-toc-text">class文件组成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实例分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">实例分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">总结</span></a></li></ol>
         </nav>
     </aside>
     
@@ -342,7 +342,7 @@ u2 line_number
             </figure>
 u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_length 0x00000002 除了之前的offset的剩余长度<br>u2 sourcefile_index 0x000e==&gt;<code>Test.java</code><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>通过分析class的内部存储，我们对class的结构有了基本的认识，但是我还是希望小伙伴们自己分析一片，这样可能对class的结构理解更深刻，在实际运用过程中也会更加得心应手，分析完，并不代表就结束了，这仅仅分析了class而已，虚拟机加载完class到内存，然后按照我们的分析方式解析，分配内存，然后解析语义，然后还需进行编译才能去执行。这也就是class跨平台的原因，编译一次，到处运行，只要满足jvm规范，屏蔽底层细节。有了class结构的认知，下篇带领大家一起深入jvm内幕，也就是jvm最后一篇，也是最为重要的，在实际应用中用的最多的，比如2016年最火爆的技术，实时热修复线上bug技术，热更技术，有些技术用到asm这个工具实现编译时透明插入代码的。这里用到的技术就是对class文件操作，hook对应的指令，插入指令，达到变更操作行为的目的。所以我们还是很有必要对jvm指令深入理解一下，jvm指令不多，我们分析class结构的时候，看到code属性里面有个code指令集，占用一个字节，也就是说，jvm指令集的全集256个。分析class确实比较耗时间，但是从中可以明白很多一些设计思想，特别可以理解底层协议设计，设局结构设计等等。敬请期待下篇jvm指令解析……</li>
 </ol>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
         </div>
 
         <blockquote class="post-copyright">

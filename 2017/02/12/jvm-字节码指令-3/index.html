@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://www.jackway.cn/2017/02/12/jvm-字节码指令-3/index.html">
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="上上篇字节码分析了判断，基本类型的分支指令，这篇主要分析分支种一种比较特殊的也是java7种新添加的分支类型String，在以前的jdk版本中是不支持String的，String看似是一种对象的分支，其实背后却是用了比较复杂的指令集完成的，这里会用到equals,hashcode，这两个是一对协议方法，由于本篇重点不是分析这两个方法，暂且知道这两个方法的用途就好了，还有结构指令中常用的循环指令，">
-<meta property="og:updated_time" content="2017-02-12T15:34:52.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:03:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-字节码指令(3)">
 <meta name="twitter:description" content="上上篇字节码分析了判断，基本类型的分支指令，这篇主要分析分支种一种比较特殊的也是java7种新添加的分支类型String，在以前的jdk版本中是不支持String的，String看似是一种对象的分支，其实背后却是用了比较复杂的指令集完成的，这里会用到equals,hashcode，这两个是一对协议方法，由于本篇重点不是分析这两个方法，暂且知道这两个方法的用途就好了，还有结构指令中常用的循环指令，">
@@ -170,7 +170,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#String分支"><span class="post-toc-number">1.</span> <span class="post-toc-text">String分支</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#while循环"><span class="post-toc-number">2.</span> <span class="post-toc-text">while循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#for循环"><span class="post-toc-number">3.</span> <span class="post-toc-text">for循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#do-while循环"><span class="post-toc-number">4.</span> <span class="post-toc-text">do while循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">6.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#String分支"><span class="post-toc-number">1.</span> <span class="post-toc-text">String分支</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#while循环"><span class="post-toc-number">2.</span> <span class="post-toc-text">while循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#for循环"><span class="post-toc-number">3.</span> <span class="post-toc-text">for循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#do-while循环"><span class="post-toc-number">4.</span> <span class="post-toc-text">do while循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li></ol>
         </nav>
     </aside>
     
@@ -212,7 +212,6 @@
 <h2 id="do-while循环"><a href="#do-while循环" class="headerlink" title="do while循环"></a>do while循环</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">private void testDoWhile();</div><div class="line">   Code:</div><div class="line">      0: iconst_0</div><div class="line">      1: istore_1</div><div class="line">      2: iinc          1, 1</div><div class="line">      5: iload_1</div><div class="line">      6: iconst_2</div><div class="line">      7: if_icmplt     2 // 整数比较如果大于等于2结束循环</div><div class="line">     10: return</div></pre></td></tr></table></figure>
 <p>do while 循环最大的不同就是判断逻辑在后端，这也意味着，无需goto指令进行跳转，if_icmplt 这个后端指令就可以具备退出循环的能力, 其他执行逻辑都一样。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这几篇结构的分析，基本上完成了结构指令集的分析，这些都是最为基础的指令集，但是也是我们在开发中，写java源代码经常用到的，理解了真正的实现，那么就能更好的写上层代码，还可以实现一系列的精准控制，到目前为止，分析只是结构性能的指令，并没有涉及到对象操作指令，接下来重点分析对象操作集，也是字节码最后的，最重要的指令集分析了，同时更希望同学们学会查阅jvm规范文档，这样能够更为深入的理解指令的行为。敬请期待下篇的分析……</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
 
         </div>
 

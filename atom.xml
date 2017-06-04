@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jackway.cn/"/>
-  <updated>2017-06-04T06:43:37.000Z</updated>
+  <updated>2017-06-04T08:04:52.000Z</updated>
   <id>http://www.jackway.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.jackway.cn/2017/06/04/push-md/"/>
     <id>http://www.jackway.cn/2017/06/04/push-md/</id>
     <published>2017-06-04T04:55:22.000Z</published>
-    <updated>2017-06-04T06:43:37.000Z</updated>
+    <updated>2017-06-04T08:04:52.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。</p>
@@ -30,7 +30,7 @@
 <h2 id="设备干扰"><a href="#设备干扰" class="headerlink" title="设备干扰"></a>设备干扰</h2><p>设备是一个物理设备，而app是一个虚拟服务，一个设备可以有很多服务，如果每个app都是后台服务，那设备的消耗将是非常的大，同时有一些app在后台进行的一些不仅仅是本地服务，还可能是一些远程服务，这样一来将导致用户设备不仅仅电量不够用，而且流量也不够用，还会将用户的隐私信息通过后台push通道发送到云端，这些行为其实都是非常可怕的，这样一来，只要用户有手机，就知道用户的行为，虽然这个跟目前用户画像技术很吻合，但是这种画像不是用户行为，是后台行为，必须要静止这种操作的出现。</p>
 <h2 id="用户情绪干扰"><a href="#用户情绪干扰" class="headerlink" title="用户情绪干扰"></a>用户情绪干扰</h2><p>现在用户的很多日常都离不开手机，不仅仅工作，生活，几乎所有一切都离不开手机，这样一来泛滥的推送手机给用户，会给用户带来很多困扰，况且有的推送过来之后，还有一个小小的声音片段，我们想想如果后台不断的推送广告信息，用户是什么感受，会严重影响用户对app的使用好感。我们应该尽量避免这种影响用户情趣的操作，用户至上，用户最具有价值，只有有了用户，我们所做的一切才能让给我们带来价值。技术仅仅是一个解决问题的工具，我们要做的就是使用这个工具做更多用户认可的事情，而不是影响用户的事情。</p>
 <h2 id="返璞归真"><a href="#返璞归真" class="headerlink" title="返璞归真"></a>返璞归真</h2><p>不管从上面的几点来说，还是从工信部这一举措来说，我们都应该统一push通道，公用系统push通道，由系统统一push出入口，这样我们就可以避免那些非法的后台服务，从而有效的控制后台服务。同时我们还可以对出入口的信息进行检测与过滤等一些列行为的拦截。最后我相信android的推送行为也会像苹果的apns一样，基于硬件机制与系统软件栈机制提供push服务。希望android的未来生态越来越好，寄语今年io大会的一句话，希望mobile first to ai first 成功过渡的过程中，android 生态越来越好。</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -52,7 +52,7 @@
     <link href="http://www.jackway.cn/2017/03/21/build-scan/"/>
     <id>http://www.jackway.cn/2017/03/21/build-scan/</id>
     <published>2017-03-21T09:57:35.000Z</published>
-    <updated>2017-03-21T10:36:54.000Z</updated>
+    <updated>2017-06-04T08:01:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>build-scan是gradle最近版本提供的一种可以实现团队协助更好协助，更好的分析工程构建的插件，当我们在本使用gradle编译工程的时候，关于工程信息，计算机系统配置等信息通过build-scan就可以很简单的发布出去，让团队成员都了解工程在不同环境构建下的性能，任务执行情况等数据反馈，同时还可以提供tag,link让其它人也可以参与到项目中来。下面详细梳理一下build-scan的使用方法</p>
@@ -100,9 +100,6 @@
 <li><a href="https://docs.gradle.com/scans/" target="_blank" rel="external">build-scan-manual</a></li>
 <li><a href="https://plugins.gradle.org/plugin/com.gradle.build-scan" target="_blank" rel="external">build-scan-portal</a></li>
 </ol>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
-
-
 ]]></content>
     
     <summary type="html">
@@ -125,7 +122,7 @@
     <link href="http://www.jackway.cn/2017/03/18/aspect%E5%88%9D%E6%8E%A2%E4%B8%8E%E5%BA%94%E7%94%A8/"/>
     <id>http://www.jackway.cn/2017/03/18/aspect初探与应用/</id>
     <published>2017-03-18T10:01:03.000Z</published>
-    <updated>2017-03-19T08:56:55.000Z</updated>
+    <updated>2017-06-04T08:00:57.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一起从认识it，然后使用it，然后初探it的场景，然后深入理解it的背后思想等不同角度和大家一起分享aspect, 在讲解aspect相关知识前，我们都知道在android领域应用层开发影响最大的就是jakewharton大神了，之所以有今天这篇文章，我也是看他写了一个hugo基础库，这个库虽然很简单，但是我们更重要学习的不是代码本身，而是他的那种思想，由此基于<a href="https://github.com/JakeWharton/hugo" target="_blank" rel="external">hugo</a>我进行了一番比较深入的学习与研究，也写了一些常用场景的事例分享给大家。</p>
@@ -183,7 +180,7 @@
 <h2 id="aop-应用repo"><a href="#aop-应用repo" class="headerlink" title="aop 应用repo"></a>aop 应用repo</h2><blockquote>
 <p>repo里面基本实现了一些基本需求，比如activity，fragment，view的埋点设置，权限的检测，方法调用参数输入，结果输出，耗时追踪，view点击抖动处理，通过这些事例只是简单说明aop的应用场景，其实还有很多可以做，比如6.0动态权限也可以用aop的方式统一处理。最后要明白aop只是一个切点的收集器，至于收集完之后的处理，还是需要我们自己处理的。下篇继续分析aspect与asm的结合，aspect是如何在编译时注入代码的，以及注入原理是什么。</p>
 </blockquote>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -207,7 +204,7 @@
     <link href="http://www.jackway.cn/2017/03/12/Loader/"/>
     <id>http://www.jackway.cn/2017/03/12/Loader/</id>
     <published>2017-03-12T08:36:34.000Z</published>
-    <updated>2017-03-12T13:10:23.000Z</updated>
+    <updated>2017-06-04T08:04:30.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>相信大家对android中的Loader不陌生，我也相信对于很多同学很陌生，可能从写android起，到现在可能都不知道loader到底是什么玩意，其实我以前也没了解过，经过看google todo架构的loader实现之后，发现loader我一直在用，只是以前都是自己写的，不是用的系统自带的loader，我对google的任何实现都很好奇的，不管是什么方向，所以我就详细的分析一下loader的实现思路以及原理，分析过程中注意到了loader跟FragmentActivity进行了生命周期绑定，于是猜想loader的牛逼之处就是实现了数据异步自动化的管理，我们写的框架都是自己管理声明周期，然后在内部处理，loader利用sdk平台特性绑定，好处很多。既然loader这么厉害，那么这篇文章和同学们一起深入分析loader，在以后的开发中，可以适当的使用，体会google设计的思想。</p>
@@ -254,7 +251,6 @@
             </figure>
 <p>时序图简单的分析了loader整个架构的调用链，注意这里只是描述的核心调用，其实里面还有很多细节处理，但是时序图没法完全体现，需要通过阅读代码了解细节。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面对loader的介绍，同学们应该对loader有了基本的认识，最好自己对着上面的讲解自己跟一下代码的调用，了解一下里面的处理细节，学习google设计架构的严谨思想与技巧。文章开始我说过，类似loader的实现方式很多，但是loader是最好的实现，因为具有先天的生命周期绑定。但是loader也有不足之处，比如loader生命周期方法并发调用是不支持的，注意这里不是并发执行任务。所以我们在自己实现的时候注意一下就好。最后还是希望大家自己看一下代码，这样在使用过程中才能更自信。</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
 ]]></content>
     
     <summary type="html">
@@ -277,7 +273,7 @@
     <link href="http://www.jackway.cn/2017/03/04/star-%E6%A8%A1%E5%9E%8B/"/>
     <id>http://www.jackway.cn/2017/03/04/star-模型/</id>
     <published>2017-03-04T14:19:27.000Z</published>
-    <updated>2017-03-05T01:08:04.000Z</updated>
+    <updated>2017-06-04T08:05:40.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交流了一下，如何才能保证工作高质量完成的同时，自己的技术同时得到了提高。我就说了star模型，今天借此这个机会，和大家一起聊聊这个经典模型，其实我们所有的事情，如果按照这个模型套路靠拢，最终的结果肯定不会太差，但是也未必一定成功。不成功不代表失败，失败有很多因素。下面用拆分模型的方式分析这个模型我们所要知道哪些因素。</p>
@@ -299,7 +295,7 @@
 </ol>
 <h2 id="star案例"><a href="#star案例" class="headerlink" title="star案例"></a>star案例</h2><p>比如我们学习android里面的view，首先我们要知道view的场景，这个场景不难发现就是用户需要交互入口，我们的最终目标就是能够在手机上绘制出view，然后绑定事件，这样才能提供用户接口。为了实现这个目标，首先我们需要抽象，view是什么，view如何绘制到屏幕上，怎么给view绑定事件。这里就产生了3个task。最后分别执行这一系列的任务，中间可能还有很多子task，最后都done，然后验证最终结果，是不是满足了用户接口，最后写wiki总结，反复思考。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不管是在学习一门技术，还是做一项调研，还是分析一个产品，star模型都可以很好的指导我们，希望小伙伴们后面用这种模型尝试的分析，我相信这种模型带来的效果是很明显的。</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -319,7 +315,7 @@
     <link href="http://www.jackway.cn/2017/02/12/jvm-%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4-3/"/>
     <id>http://www.jackway.cn/2017/02/12/jvm-字节码指令-3/</id>
     <published>2017-02-12T13:33:14.000Z</published>
-    <updated>2017-02-12T15:34:52.000Z</updated>
+    <updated>2017-06-04T08:03:29.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>上上篇字节码分析了判断，基本类型的分支指令，这篇主要分析分支种一种比较特殊的也是java7种新添加的分支类型String，在以前的jdk版本中是不支持String的，String看似是一种对象的分支，其实背后却是用了比较复杂的指令集完成的，这里会用到equals,hashcode，这两个是一对协议方法，由于本篇重点不是分析这两个方法，暂且知道这两个方法的用途就好了，还有结构指令中常用的循环指令，while,do while,for 指令集。指令不多，但是经过组合，就可以实现很复杂的功能，其实函数就是一系列指令集的组装，才具备了行为的能力。下面就分别详细的分析这些指令集，其中会涉及一些指令，不理解的可以查阅jvm指令规范文档，上面介绍的很详细。</p>
@@ -342,7 +338,6 @@
 <h2 id="do-while循环"><a href="#do-while循环" class="headerlink" title="do while循环"></a>do while循环</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">private void testDoWhile();</div><div class="line">   Code:</div><div class="line">      0: iconst_0</div><div class="line">      1: istore_1</div><div class="line">      2: iinc          1, 1</div><div class="line">      5: iload_1</div><div class="line">      6: iconst_2</div><div class="line">      7: if_icmplt     2 // 整数比较如果大于等于2结束循环</div><div class="line">     10: return</div></pre></td></tr></table></figure>
 <p>do while 循环最大的不同就是判断逻辑在后端，这也意味着，无需goto指令进行跳转，if_icmplt 这个后端指令就可以具备退出循环的能力, 其他执行逻辑都一样。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这几篇结构的分析，基本上完成了结构指令集的分析，这些都是最为基础的指令集，但是也是我们在开发中，写java源代码经常用到的，理解了真正的实现，那么就能更好的写上层代码，还可以实现一系列的精准控制，到目前为止，分析只是结构性能的指令，并没有涉及到对象操作指令，接下来重点分析对象操作集，也是字节码最后的，最重要的指令集分析了，同时更希望同学们学会查阅jvm规范文档，这样能够更为深入的理解指令的行为。敬请期待下篇的分析……</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
 ]]></content>
     
     <summary type="html">
@@ -365,7 +360,7 @@
     <link href="http://www.jackway.cn/2017/02/06/classloader/"/>
     <id>http://www.jackway.cn/2017/02/06/classloader/</id>
     <published>2017-02-06T12:48:24.000Z</published>
-    <updated>2017-02-07T05:03:30.000Z</updated>
+    <updated>2017-06-04T08:01:46.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词就很通俗的说明了是class加载器，不能加载其它，可能有能有疑问，不是可以加载资源和so吗？确实没错，classloader是代码，资源大管家，注意这里的资源不是android里面的assetsmanager，比如加载文件，最为常见的是加载配置文件，属性文件，写后台的很常见，我们写客户端的基本很少用到，既然classloader能做这么多事情，那么问题来了，我们在android代码的时候根本没有用到了，class也加载进来了，对象也创建出来了，这是什么原因了。是的，我们想想，如果我们平时开发每创建一个对象都要手动classloader加载，肯定是很繁琐的。这个流程系统接管了，所以导致很多同学对class的加载流程不是很明白，即使在网上看了一些文档，也没有根本理解原理。那么这篇文章我就跟同学们较为全面，深入的讲解，让我们能真正的理解的classloader的加载机制，命名空间，隔离行等特性。</p>
@@ -419,7 +414,7 @@
 <h2 id="classloader的运用场景"><a href="#classloader的运用场景" class="headerlink" title="classloader的运用场景"></a>classloader的运用场景</h2><p>classloader场景就太多了，比如插件开发，热修复，so修复等等都可以用这个实现，只有深入理解了classloader，我们很多高难度的场景才能对付。其实静下心来也不难理解。</p>
 <h2 id="classloader常见问题以及解决方法"><a href="#classloader常见问题以及解决方法" class="headerlink" title="classloader常见问题以及解决方法"></a>classloader常见问题以及解决方法</h2><p>classloader我们在真正项目运用过程中肯定会遇到一些坑，比如不同的os的classloader被定制的面目全非，最坑的是阿里云的类加载器，这里就不过多吐槽，在插件化的时候，一定要单独处理对待，它的待遇就是不一样，还有360自家系统的classloader也要单独处理，其实这些都不难，就是坑，发现一个埋一个就好，理解原理了之后，后续问题基本都可以解决，只是可能有时麻烦点。这里的问题大多数是classloader内部的数据结构被改了。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来看classloader涉及到的东西还是很多的，我们平时开发可能很少注意，希望通过本篇文章，希望大家对classloader的应用层面有个好的理解，能够在以后的项目中遇到问题之后，用已有积累的知识点，快速解决问题。前面的文章分析了class的加载，也就是classloader真正加载class的生命周期，这篇是进一步的外部层面的补充。本来打算这篇是继续分析class的字节循环指令的，由于有同学对classloader不是很理解，就有了这篇文章的分析，下篇还是会按照正常套路分析字节码指令，敬请期待……</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -484,7 +479,7 @@
     <link href="http://www.jackway.cn/2017/01/22/jvm-%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4-2-%E7%BB%93%E6%9E%84%E6%8C%87%E4%BB%A4/"/>
     <id>http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/</id>
     <published>2017-01-22T10:20:31.000Z</published>
-    <updated>2017-01-22T11:29:28.000Z</updated>
+    <updated>2017-06-04T08:03:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输入，还是系统内部触发，最后必定涉及到数据操作，那么数据操作，程序结构在字节码层面是如何实现的，这篇文章就分析，数据判断，程序结构等指令，也是非常重要的，不管一个程序多么的复杂，我说过必定都是由数据，以及数据的操作指令组成，只有基础指令掌握的扎实了，我们才能解决复杂的问题，说了这么多，下面详细进行指令分析。</p>
@@ -505,8 +500,6 @@
 <blockquote>
 <p>说到这里我们应该明白了数据的比较，分支处理指令，这是实现复杂指令的根基，一定要好好的体会，后续对象操作指令，其实也很类似，只是对象的操作比这更复杂些，涉及到引用链，其实也不难，今天就写这么多，下篇继续分析，分支指令的String处理方式，以及循环结构的指令处理，明白了这些，指令的基本操作到此就结束了，后续会有几篇讲解，一些对象上的指令，比如对象的操作，也就是方法的调用，对象字段的操作，包括实例字段，静态字段。敬请期待后续的分析……</p>
 </blockquote>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
-
 ]]></content>
     
     <summary type="html">
@@ -529,7 +522,7 @@
     <link href="http://www.jackway.cn/2017/01/18/jvm-%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4-1/"/>
     <id>http://www.jackway.cn/2017/01/18/jvm-字节码指令-1/</id>
     <published>2017-01-18T14:17:45.000Z</published>
-    <updated>2017-01-18T15:27:16.000Z</updated>
+    <updated>2017-06-04T08:03:11.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>上篇文章比较详细的分析了一个class文件的基本结构,文件的内容虽然很简单，但是足以说明class结构的组成与本质，不管class文件多复杂，最后的文件结构都是按照字节有序的排序在文件中，所以了解class文件的结构是我们进行这篇字节码指令解析的前提，如果你还没有对class结构有所了解，可以先查看<a href="http://www.jackway.cn/2017/01/15/jvm-class%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84/">class结构</a>这篇文章，对class有个初步的认识，这样再看字节码就相对好理解，jvm字节码指令的占用空间就一个byte,意味着字节码指令最多256个，无符号数据范围0-255,我们在上篇class结构的Code属性里面就看到对用的指令，只是指令操作码是以二进制出现，对应我们查表就知道对应指令的含义，说了这么多，还是那句话talking is a cheap,show me code.这篇文章，讲解最基础的指令，也是为了后续复杂组合打下基础。</p>
@@ -565,7 +558,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">public class com.example.MyClass</div><div class="line">  minor version: 0</div><div class="line">  major version: 51</div><div class="line">  flags: ACC_PUBLIC, ACC_SUPER</div><div class="line">Constant pool:</div><div class="line">   #1 = Methodref          #4.#20         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #2 = Fieldref           #3.#21         // com/example/MyClass.a:I</div><div class="line">   #3 = Class              #22            // com/example/MyClass</div><div class="line">   #4 = Class              #23            // java/lang/Object</div><div class="line">   #5 = Utf8               a</div><div class="line">   #6 = Utf8               I</div><div class="line">   #7 = Utf8               &lt;init&gt;</div><div class="line">   #8 = Utf8               ()V</div><div class="line">   #9 = Utf8               Code</div><div class="line">  #10 = Utf8               LineNumberTable</div><div class="line">  #11 = Utf8               LocalVariableTable</div><div class="line">  #12 = Utf8               this</div><div class="line">  #13 = Utf8               Lcom/example/MyClass;</div><div class="line">  #14 = Utf8               main</div><div class="line">  #15 = Utf8               ([Ljava/lang/String;)V</div><div class="line">  #16 = Utf8               args</div><div class="line">  #17 = Utf8               [Ljava/lang/String;</div><div class="line">  #18 = Utf8               SourceFile</div><div class="line">  #19 = Utf8               MyClass.java</div><div class="line">  #20 = NameAndType        #7:#8          // &quot;&lt;init&gt;&quot;:()V</div><div class="line">  #21 = NameAndType        #5:#6          // a:I</div><div class="line">  #22 = Utf8               com/example/MyClass</div><div class="line">  #23 = Utf8               java/lang/Object</div><div class="line">&#123;</div><div class="line">  public com.example.MyClass();</div><div class="line">    descriptor: ()V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         4: aload_0</div><div class="line">         5: iconst_1</div><div class="line">         6: putfield      #2                  // Field a:I</div><div class="line">         9: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 3: 0</div><div class="line">        line 4: 4</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0      10     0  this   Lcom/example/MyClass;</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=0, locals=1, args_size=1</div><div class="line">         0: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 7: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       1     0  args   [Ljava/lang/String;</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;MyClass.java&quot;</div></pre></td></tr></table></figure>
 <p>我们重点看看Code属性就好了，我们知道是了变量的初始化其实实在构造函数进行的，首先我们看到<code>aload_0</code> 这个指令，这个指令就是将局部变量表中<code>this</code>(实例方法隐含参数)指针push到栈, 然后接下来执行<code>invokespecial</code> 这个就是调用父类的构造方法，在这里就是指向<code>Constant pool #1</code> 也就是<code>Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</code> 然后再次将<code>this</code>指针入栈,然后执行<code>iconst_1</code> 将1常量push到栈,然后<code>putfield</code> pop栈顶的值，写入<code>Constant pool #1</code> 对应的变量中，在这个实例也就是<code>Field a:I</code>,最后<code>return</code> 整个实例变量的赋值流程就完成了，写到这里，我想说，其实分析这个过程，很有利于我们对上层类加载，在初始化类的时候整个流程的理解很有帮助。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章主要目的是让大家明白指令的工作方式，基础操作变量的指令，以及内部执行逻辑，并没有写很复杂的指令，比如控制指令，逻辑指令，比较指令等等指令组合，其实这些都不很难，我们有了指令的认识，后续再看其他指令就很好理解，同时指令虽然最多256个，不算多，也不算少，在此我建议小伙伴们在分析指令，自己写的时候，可以查阅<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5" target="_blank" rel="external">jvm指令文档</a>这样更好理解，同时也是记忆的一种方式，看多了，自然就会了，也就不用查阅文档了。这篇文章主要是指令入门，后续讲解更多的指令操作，以及指令的灵活使用，我们都知道的，为了避免class打上preverify标志，同时也为了开发人员的透明开发，我们实现插件的方式去hook gradle任务，然后通过在每个class文件中插入一段代码，这个也就是热修复中插桩的一种方式。这里就需要直接修改字节码，加入对应的字节码指令。所以对字节码的指令了解是很有必要的。下篇继续分析jvm指令，大概还会写3篇相关指令的文章，然后一个asm实例，用这种方式实现方法执行时间统计，aop操作等。以前我们都是通过代理的方式，其实是比较繁琐的。敬请期待接下来更精彩的文章……</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -587,7 +580,7 @@
     <link href="http://www.jackway.cn/2017/01/15/jvm-class%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84/"/>
     <id>http://www.jackway.cn/2017/01/15/jvm-class内部结构/</id>
     <published>2017-01-15T06:24:26.000Z</published>
-    <updated>2017-01-15T14:45:54.000Z</updated>
+    <updated>2017-06-04T08:03:51.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们<br>并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们<br>都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，<br>也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心最上层的源码编写，那有同学可能<br>会疑惑，既然开发工具都帮我完成了，我们还有必要去了解内部吗？我们用过classloader加载一下不就好了吗？<br>是的，说的很对，几乎99%的场景下，我们都是这样，但是假如一天遇到需要我们修改class内部结构的需求，那<br>这时类加载就帮我们不了了，我们能够去完成需求的前提是，对class结构有一定的了解，不管如何，最为用java<br>语言开发的开发者，都建议多少深入研究一下class的内部结构，这样不仅仅对写上层代码有帮助，更有助于我们<br>对我们写的程序的把控，做到心理有底的代码必定bug会降到最低，说了这么多，这篇就来简单分析一下class内部<br>的存储逻辑，jvm怎么能够识别class文件的。</p>
@@ -726,7 +719,7 @@ u2 line_number
             </figure>
 u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_length 0x00000002 除了之前的offset的剩余长度<br>u2 sourcefile_index 0x000e==&gt;<code>Test.java</code><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>通过分析class的内部存储，我们对class的结构有了基本的认识，但是我还是希望小伙伴们自己分析一片，这样可能对class的结构理解更深刻，在实际运用过程中也会更加得心应手，分析完，并不代表就结束了，这仅仅分析了class而已，虚拟机加载完class到内存，然后按照我们的分析方式解析，分配内存，然后解析语义，然后还需进行编译才能去执行。这也就是class跨平台的原因，编译一次，到处运行，只要满足jvm规范，屏蔽底层细节。有了class结构的认知，下篇带领大家一起深入jvm内幕，也就是jvm最后一篇，也是最为重要的，在实际应用中用的最多的，比如2016年最火爆的技术，实时热修复线上bug技术，热更技术，有些技术用到asm这个工具实现编译时透明插入代码的。这里用到的技术就是对class文件操作，hook对应的指令，插入指令，达到变更操作行为的目的。所以我们还是很有必要对jvm指令深入理解一下，jvm指令不多，我们分析class结构的时候，看到code属性里面有个code指令集，占用一个字节，也就是说，jvm指令集的全集256个。分析class确实比较耗时间，但是从中可以明白很多一些设计思想，特别可以理解底层协议设计，设局结构设计等等。敬请期待下篇jvm指令解析……</li>
 </ol>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -750,7 +743,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2017/01/12/sdk-design-rules/"/>
     <id>http://www.jackway.cn/2017/01/12/sdk-design-rules/</id>
     <published>2017-01-12T03:17:05.000Z</published>
-    <updated>2017-01-12T05:42:05.000Z</updated>
+    <updated>2017-06-04T08:05:14.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>Twitter 的 Fabric 是知名的注重质量的 SDK，并已部署在数十亿的设备。在这次dev 演讲中，来自 Twitter 的 Ty Smith，揭示了 Fabric 团队创建他们 Fabric 的各种原则，特别是在 Android 方面。通过深入参与技术决策团队，Ty 了解到很多信息，他展示了团队在创建这个 SDK 过程中，学到的各种经验心得，关于稳定性、性能、SDK 体积控制、以及对于一些特殊情况的处理这些方面。无论你现在或将来想要建设一个 SDK，通过这次演讲你应该能收益很多关于设计 SDK 的伟大想法。</p>
@@ -834,7 +827,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
 <p>以上是<code>twitter Fabric</code> 伟大sdk的一些思考，通过个人理解与学习，其实开发一个伟大sdk的难度还是<br>很大的，需要从sdk本身，sdk的使用者，sdk辅助平台等角度思考，同时还需要尽量透明，即使在sdk出现内部<br>错误的时候，我们可以通过热修复的方式实时修复，不影响主app，这点很重要。这篇文章只是一些理论依据，在<br>真正实践过程中，可能会遇到各种问题，各种坑，有了理论的支持，我相信可以用技术手段去解决，接下来的sdk<br>文章，我会通过一个如何设计一个优雅的第三方登录sdk来实践上面的理论。敬请期待……</p>
 </blockquote>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -856,7 +849,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2017/01/11/jvm-heap/"/>
     <id>http://www.jackway.cn/2017/01/11/jvm-heap/</id>
     <published>2017-01-11T13:45:17.000Z</published>
-    <updated>2017-01-11T14:13:28.000Z</updated>
+    <updated>2017-06-04T08:04:09.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那么这篇文章，我来分析一下，jvm里面的堆以及gc，前面也说过，堆内存的重要性，堆与我们开发非常密切，如果在写程序的过程中，没有很好的利用堆内存，最为常见的问题就是内存泄漏，内存溢出等致命bug。下面我来详细分析一下jvm里面的堆与gc。</p>
@@ -891,7 +884,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <blockquote>
 <p>了解jvm理论对我们编码，以及目前很火的技术，热修复，插件化，动态部署，都非常有指导性作用，如果想进阶的，一定<br>要好好学习jvm知识，才能做到得心应手，不然后面会遇到很多难点，jvm已经分析几篇与我们开发最为密切的系列，我们对jvm有了基本的认识，我们还不了解jvm的字节码文件，但是很多情况下，我们只需要了解class的基本构成就行，但是在一些场景不行，比如我最近在用asm技术实现hook，那么需要对字节码指令，以及文件构成有深入了解。下篇class结构分析，敬请期待……</p>
 </blockquote>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -915,7 +908,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2017/01/07/jvm-class-verify/"/>
     <id>http://www.jackway.cn/2017/01/07/jvm-class-verify/</id>
     <published>2017-01-07T09:58:52.000Z</published>
-    <updated>2017-01-07T10:19:56.000Z</updated>
+    <updated>2017-06-04T08:03:39.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的隔离，互不干扰，数据安全，运行安全等安全机制，能够保证我们的程序在自身稳定的情况下，不会受到外界环境干扰，而出现进程运行异常，这篇文章从jvm加载class的角度来分析jvm内部安全体系。</p>
@@ -961,7 +954,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <li>数组边界检查；</li>
 <li>空引用检查。<br>内置在java虚拟机中的另一个安全特性,并未指明运行时数据空间在java虚拟机内部分布式怎样的。如果查看class文件的内部，将看不到任何内存地址（全是符号引用和无符号数），当java虚拟机装载一个class文件是，由它决定将这些字节码以及其他从class文件中解析得到的数据放置在内存的什么地方。当虚拟机启动一个线程时，由它决定将这个线程创建java栈放到哪里。最后，java虚拟机拥有异常的结构化错误处理机制，因为java虚拟机支持异常，所以当一些违反安全的行为发生时，它会做一些结构化处理，java虚拟机将抛出一个异常或者错误，而不是崩溃。<h2 id="安全管理器和java-API"><a href="#安全管理器和java-API" class="headerlink" title="安全管理器和java API"></a>安全管理器和java API</h2>安全管理器定义了沙箱的外部边界，保护虚拟机的外部资源不被虚拟机内运行的恶意或者有漏洞的代码侵犯。javaAPI在进行一个可能不安全的操作前，总是会检查安全管理器，所以javaAPI不会在安全管理器建立的安全策略下执行被禁止的操作。具体可以参考<code>java.lang.SecurityManager</code>类。</li>
 </ol>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -972,13 +965,13 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     </summary>
     
     
-      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
-    
       <category term="class-verify" scheme="http://www.jackway.cn/tags/class-verify/"/>
     
       <category term="inbox" scheme="http://www.jackway.cn/tags/inbox/"/>
     
       <category term="security" scheme="http://www.jackway.cn/tags/security/"/>
+    
+      <category term="jvm" scheme="http://www.jackway.cn/tags/jvm/"/>
     
   </entry>
   
@@ -987,7 +980,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2017/01/04/jvm-classloader/"/>
     <id>http://www.jackway.cn/2017/01/04/jvm-classloader/</id>
     <published>2017-01-04T09:06:02.000Z</published>
-    <updated>2017-01-07T09:02:10.000Z</updated>
+    <updated>2017-06-04T08:04:00.000Z</updated>
     
     <content type="html"><![CDATA[<p>在class文件中描述的各种信息，最终都需要被加载到虚拟机中之后，才能被运行和使用。<br>虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验，转换，解析和初始化，最终形成可以被虚拟机直接使用的java类型，这就是虚拟机的类加载机制。</p>
 <a id="more"></a>
@@ -1022,7 +1015,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
                 <div class="image-caption">classloader</div>
             </figure>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>这里只是java的基本流程，但是我们知道android是没法运行class文件的，<br>必须dx化，转换成dalvik或者art，或者混合模式下的字节码，才能运行。并且<br>移动设备对class的执行进行了深度优化，比如inline等等。这篇只讲解jvm的加载<br>，android的加载必须单独分开写，才能明白原理与区别，后续更新……</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1044,7 +1037,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2017/01/03/jvm-memorymodel/"/>
     <id>http://www.jackway.cn/2017/01/03/jvm-memorymodel/</id>
     <published>2017-01-03T09:44:30.000Z</published>
-    <updated>2017-01-07T09:04:18.000Z</updated>
+    <updated>2017-06-04T08:04:17.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。</p>
@@ -1088,7 +1081,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <blockquote>
 <p>虚拟内存布局还有一个堆区，这个在这里没有画出来，因为堆区比较特殊，非常重要，对于我们理解整个虚拟机内幕都很重要，<br>那个区域必须详细讲解，必须写一篇文章来专门讲解堆区的细节。有了内存布局的认识，下面对jvm gc,class结构，class布局，class加载安全机制，class加载流程，class优化，classloader namespace，classloader模式，class生成细节，字节码指令运用等一些列进行深入分析，敬请期待……</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1110,7 +1103,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/30/2016%E6%80%BB%E7%BB%93/"/>
     <id>http://www.jackway.cn/2016/12/30/2016总结/</id>
     <published>2016-12-30T13:37:24.000Z</published>
-    <updated>2017-01-07T07:14:17.000Z</updated>
+    <updated>2017-06-04T08:00:08.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>2016即将过去，此时我在想，我该写点什么好了，我该怎么总结自己这一年中的得与失了，我该怎么计划2017了，我该如何计划自己的未来了，我离自己的职业规划的目标还差多远了，那么此文不聊技术，总结自我一下。希望看到此文的同仁也会有自己的感受，也希望同仁对自己也好好的总结。</p>
@@ -1131,7 +1124,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <blockquote>
 <p>总结只是对过去的一种简单描述，其实还有很多说不完的，一篇文章也不可能说清楚，即使说清楚了，也未必对阅读者有意，毕竟不同人的经历不同，在过去走过的路都不一样。体会感受也不一样。这里只是我的一点点感受。希望大家都总结自己的过去。2016真的很快就要离我们而去，接下来，我们需要规划2017，希望明年的今天，我们会有更过的精彩描述，最后提前祝大家元旦快乐，新年快乐，幸福满满，新的一年里有很多美好的奇迹发生在你的身上。共勉……</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1153,7 +1146,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/28/android-system-img/"/>
     <id>http://www.jackway.cn/2016/12/28/android-system-img/</id>
     <published>2016-12-28T02:44:14.000Z</published>
-    <updated>2017-01-07T07:22:15.000Z</updated>
+    <updated>2017-06-04T08:00:29.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般<br>我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么<br>我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们<br>就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间<br>我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了<br>今天的<code>android</code>系统中，包括<code>编译,打包</code>,<code>运行时</code>,<code>框架</code>,<code>安装</code>等脑图。<br><a id="more"></a></p>
@@ -1275,7 +1268,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <blockquote>
 <p>后续会不断整理脑图…..</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1298,7 +1291,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/25/JMM-transient-4/"/>
     <id>http://www.jackway.cn/2016/12/25/JMM-transient-4/</id>
     <published>2016-12-25T04:01:41.000Z</published>
-    <updated>2017-01-07T07:24:02.000Z</updated>
+    <updated>2017-06-04T08:03:03.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>java里面将一个对象序列化，步骤就是将要被序列化的对象实现<code>Serializable</code>接口，这个接口是个标志接口，跟java里面的<code>Clonable,Closable</code>等接口一样，没有具体的行为标准定义，就是一个描述。只有实现了序列化接口的对象，才能够序列化，但是我们还注意到序列化对象的类的内部还定义了一个<code>serialVersionUUID</code>,这个是做什么的了，这个可以理解为一个token，只有token值一样的类，序列化的对象才可逆，也就是说，标志这个<code>class,Class</code>对象是否前后版本一致。注意类里面的被序列的数据只有，非<code>static</code>字段，非<code>transient</code>字段。下面重点来来讲解序列化的几种不同姿势。以及我们需要的地方，但是在<code>Android</code>里面最好用<code>Parcelable</code>接口，实现数据的序列化，这个本地性能很棒，原因是内存拷贝，前者是反射，性能当然差点哈，但是如果要将对象在网络传输，那么我们就只能用前者了。其实还有一个接口可以实现序列化，本文为了更专注序列化的几大特性来讲，不会过多介绍，后面我会提到。知道就行。</p>
@@ -1333,7 +1326,6 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <h2 id="信任，但要验证"><a href="#信任，但要验证" class="headerlink" title="信任，但要验证"></a>信任，但要验证</h2><p>认为序列化流中的数据总是与最初写到流中的数据一致，这没有问题。但是，正如一位美国前总统所说的，“信任，但要验证”。<br>对于序列化的对象，这意味着验证字段，以确保在反序列化之后它们仍具有正确的值，“以防万一”。为此，可以实现 ObjectInputValidation 接口，并覆盖 validateObject() 方法。如果调用该方法时发现某处有错误，则抛出一个 InvalidObjectException。</p>
 <h2 id="Parcelable"><a href="#Parcelable" class="headerlink" title="Parcelable"></a>Parcelable</h2><p>这个我们在组件之间传递对象数据的时候，很常见，比如intent启动一个activity然后带一些数据过去，那么我们就可以传输一个pracelabel对象过去，最开始提到,<code>android</code>里面优先使用这种序列化，在性能，内存等方面的考虑都会优越于java里面的<code>Serializable</code>方式。首先paracelable底层其实是用parcel存储数据，并且这个类也只是一个java层的包装，里面有个很重要的成员变量long类型的native引用，其实我们写数据是写在这个对象上面，这个对象是jni里面的一个对象，用c++实现的一个类<code>Parcel</code>，这里有个很有意思的技术点，就是将c＋＋一个对象转换成基本基本类型，然后存储在java层，这样我们java层拿了这个基本数据值，就很容易的创建出对应的jni对象，然后实现数据读取与存储。<code>google</code> 的这种做法非常牛逼。接下来的jni文章会重点说这种方式的具体实现。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>序列化其实其实我们想象的那么简单，只是我们使用很简单，但是里面还是很多需要我们去挖掘的，才能深入理解序列化内部，才能很好的使用，出问题可以搞定它。到此java里面的核心关键字分析<code>final,volatile,transient</code>等都分析完了，我个人觉得这是java里面最难理解的，也是最核心的，能够理解这些，并能够很好运用到java代码里面就可以了。后续会计划继续分析java里面核心的技术点，比如<code>线程，线程池，nio，io，集合，网络，gc，jvm</code>的一些核心特性等。一切都输围绕解决实际问题出发。</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
 ]]></content>
     
     <summary type="html">
@@ -1356,7 +1348,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/22/transfer-security-1/"/>
     <id>http://www.jackway.cn/2016/12/22/transfer-security-1/</id>
     <published>2016-12-22T08:01:43.000Z</published>
-    <updated>2017-01-07T07:25:30.000Z</updated>
+    <updated>2017-06-04T08:05:58.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概<br>包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，<br>so 调试等,下面我就针对我每个方面的思考详细讲解一下。</p>
@@ -1376,7 +1368,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <h2 id="java层代码"><a href="#java层代码" class="headerlink" title="java层代码"></a>java层代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Key</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"key"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        Log.e(TAG, <span class="string">"start load......"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.loadLibrary(<span class="string">"key"</span>);</div><div class="line">        &#125;<span class="keyword">catch</span> (UnsatisfiedLinkError error)&#123;</div><div class="line">            error.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">static</span> String <span class="title">key</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">// native call</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getSignature</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> AppUtils.getHostSignature(SystemServiceManager.getAppContext());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>代码不难理解，对代码有疑问的可以评论提出疑问。后面将会发布工程代码，敬请期待……</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>安全其实还是很多事情需要我们思考，我们需要不断的防范，才能对应一些攻击，安全与黑客永远都是对手，但是我相信，我们从自己的防范做起，还是可以拦截那些攻击者的。</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1400,7 +1392,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/20/accessibilityService-1/"/>
     <id>http://www.jackway.cn/2016/12/20/accessibilityService-1/</id>
     <published>2016-12-20T10:24:57.000Z</published>
-    <updated>2017-01-07T07:22:07.000Z</updated>
+    <updated>2017-06-04T08:00:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>AccessibilityService是android系统提供的一种辅助服务，google设计<br>这个玩意我想初心肯定是为了提供更加便捷的服务，但是同时也提供了很多创新的<br>姿势，这篇文章主要讲解一下辅助自动安装，首先要声明的是不是静默安装，这个<br>肯定是从入门到放弃，不信可以试试。至于为什么，自己去看PackageManager<br>这一系列的源码就知道了。</p>
@@ -1416,7 +1408,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <blockquote>
 <p>辅助服务的流程都一样，通过这种手段可以实现很多有意思的功能，我认为这个服务有点类似脚本，<br>可以自动化的执行一些动作，比如<code>微信自动抢红包</code>，<code>语音播放</code> 等等都可以通过这种实现，其实只要<br>系统提供了相应事件的，我们都可以基于这些事件做一些事情。后续更丰富……</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1440,7 +1432,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/18/JMM-3/"/>
     <id>http://www.jackway.cn/2016/12/18/JMM-3/</id>
     <published>2016-12-18T04:34:36.000Z</published>
-    <updated>2017-01-07T07:23:46.000Z</updated>
+    <updated>2017-06-04T08:02:52.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p> Java内部类final语义实现 </p>
@@ -1475,7 +1467,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <p>可以看出，即使是引用static字段，在内部类中仍然会保留外部类的引用，即达到引用目的。同时，在run方法内部，因为是static字段，因此将不再使用getField，而是使用getStatic来进行相应字段的引用。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在整个内部类字节码的生成规则中，主要采用了修改构造函数的方式来将需要在整个内部类中引用的变量进行参数传递。并且，因为是内部类，构造函数是已知的，可以随意的修改。针对特定的场景，可以进行一定的优化，如常量化(临时变量基本类型)。<br>因为在整个JVM层，并没有针对内部类作特殊的处理，因此这些处理手法都是在编译层进行处理的。同时，在语言层，针对这些生成的信息进行指定的说明。如SYNTHETIC语义。<br>在反射字段Member层，定义了如下方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line"> * Returns &#123;<span class="doctag">@code</span> true&#125; if this member was introduced by</div><div class="line"></div><div class="line"> * the compiler; returns &#123;<span class="doctag">@code</span> false&#125; otherwise.</div><div class="line"></div><div class="line"> *</div><div class="line"></div><div class="line"> * <span class="doctag">@return</span> true if and only if this member was introduced by</div><div class="line"></div><div class="line"> * the compiler.</div><div class="line"></div><div class="line"> * <span class="doctag">@jls</span> 13.1 The Form of a Binary</div><div class="line"></div><div class="line"> * <span class="doctag">@since</span> 1.5</div><div class="line"></div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSynthetic</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure></p>
 <p>即此信息是由编译器引入的。<br>了解这些对于整个语言层有一定的理解意义，但并不代表将来这些不会会改变，了解一些实现细节有助于自己在代码实现层有进一步的思考空间，并不局限于之前所了解的信息。</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1506,7 +1498,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/18/JMM-2/"/>
     <id>http://www.jackway.cn/2016/12/18/JMM-2/</id>
     <published>2016-12-18T04:18:57.000Z</published>
-    <updated>2017-01-07T07:23:35.000Z</updated>
+    <updated>2017-06-04T08:02:40.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>Java 语言中的 volatile 变量可以被看作是一种 “程度较轻的 synchronized”；与 synchronized 块相比，volatile 变量所需的编码较少，并且运行时开销也较少，但是它所能实现的功能也仅是 synchronized 的一部分。本文介绍了几种有效使用 volatile 变量的模式，并强调了几种不适合使用 volatile 变量的情形。</p>
@@ -1538,7 +1530,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <p>volatile bean 模式适用于将 JavaBeans 作为“荣誉结构”使用的框架。在 volatile bean 模式中，JavaBean 被用作一组具有 getter 和/或 setter 方法 的独立属性的容器。volatile bean 模式的基本原理是：很多框架为易变数据的持有者（例如 HttpSession）提供了容器，但是放入这些容器中的对象必须是线程安全的。<br>在 volatile bean 模式中，JavaBean 的所有数据成员都是 volatile 类型的，并且 getter 和 setter 方法必须非常普通 —— 除了获取或设置相应的属性外，不能包含任何逻辑。此外，对于对象引用的数据成员，引用的对象必须是有效不可变的。（这将禁止具有数组值的属性，因为当数组引用被声明为 volatile 时，只有引用而不是数组本身具有 volatile 语义）。对于任何 volatile 变量，不变式或约束都不能包含 JavaBean 属性。</p>
 <h2 id="开销较低的读－写锁策略"><a href="#开销较低的读－写锁策略" class="headerlink" title="开销较低的读－写锁策略"></a>开销较低的读－写锁策略</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheesyCounter</span> </span>&#123;</div><div class="line">    <span class="comment">// Employs the cheap read-write lock trick</span></div><div class="line">    <span class="comment">// All mutative operations MUST be done with the 'this' lock held</span></div><div class="line">    <span class="meta">@GuardedBy</span>(<span class="string">"this"</span>) <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> value; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">increment</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> value++;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>与锁相比，Volatile 变量是一种非常简单但同时又非常脆弱的同步机制，它在某些情况下将提供优于锁的性能和伸缩性。如果严格遵循 volatile 的使用条件 —— 即变量真正独立于其他变量和自己以前的值 —— 在某些情况下可以使用 volatile 代替 synchronized 来简化代码。然而，使用 volatile 的代码往往比使用锁的代码更加容易出错。本文介绍的模式涵盖了可以使用 volatile 代替 synchronized 的最常见的一些用例。遵循这些模式（注意使用时不要超过各自的限制）可以帮助您安全地实现大多数用例，使用 volatile 变量获得更佳性能。</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1562,7 +1554,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/17/JMM-1/"/>
     <id>http://www.jackway.cn/2016/12/17/JMM-1/</id>
     <published>2016-12-17T02:50:07.000Z</published>
-    <updated>2017-01-07T07:23:23.000Z</updated>
+    <updated>2017-06-04T08:02:31.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>首先我们都知道，android开发的主要语言是java，其实android上的java还是有点区别的，<br>在此不展开讲解，这篇专注内存模型，内存重排的问题进行讲解。很多人可能在想，重排是什么<br>鬼，什么情况下会出现重排，重排对程序有是否影响，怎么避免重排等等一系列的疑问。下面我<br>对每个疑问进行剖析。</p>
@@ -1588,7 +1580,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <li>内存重排的解决方法（volatile）</li>
 <li>内存可见性与重排的关系</li>
 </ol>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1614,7 +1606,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/13/cas-1/"/>
     <id>http://www.jackway.cn/2016/12/13/cas-1/</id>
     <published>2016-12-13T03:33:21.000Z</published>
-    <updated>2017-01-07T07:22:33.000Z</updated>
+    <updated>2017-06-04T08:01:31.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>CAS（Compare and swap）比较和替换是设计并发算法时用到的一种技术。简单来说，比较和替换是使用一个期望值和一个变量的当前值进行比较，<br>如果当前变量的值与我们期望的值相等，就使用一个新值替换当前变量的值。这听起来可能有一点复杂但是实际上你理解之后发现很简单，<br>接下来，让我们更深入的了解一下这项技术。</p>
@@ -1643,7 +1635,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <blockquote>
 <p>cas只能保证单一变量操作的原子性，如果需要保证多个变量，那么使用对象，然后数据封装到对象进行atomic，<br><code>AtomicReference</code> 有兴趣的可以了解，还有很多数据结构实现的无锁操作，也可以去学习，了解。</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1665,7 +1657,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/12/thread-stop/"/>
     <id>http://www.jackway.cn/2016/12/12/thread-stop/</id>
     <published>2016-12-12T06:17:50.000Z</published>
-    <updated>2017-01-07T07:25:15.000Z</updated>
+    <updated>2017-06-04T08:05:48.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>异步任务最后都会回归到Thread这个类，所以我们很有必要深入理解一下这个类，才能<br>写基础框架，才能理解目前大名鼎鼎的线程池框架，不得不佩服并发大神<a href="http://baike.baidu.com/link?url=8gNOf1rdWwWIwgTs9jiK7YPWRCWus2QJOySxomfNQrGQVr1srHi4v-4uZrCz-TUUGG4MALDNKwkLgS-HDt0X4p5SEwZByLWAAi3hUeyxr8K" target="_blank" rel="external">Doug Lea</a><br>对java并发做出的共享，也就是很多人所说，java具有先天高并发的特性。下面分析一下我们常见的场景，任务的停止处理.</p>
@@ -1681,7 +1673,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <h2 id="interrupted"><a href="#interrupted" class="headerlink" title="interrupted"></a>interrupted</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = ThreadInterrupt.class.getSimpleName();</div><div class="line">   <span class="keyword">private</span> Thread mThread;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">ThreadInterrupt</span><span class="params">()</span> </span>&#123;</div><div class="line">       mThread = <span class="keyword">new</span> Thread(<span class="keyword">this</span>);</div><div class="line">       mThread.start();</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">while</span> (!Thread.currentThread().isInterrupted()) &#123;<span class="comment">// 判断是否被打断，但是不会清除打断标志</span></div><div class="line">           Log.e(TAG, <span class="string">"alive......"</span>);</div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               Thread.sleep(<span class="number">1000</span>);</div><div class="line">           &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">               e.printStackTrace();</div><div class="line">               Log.e(TAG, Thread.currentThread().interrupted() + <span class="string">""</span>);<span class="comment">// 是否打断，同时清除打断标志</span></div><div class="line">               Thread.currentThread().interrupt(); <span class="comment">// 打断复原,根据需求是否需要复原</span></div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       Log.e(TAG, <span class="string">"stop......"</span>+Thread.currentThread().interrupted()+<span class="string">"/"</span>+Thread.currentThread().interrupted()); <span class="comment">// true/false</span></div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</div><div class="line">       mThread.interrupt();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>上面两种都可以实现线程的停止,那么哪种更好了，我建议用第二种，首先无需定义额外的<br>标志，然后就是代码比较清晰，充分利用了内部特性，并且更高效，可靠。</p>
 <h2 id="为什么第一种实现不好了"><a href="#为什么第一种实现不好了" class="headerlink" title="为什么第一种实现不好了?"></a>为什么第一种实现不好了?</h2><p>首先需要定义额外标志，意味着需要额外的存储空间，同时<code>volatile</code> jdk1.5之前不可靠，意味着<br>不能真正停止任务，sleep必须等待有线程打断才可能停止任务。</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1706,7 +1698,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
     <link href="http://www.jackway.cn/2016/12/08/gitsubmodule-1/"/>
     <id>http://www.jackway.cn/2016/12/08/gitsubmodule-1/</id>
     <published>2016-12-08T03:36:11.000Z</published>
-    <updated>2017-01-07T07:22:44.000Z</updated>
+    <updated>2017-06-04T08:01:56.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>有种情况我们经常会遇到：某个工作中的项目需要包含并使用另一个项目。 也许是第三方库，或者你独立开发的，用于多个父项目的库。 现在问题来了：你想要把它们当做两个独立的项目，同时又想在一个项目中使用另一个。</p>
@@ -1750,7 +1742,7 @@ index eb41d76,c771610..0000000
 <h3 id="子模块技巧"><a href="#子模块技巧" class="headerlink" title="子模块技巧"></a>子模块技巧</h3><p><code>git submodule foreach &#39;git stash&#39;</code><br><code>git submodule foreach &#39;git checkout -b featureA&#39;</code><br><code>git submodule foreach &#39;git diff&#39;</code><br>有用的别名</p>
 <p>你可能想为其中一些命令设置别名，因为它们可能会非常长而你又不能设置选项作为它们的默认选项。 我们在 Git 别名 介绍了设置 Git 别名，但是如果你计划在 Git 中大量使用子模块的话，这里有一些例子。</p>
 <p><code>$ git config alias.sdiff &#39;!&#39;&quot;git diff &amp;&amp; git submodule foreach &#39;git diff&#39;&quot;</code><br><code>$ git config alias.spush &#39;push --recurse-submodules=on-demand&#39;</code><br><code>$ git config alias.supdate &#39;submodule update --remote --merge&#39;</code></p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1776,7 +1768,7 @@ index eb41d76,c771610..0000000
     <link href="http://www.jackway.cn/2016/12/07/interview-1/"/>
     <id>http://www.jackway.cn/2016/12/07/interview-1/</id>
     <published>2016-12-07T10:46:41.000Z</published>
-    <updated>2017-01-07T07:23:05.000Z</updated>
+    <updated>2017-06-04T08:02:15.000Z</updated>
     
     <content type="html"><![CDATA[<ol>
 <li>介绍自己负责的部分，如何实现的。</li>
@@ -1842,7 +1834,7 @@ index eb41d76,c771610..0000000
 <h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><blockquote>
 <p>其实架构没有固定模式，能够说出自己对架构的理解就很好，比如mvp，不同人对这个理解不一样，最好的，够用的，最适合业务的才是好架构，这个也很多要说，评论说吧。</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1876,7 +1868,7 @@ index eb41d76,c771610..0000000
     <link href="http://www.jackway.cn/2016/12/06/ios-oc-1/"/>
     <id>http://www.jackway.cn/2016/12/06/ios-oc-1/</id>
     <published>2016-12-06T13:36:07.000Z</published>
-    <updated>2017-01-07T07:23:15.000Z</updated>
+    <updated>2017-06-04T08:02:23.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>平时我们写程序第一个程序都是<em>hello world</em>,这次开始就不用老套路了，用字符串的基本用法开始，我认为标准的hello world 其实就是一个字符串,但是我们从程序的角度看，就是一个空虚的字符串，不能让我们想到更多，我想如果能否说一些字符串的基本操作可能更有意思，一方面是基础语法，另一方面也理解了<code>oc</code>字符串对象与<code>java</code>的不同点。</p>
@@ -1889,7 +1881,7 @@ index eb41d76,c771610..0000000
 <blockquote>
 <p>oc 里面导入基础库跟java一样，只是java导入的是类或者静态方法，而oc导入的是头文件，也是是实现的声明，因为oc不开源，我们只能通过看到头文件的具体声明。其中oc里面Foundation.h 这个是基础更能核心库，后面还有uikit等核心库。<br>第一个程序看起来很简单，其实里面很多语法细节，后面慢慢来讲吧，往往简单的东西背后都是复杂。</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1913,7 +1905,7 @@ index eb41d76,c771610..0000000
     <link href="http://www.jackway.cn/2016/12/05/wait-sleep/"/>
     <id>http://www.jackway.cn/2016/12/05/wait-sleep/</id>
     <published>2016-12-05T06:08:43.000Z</published>
-    <updated>2017-01-07T07:25:39.000Z</updated>
+    <updated>2017-06-04T08:06:09.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:</p>
@@ -1935,7 +1927,7 @@ index eb41d76,c771610..0000000
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><blockquote>
 <p>通过上面代码我们在写并发代码的时候，一定要理解场景，不然真的很危险.</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -1965,7 +1957,7 @@ index eb41d76,c771610..0000000
     <link href="http://www.jackway.cn/2016/12/03/shareUID/"/>
     <id>http://www.jackway.cn/2016/12/03/shareUID/</id>
     <published>2016-12-03T05:45:14.000Z</published>
-    <updated>2017-01-07T07:24:56.000Z</updated>
+    <updated>2017-06-04T08:05:23.000Z</updated>
     
     <content type="html"><![CDATA[<p>shareUID是提供已经安装app之间的数据访问的通道，我们最常见的场景就是同一个公司不同的app安装在同一手机上，在某些时候可能需要数据，资源，代码共享，但是实现该目的也是有一定限制的，首先保证app之间的签名一致，同时shareUID值相等，才能完全无障碍访问所有资源，不然只能访问部分资源，代码，sharedPreferences等资源是没法访问到的，即使访问到的也是非安全的。<br><a id="more"></a></p>
 <h2 id="shareuid常见数据共享的方式有"><a href="#shareuid常见数据共享的方式有" class="headerlink" title="shareuid常见数据共享的方式有"></a>shareuid常见数据共享的方式有</h2><ol>
@@ -1984,7 +1976,7 @@ index eb41d76,c771610..0000000
 <p>shareuid的前提是app已经安装到了设备中，不然是访问不了的，如果是没安装的访问，就只能用插件化的方式去加载，然后去访问了。根据自己的需求，选择对应的技术实现就好了。</p>
 </blockquote>
 <p><a href="https://github.com/jackwaylong/shareuid" target="_blank" rel="external">查看源码实例</a></p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -2006,7 +1998,7 @@ index eb41d76,c771610..0000000
     <link href="http://www.jackway.cn/2016/12/03/safesharepreferences/"/>
     <id>http://www.jackway.cn/2016/12/03/safesharepreferences/</id>
     <published>2016-12-02T19:04:51.000Z</published>
-    <updated>2017-01-07T07:24:48.000Z</updated>
+    <updated>2017-06-04T08:04:59.000Z</updated>
     
     <content type="html"><![CDATA[<p>SharedPreferences是单进程线程安全,Android系统进程之间的内存是隔离的,<br>这样就导致了进程之间如果访问同一个数据文件,进行数据共享通信的时候,可能会<br>出现下面几种异常:<br><a id="more"></a></p>
 <ol>
@@ -2038,7 +2030,7 @@ index eb41d76,c771610..0000000
 <p>clone项目发送pull request</p>
 </blockquote>
 <h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>SafeSharedPreferences is under the Apache license. See the <a href="https://github.com/jackwaylong/SafeSharedPreferences/blob/master/LICENSE" target="_blank" rel="external">LICENSE</a> file for details.</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     
@@ -2062,7 +2054,7 @@ index eb41d76,c771610..0000000
     <link href="http://www.jackway.cn/2016/12/03/single/"/>
     <id>http://www.jackway.cn/2016/12/03/single/</id>
     <published>2016-12-02T18:30:04.000Z</published>
-    <updated>2017-01-07T07:25:06.000Z</updated>
+    <updated>2017-06-04T08:05:33.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各种版本，这篇文章我想跟大家聊聊我心中的单例模式，同时我会给出我心目中的单例模式的各种版本，同时会给出不同版本的优缺点，以及我们最后应该选用哪个版本才是最为安全，优雅，同时性能也是比较好的，最后我想说，安全，性能是一个折中的考虑。</p>
@@ -2110,7 +2102,6 @@ index eb41d76,c771610..0000000
 </blockquote>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看似很简单一种设计模式，其实我们深入思考一下，就没那么简单了，中间有很多技术点，有很多细节需要我们去挖掘，思考，最后推荐SingletonV7版本，注意这个只是保证了对象创建安全，对象成员的安全，还需要我们自己去保证。希望阅读过这篇文章的同学，再也不要写不安全的单例对象代码了，代码改进的一小步，程序稳定，可靠的一大步。</p>
 <h2 id="可能的疑问"><a href="#可能的疑问" class="headerlink" title="可能的疑问"></a>可能的疑问</h2><p>有的同学可能会在想，客户端平台不是不建议enum吗？确实没错，那是很早以前android官网也不建议使用，但是现在你去看官网还能看到那句话吗？google已经去掉了，至于为什么去掉了，我个人认为，有几种可能的原因，第一个是目前机器的配置，现在的cpu，内存等配置跟以前都不是在一个级别上，第二个就是软件层运行时对代码优化。另外还有<code>JakeWharton</code>大神都不考虑这个了，我们还有什么理由考虑这些了，其实真的没必要考虑这个了。</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
 ]]></content>
     
     <summary type="html">
@@ -2139,7 +2130,7 @@ index eb41d76,c771610..0000000
     <link href="http://www.jackway.cn/2016/11/29/gradle/"/>
     <id>http://www.jackway.cn/2016/11/29/gradle/</id>
     <published>2016-11-28T16:32:01.000Z</published>
-    <updated>2017-01-07T07:22:54.000Z</updated>
+    <updated>2017-06-04T08:02:04.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://www.processon.com/chart_image/583c622fe4b0e742e43f7055.png"></p>
 <blockquote>
@@ -2212,17 +2203,6 @@ index eb41d76,c771610..0000000
 <li><a href="https://github.com/jackwaylong/Gradle/archive/master.zip" target="_blank" rel="external">下载</a></li>
 <li><a href="https://github.com/jackwaylong/gradle" target="_blank" rel="external">github查看</a></li>
 </ul>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
-
-
-
-
-
-
-
-
-
-
 ]]></content>
     
     <summary type="html">
@@ -2246,7 +2226,7 @@ index eb41d76,c771610..0000000
     <link href="http://www.jackway.cn/2016/11/27/modularity/"/>
     <id>http://www.jackway.cn/2016/11/27/modularity/</id>
     <published>2016-11-27T08:50:54.000Z</published>
-    <updated>2017-01-07T07:24:39.000Z</updated>
+    <updated>2017-06-04T08:04:37.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>主题大纲</p>
@@ -2276,7 +2256,7 @@ index eb41d76,c771610..0000000
 <h2 id="组件化打包"><a href="#组件化打包" class="headerlink" title="组件化打包"></a>组件化打包</h2><p>组件化打包其实就是将aar进行整合，然后生成一个apk文件。这个apk可以单独加载，也可以单独运行。</p>
 <h2 id="组件化开发闭环链接系统"><a href="#组件化开发闭环链接系统" class="headerlink" title="组件化开发闭环链接系统"></a>组件化开发闭环链接系统</h2><p>组件化闭环系统基本组成:git源代码管理,maven二进制包管理,jenkins打包管理,gerrit代码审查等其他辅助系统，比如mail系统，短信系统。</p>
 <h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>同学们的疑问与解答</p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+]]></content>
     
     <summary type="html">
     

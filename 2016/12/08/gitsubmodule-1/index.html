@@ -22,7 +22,7 @@
 <meta property="og:description" content="有种情况我们经常会遇到：某个工作中的项目需要包含并使用另一个项目。 也许是第三方库，或者你独立开发的，用于多个父项目的库。 现在问题来了：你想要把它们当做两个独立的项目，同时又想在一个项目中使用另一个。
 
 我们举一个例子。 假设你正在开发一个网站然后创建了 Atom 订阅。 你决定使用一个库，而不是写自己的 Atom 生成代码。 你可能不得不通过 CPAN 安装或 Ruby gem 来包含共享库">
-<meta property="og:updated_time" content="2017-01-07T07:22:44.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:01:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git submodule">
 <meta name="twitter:description" content="有种情况我们经常会遇到：某个工作中的项目需要包含并使用另一个项目。 也许是第三方库，或者你独立开发的，用于多个父项目的库。 现在问题来了：你想要把它们当做两个独立的项目，同时又想在一个项目中使用另一个。
@@ -176,7 +176,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#开始使用子模块"><span class="post-toc-number">1.</span> <span class="post-toc-text">开始使用子模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#克隆有子模块的项目"><span class="post-toc-number">2.</span> <span class="post-toc-text">克隆有子模块的项目</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在包含子模块的项目上工作"><span class="post-toc-number">3.</span> <span class="post-toc-text">在包含子模块的项目上工作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#子模块技巧"><span class="post-toc-number">4.</span> <span class="post-toc-text">子模块技巧</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">5.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#开始使用子模块"><span class="post-toc-number">1.</span> <span class="post-toc-text">开始使用子模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#克隆有子模块的项目"><span class="post-toc-number">2.</span> <span class="post-toc-text">克隆有子模块的项目</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在包含子模块的项目上工作"><span class="post-toc-number">3.</span> <span class="post-toc-text">在包含子模块的项目上工作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#子模块技巧"><span class="post-toc-number">4.</span> <span class="post-toc-text">子模块技巧</span></a></li></ol>
         </nav>
     </aside>
     
@@ -239,7 +239,7 @@ index eb41d76,c771610..0000000
 <h3 id="子模块技巧"><a href="#子模块技巧" class="headerlink" title="子模块技巧"></a>子模块技巧</h3><p><code>git submodule foreach &#39;git stash&#39;</code><br><code>git submodule foreach &#39;git checkout -b featureA&#39;</code><br><code>git submodule foreach &#39;git diff&#39;</code><br>有用的别名</p>
 <p>你可能想为其中一些命令设置别名，因为它们可能会非常长而你又不能设置选项作为它们的默认选项。 我们在 Git 别名 介绍了设置 Git 别名，但是如果你计划在 Git 中大量使用子模块的话，这里有一些例子。</p>
 <p><code>$ git config alias.sdiff &#39;!&#39;&quot;git diff &amp;&amp; git submodule foreach &#39;git diff&#39;&quot;</code><br><code>$ git config alias.spush &#39;push --recurse-submodules=on-demand&#39;</code><br><code>$ git config alias.supdate &#39;submodule update --remote --merge&#39;</code></p>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
         </div>
 
         <blockquote class="post-copyright">

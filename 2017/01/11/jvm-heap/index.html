@@ -20,7 +20,7 @@
 <meta property="og:description" content="前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那么这篇文章，我来分析一下，jvm里面的堆以及gc，前面也说过，堆内存的重要性，堆与我们开发非常密切，如果在写程序的过程中，没有很好的利用堆内存，最为常">
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/jvm-heap.png">
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/jvm-hp.png">
-<meta property="og:updated_time" content="2017-01-11T14:13:28.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:04:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-(heap-gc)">
 <meta name="twitter:description" content="前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那么这篇文章，我来分析一下，jvm里面的堆以及gc，前面也说过，堆内存的重要性，堆与我们开发非常密切，如果在写程序的过程中，没有很好的利用堆内存，最为常">
@@ -173,7 +173,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gc分代理论"><span class="post-toc-number">1.</span> <span class="post-toc-text">gc分代理论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#堆区"><span class="post-toc-number">2.</span> <span class="post-toc-text">堆区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gc回收过程"><span class="post-toc-number">3.</span> <span class="post-toc-text">gc回收过程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">5.</span> <span class="post-toc-text">注意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#调优参数"><span class="post-toc-number">6.</span> <span class="post-toc-text">调优参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">7.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gc分代理论"><span class="post-toc-number">1.</span> <span class="post-toc-text">gc分代理论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#堆区"><span class="post-toc-number">2.</span> <span class="post-toc-text">堆区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#gc回收过程"><span class="post-toc-number">3.</span> <span class="post-toc-text">gc回收过程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">5.</span> <span class="post-toc-text">注意</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#调优参数"><span class="post-toc-number">6.</span> <span class="post-toc-text">调优参数</span></a></li></ol>
         </nav>
     </aside>
     
@@ -227,7 +227,7 @@
 <blockquote>
 <p>了解jvm理论对我们编码，以及目前很火的技术，热修复，插件化，动态部署，都非常有指导性作用，如果想进阶的，一定<br>要好好学习jvm知识，才能做到得心应手，不然后面会遇到很多难点，jvm已经分析几篇与我们开发最为密切的系列，我们对jvm有了基本的认识，我们还不了解jvm的字节码文件，但是很多情况下，我们只需要了解class的基本构成就行，但是在一些场景不行，比如我最近在用asm技术实现hook，那么需要对字节码指令，以及文件构成有深入了解。下篇class结构分析，敬请期待……</p>
 </blockquote>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
         </div>
 
         <blockquote class="post-copyright">

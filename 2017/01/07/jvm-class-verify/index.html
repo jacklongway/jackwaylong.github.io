@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#3F51B5">
   
   
-  <meta name="keywords" content="jvm,class-verify,inbox,security">
+  <meta name="keywords" content="class-verify,inbox,security,jvm">
   <meta name="description" content="java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的隔离，互不干扰，数据安全，运行安全等安全机制，能够保证我们的程序在自身稳定的情况下，不会受到外界环境干扰，而出现进程运行异常，这篇文章从jvm加载class的角度来分析jvm内部安全体系。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm-class加载验证">
@@ -20,7 +20,7 @@
 <meta property="og:description" content="java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的隔离，互不干扰，数据安全，运行安全等安全机制，能够保证我们的程序在自身稳定的情况下，不会受到外界环境干扰，而出现进程运行异常，这篇文章从jvm加载class的角度来分析jvm内部安全体系。">
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/jvm类加载.png">
 <meta property="og:image" content="http://www.jackway.cn/img/jvm/jvm类检测.png">
-<meta property="og:updated_time" content="2017-01-07T10:19:56.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:03:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-class加载验证">
 <meta name="twitter:description" content="java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的隔离，互不干扰，数据安全，运行安全等安全机制，能够保证我们的程序在自身稳定的情况下，不会受到外界环境干扰，而出现进程运行异常，这篇文章从jvm加载class的角度来分析jvm内部安全体系。">
@@ -171,7 +171,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#话题大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">话题大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类装载器体系结构"><span class="post-toc-number">2.</span> <span class="post-toc-text">类装载器体系结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java类加载器体系"><span class="post-toc-number">3.</span> <span class="post-toc-text">java类加载器体系</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class文件检验器"><span class="post-toc-number">4.</span> <span class="post-toc-text">class文件检验器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class检验模型"><span class="post-toc-number">5.</span> <span class="post-toc-text">class检验模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java虚拟机中内置的安全特性"><span class="post-toc-number">6.</span> <span class="post-toc-text">java虚拟机中内置的安全特性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安全管理器和java-API"><span class="post-toc-number">7.</span> <span class="post-toc-text">安全管理器和java API</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">8.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#话题大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">话题大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类装载器体系结构"><span class="post-toc-number">2.</span> <span class="post-toc-text">类装载器体系结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java类加载器体系"><span class="post-toc-number">3.</span> <span class="post-toc-text">java类加载器体系</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class文件检验器"><span class="post-toc-number">4.</span> <span class="post-toc-text">class文件检验器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class检验模型"><span class="post-toc-number">5.</span> <span class="post-toc-text">class检验模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java虚拟机中内置的安全特性"><span class="post-toc-number">6.</span> <span class="post-toc-text">java虚拟机中内置的安全特性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安全管理器和java-API"><span class="post-toc-number">7.</span> <span class="post-toc-text">安全管理器和java API</span></a></li></ol>
         </nav>
     </aside>
     
@@ -234,7 +234,7 @@
 <li>数组边界检查；</li>
 <li>空引用检查。<br>内置在java虚拟机中的另一个安全特性,并未指明运行时数据空间在java虚拟机内部分布式怎样的。如果查看class文件的内部，将看不到任何内存地址（全是符号引用和无符号数），当java虚拟机装载一个class文件是，由它决定将这些字节码以及其他从class文件中解析得到的数据放置在内存的什么地方。当虚拟机启动一个线程时，由它决定将这个线程创建java栈放到哪里。最后，java虚拟机拥有异常的结构化错误处理机制，因为java虚拟机支持异常，所以当一些违反安全的行为发生时，它会做一些结构化处理，java虚拟机将抛出一个异常或者错误，而不是崩溃。<h2 id="安全管理器和java-API"><a href="#安全管理器和java-API" class="headerlink" title="安全管理器和java API"></a>安全管理器和java API</h2>安全管理器定义了沙箱的外部边界，保护虚拟机的外部资源不被虚拟机内运行的恶意或者有漏洞的代码侵犯。javaAPI在进行一个可能不安全的操作前，总是会检查安全管理器，所以javaAPI不会在安全管理器建立的安全策略下执行被禁止的操作。具体可以参考<code>java.lang.SecurityManager</code>类。</li>
 </ol>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
         </div>
 
         <blockquote class="post-copyright">

@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://www.jackway.cn/2017/01/22/jvm-字节码指令-2-结构指令/index.html">
 <meta property="og:site_name" content="longway's blog">
 <meta property="og:description" content="上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输">
-<meta property="og:updated_time" content="2017-01-22T11:29:28.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:03:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-字节码指令(2)">
 <meta name="twitter:description" content="上篇介绍了基本的一些字节码指令，比如基本的数据操作，我们也大概的明白了字节码层面是如何对数据进行操作的，有的小伙伴可能觉得字节码指令跟汇编指令，smail指令有点像，没错，从结构层面上来说没有两样，不同的就是指令的含义不一样，也就是不同语言环境导致了指令的动作不一样，理解的思路都差不多，理解一门，其他都一样。有了指令基本的认识，那么必定会涉及到基本数据的操作，数据必然是流动的，不管是用户事件的输">
@@ -170,7 +170,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指令大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">指令大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#int-条件判断（if－else）"><span class="post-toc-number">2.</span> <span class="post-toc-text">int-条件判断（if－else）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#float-条件判断（if－else）"><span class="post-toc-number">3.</span> <span class="post-toc-text">float-条件判断（if－else）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分支指令（switch）"><span class="post-toc-number">4.</span> <span class="post-toc-text">分支指令（switch）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">5.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指令大纲"><span class="post-toc-number">1.</span> <span class="post-toc-text">指令大纲</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#int-条件判断（if－else）"><span class="post-toc-number">2.</span> <span class="post-toc-text">int-条件判断（if－else）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#float-条件判断（if－else）"><span class="post-toc-number">3.</span> <span class="post-toc-text">float-条件判断（if－else）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分支指令（switch）"><span class="post-toc-number">4.</span> <span class="post-toc-text">分支指令（switch）</span></a></li></ol>
         </nav>
     </aside>
     
@@ -210,8 +210,6 @@
 <blockquote>
 <p>说到这里我们应该明白了数据的比较，分支处理指令，这是实现复杂指令的根基，一定要好好的体会，后续对象操作指令，其实也很类似，只是对象的操作比这更复杂些，涉及到引用链，其实也不难，今天就写这么多，下篇继续分析，分支指令的String处理方式，以及循环结构的指令处理，明白了这些，指令的基本操作到此就结束了，后续会有几篇讲解，一些对象上的指令，比如对象的操作，也就是方法的调用，对象字段的操作，包括实例字段，静态字段。敬请期待后续的分析……</p>
 </blockquote>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
-
 
         </div>
 

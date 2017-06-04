@@ -30,7 +30,7 @@ wait是Object中的方法,sleep是Thread中的方法
 wait必须在同步代码块中调用，也就是说必须首先获得监视器锁，然后才能调用,sleep可以在任何可能的地方调用
 wait释放锁,sleep不释放锁
 wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源">
-<meta property="og:updated_time" content="2017-01-07T07:25:39.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:06:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="wait和sleep 深度分析">
 <meta name="twitter:description" content="首先我们需要明白wait与sleep的区别，区别大致有下面几个方面:
@@ -188,7 +188,7 @@ wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源">
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下面分析一种wait协助的场景，如果换成sleep可能导致死锁"><span class="post-toc-number">1.</span> <span class="post-toc-text">下面分析一种wait协助的场景，如果换成sleep可能导致死锁</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">2.</span> <span class="post-toc-text">注意</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">最近访客</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下面分析一种wait协助的场景，如果换成sleep可能导致死锁"><span class="post-toc-number">1.</span> <span class="post-toc-text">下面分析一种wait协助的场景，如果换成sleep可能导致死锁</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">2.</span> <span class="post-toc-text">注意</span></a></li></ol>
         </nav>
     </aside>
     
@@ -229,7 +229,7 @@ wait尽可能的少消耗cpu资源,sleep消耗更多的cpu资源">
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><blockquote>
 <p>通过上面代码我们在写并发代码的时候，一定要理解场景，不然真的很危险.</p>
 </blockquote>
-<h3 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h3><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
         </div>
 
         <blockquote class="post-copyright">

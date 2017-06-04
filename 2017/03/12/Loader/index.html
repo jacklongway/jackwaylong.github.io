@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://www.processon.com/chart_image/58c50724e4b070abda1d8619.png">
 <meta property="og:image" content="http://www.jackway.cn/img/android/loader.png">
 <meta property="og:image" content="http://www.jackway.cn/img/android/LoaderSequenceDiagram.png">
-<meta property="og:updated_time" content="2017-03-12T13:10:23.000Z">
+<meta property="og:updated_time" content="2017-06-04T08:04:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中的Loader异步加载架构分析">
 <meta name="twitter:description" content="相信大家对android中的Loader不陌生，我也相信对于很多同学很陌生，可能从写android起，到现在可能都不知道loader到底是什么玩意，其实我以前也没了解过，经过看google todo架构的loader实现之后，发现loader我一直在用，只是以前都是自己写的，不是用的系统自带的loader，我对google的任何实现都很好奇的，不管是什么方向，所以我就详细的分析一下loader的">
@@ -174,7 +174,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#loader的组成"><span class="post-toc-number">1.</span> <span class="post-toc-text">loader的组成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#loader臆想图"><span class="post-toc-number">2.</span> <span class="post-toc-text">loader臆想图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#loader类图"><span class="post-toc-number">3.</span> <span class="post-toc-text">loader类图</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#说明"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">说明</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#loader时序图"><span class="post-toc-number">4.</span> <span class="post-toc-text">loader时序图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">6.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#loader的组成"><span class="post-toc-number">1.</span> <span class="post-toc-text">loader的组成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#loader臆想图"><span class="post-toc-number">2.</span> <span class="post-toc-text">loader臆想图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#loader类图"><span class="post-toc-number">3.</span> <span class="post-toc-text">loader类图</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#说明"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">说明</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#loader时序图"><span class="post-toc-number">4.</span> <span class="post-toc-text">loader时序图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li></ol>
         </nav>
     </aside>
     
@@ -240,7 +240,6 @@
             </figure>
 <p>时序图简单的分析了loader整个架构的调用链，注意这里只是描述的核心调用，其实里面还有很多细节处理，但是时序图没法完全体现，需要通过阅读代码了解细节。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面对loader的介绍，同学们应该对loader有了基本的认识，最好自己对着上面的讲解自己跟一下代码的调用，了解一下里面的处理细节，学习google设计架构的严谨思想与技巧。文章开始我说过，类似loader的实现方式很多，但是loader是最好的实现，因为具有先天的生命周期绑定。但是loader也有不足之处，比如loader生命周期方法并发调用是不支持的，注意这里不是并发执行任务。所以我们在自己实现的时候注意一下就好。最后还是希望大家自己看一下代码，这样在使用过程中才能更自信。</p>
-<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
 
         </div>
 
