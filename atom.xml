@@ -1060,9 +1060,9 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <h2 id="虚拟机变量表"><a href="#虚拟机变量表" class="headerlink" title="虚拟机变量表"></a>虚拟机变量表</h2><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/img/jvm/jvm变量表.png" alt="local" title="">
+                    <img src="/img/jvm/jvm变量表.png" alt="local variable" title="">
                 </div>
-                <div class="image-caption">local</div>
+                <div class="image-caption">local variable</div>
             </figure>
 <h2 id="虚拟机栈对象引用方式"><a href="#虚拟机栈对象引用方式" class="headerlink" title="虚拟机栈对象引用方式"></a>虚拟机栈对象引用方式</h2><figure class="image-bubble">
                 <div class="img-lightbox">
