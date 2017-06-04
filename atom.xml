@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jackway.cn/"/>
-  <updated>2017-06-04T06:24:41.000Z</updated>
+  <updated>2017-06-04T06:43:37.000Z</updated>
   <id>http://www.jackway.cn/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>工信部对android推送通道规范化的一些思考</title>
+    <title>对工信部对android推送通道规范化的一些思考</title>
     <link href="http://www.jackway.cn/2017/06/04/push-md/"/>
     <id>http://www.jackway.cn/2017/06/04/push-md/</id>
     <published>2017-06-04T04:55:22.000Z</published>
-    <updated>2017-06-04T06:24:41.000Z</updated>
+    <updated>2017-06-04T06:43:37.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。</p>

@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[工信部对android推送通道规范化的一些思考]]></title>
+      <title><![CDATA[对工信部对android推送通道规范化的一些思考]]></title>
       <url>http://www.jackway.cn/2017/06/04/push-md/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。</p>
