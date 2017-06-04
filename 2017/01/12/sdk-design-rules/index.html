@@ -376,17 +376,19 @@ Twitter 的 Fabric 是知名的注重质量的 SDK，并已部署在数十亿的
 
 
     
-<div class="duoshuo" id="comments">
-	<div class="ds-thread" data-thread-key="sdk-design-rules" data-title="sdk-design-rules" data-url="http://www.jackway.cn/2017/01/12/sdk-design-rules/"></div>
-</div>
-<script src="/js/embed.min.js?v=1.3.2"></script>
-<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
 <script>
-var duoshuoQuery = {short_name:'longway', theme: 'none'}
+var cloudTieConfig = {
+  url: document.location.href, 
+  sourceId: "",
+  productKey: "c811f24d9e45478c9593d155099fbc35",
+  target: "cloud-tie-wrapper"
+};
+var yunManualLoad = true;
+Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
 </script>
-
-
-
+    
 
 
 </article>
