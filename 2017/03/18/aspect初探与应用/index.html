@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>aspect初探与应用 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="aspect,asm">
+  <meta name="description" content="aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一起从认识it，然后使用it，然后初探it的场景，然后深入理解it的背后思想等不同角度和大家一起分享aspect, 在讲解aspect相关知识前，我们都知道在android领域应用层开发影响最大的就是jakewharton大神了，之所以有今天这篇文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="aspect初探与应用">
+<meta property="og:url" content="http://www.jackway.cn/2017/03/18/aspect初探与应用/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一起从认识it，然后使用it，然后初探it的场景，然后深入理解it的背后思想等不同角度和大家一起分享aspect, 在讲解aspect相关知识前，我们都知道在android领域应用层开发影响最大的就是jakewharton大神了，之所以有今天这篇文">
+<meta property="og:image" content="http://www.jackway.cn/img/android/AspectOrientedProgramming.png">
+<meta property="og:image" content="http://www.jackway.cn/img/android/AspectWeaving.png">
+<meta property="og:updated_time" content="2017-03-19T08:56:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="aspect初探与应用">
+<meta name="twitter:description" content="aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一起从认识it，然后使用it，然后初探it的场景，然后深入理解it的背后思想等不同角度和大家一起分享aspect, 在讲解aspect相关知识前，我们都知道在android领域应用层开发影响最大的就是jakewharton大神了，之所以有今天这篇文">
+<meta name="twitter:image" content="http://www.jackway.cn/img/android/AspectOrientedProgramming.png">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jacklongway" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2017</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">aspect初探与应用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">aspect初探与应用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-18T10:01:03.000Z" itemprop="datePublished" class="page-time">
+  2017-03-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#序言"><span class="post-toc-number">1.</span> <span class="post-toc-text">序言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#专业术语"><span class="post-toc-number">2.</span> <span class="post-toc-text">专业术语</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#aspect使用场景"><span class="post-toc-number">3.</span> <span class="post-toc-text">aspect使用场景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android-aspect-picture"><span class="post-toc-number">4.</span> <span class="post-toc-text">android aspect picture</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#practice"><span class="post-toc-number">5.</span> <span class="post-toc-text">practice</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#aop-应用repo"><span class="post-toc-number">7.</span> <span class="post-toc-text">aop 应用repo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">8.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-aspect初探与应用"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">aspect初探与应用</h1>
+        <div class="post-meta">
+            <time datetime="2017-03-18T10:01:03.000Z" itemprop="datePublished" class="post-time">
+  2017-03-18
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一起从认识it，然后使用it，然后初探it的场景，然后深入理解it的背后思想等不同角度和大家一起分享aspect, 在讲解aspect相关知识前，我们都知道在android领域应用层开发影响最大的就是jakewharton大神了，之所以有今天这篇文章，我也是看他写了一个hugo基础库，这个库虽然很简单，但是我们更重要学习的不是代码本身，而是他的那种思想，由此基于<a href="https://github.com/JakeWharton/hugo" target="_blank" rel="external">hugo</a>我进行了一番比较深入的学习与研究，也写了一些常用场景的事例分享给大家。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h2><blockquote>
+<p>我们都知道java的世界的是oop的世界，c的世界是过程化的世界，当然这里只是相对的来说，其实c也有对象的思想，在这里就不展开讲解，想了解的在文章末尾可以向我提问，我们还是回到java的世界，java我们太熟悉了，我们也太陌生了，为什么这么说了，熟悉是我们写程序离不开java，陌生是因为大多数人只是会使用。不管哪种，都是java的背后oop能力在支撑，oop是什么了，字面上解释就是面向对象编程，技术层面解释就具备封装，继承，多态的能力。大多数程序是oop的集合，可能在接触oop的时候，还有关注过ooa，ood，aop，ioc等程序方法论，但是这些都只是一些概念层面的，很多时候我们并没有真正使用过，比如ooa，这个我相信大家都知道是一种面向对象分析的方法论，在分析一对对象系统的时候我们要用ooa的思想去进行分析，然后用ood的方式可视化的表现出来，最后用oop的思想用对象语言实现。其实他们之间是有一定依赖关系的，ooa－&gt;ood-&gt;oop 从想法到落地的过程。那么aop在这个过程能做什么了，是什么角色了，aop主要在oop实施完阶段之后收集各个面的信息，然后集中处理，这样说起来可能很抽象，其实简单来说就是一个scanner，发现满足规则的切入点然后汇集到weave。ioc也是aop的实施阶段，但是会参与这个过程不是实施之后，ioc能够将一些有依赖关系的对象进行一定的规则生成对应的代码，然后汇集到javac参与编译的过程。不管是aop，还是ioc，目前市面上都有很多关于这两者应用的开源库，比如aop的有aspect，asm，cglib，dexmarker，asmdex等等，ioc我们常用的有butterknife，dagger2等等。这篇主要分析aspect，从各个层面分析以及与其它实现方式的比较。</p>
+</blockquote>
+<h2 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h2><ol>
+<li>Cross-cutting concerns</li>
+<li>Advice</li>
+<li>Joint point</li>
+<li>Pointcut</li>
+<li>Aspect</li>
+<li>Weaving</li>
+</ol>
+<p>aspect picture：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/android/AspectOrientedProgramming.png" alt="aspect" title="">
+                </div>
+                <div class="image-caption">aspect</div>
+            </figure></p>
+<h2 id="aspect使用场景"><a href="#aspect使用场景" class="headerlink" title="aspect使用场景"></a>aspect使用场景</h2><ol>
+<li>logging</li>
+<li>persistance</li>
+<li>performance monitoring</li>
+<li>data validation</li>
+<li>caching</li>
+<li>transcation</li>
+<li>permission</li>
+<li>……</li>
+</ol>
+<h2 id="android-aspect-picture"><a href="#android-aspect-picture" class="headerlink" title="android aspect picture"></a>android aspect picture</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/android/AspectWeaving.png" alt="aspect" title="">
+                </div>
+                <div class="image-caption">aspect</div>
+            </figure>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><p>Creating our annotation<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</div><div class="line"><span class="meta">@Target</span>(&#123; ElementType.CONSTRUCTOR, ElementType.METHOD &#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> DebugTrace &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>Our StopWatch for performance monitoring<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StopWatch</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> startTime;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> endTime;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> elapsedTime;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">StopWatch</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//empty</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">reset</span><span class="params">()</span> </span>&#123;</div><div class="line">    startTime = <span class="number">0</span>;</div><div class="line">    endTime = <span class="number">0</span>;</div><div class="line">    elapsedTime = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">    reset();</div><div class="line">    startTime = System.nanoTime();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (startTime != <span class="number">0</span>) &#123;</div><div class="line">      endTime = System.nanoTime();</div><div class="line">      elapsedTime = endTime - startTime;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      reset();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTotalTimeMillis</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> (elapsedTime != <span class="number">0</span>) ? TimeUnit.NANOSECONDS.toMillis(endTime - startTime) : <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Our Aspect<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Aspect representing the cross cutting-concern: Method and Constructor Tracing.</div><div class="line"> */</div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TraceAspect</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String POINTCUT_METHOD =</div><div class="line">      <span class="string">"execution(@org.android10.gintonic.annotation.DebugTrace * *(..))"</span>;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String POINTCUT_CONSTRUCTOR =</div><div class="line">      <span class="string">"execution(@org.android10.gintonic.annotation.DebugTrace *.new(..))"</span>;</div><div class="line"></div><div class="line">  <span class="meta">@Pointcut</span>(POINTCUT_METHOD)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodAnnotatedWithDebugTrace</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">  <span class="meta">@Pointcut</span>(POINTCUT_CONSTRUCTOR)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">constructorAnnotatedDebugTrace</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">  <span class="meta">@Around</span>(<span class="string">"methodAnnotatedWithDebugTrace() || constructorAnnotatedDebugTrace()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">weaveJoinPoint</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">    MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();</div><div class="line">    String className = methodSignature.getDeclaringType().getSimpleName();</div><div class="line">    String methodName = methodSignature.getName();</div><div class="line"></div><div class="line">    <span class="keyword">final</span> StopWatch stopWatch = <span class="keyword">new</span> StopWatch();</div><div class="line">    stopWatch.start();</div><div class="line">    Object result = joinPoint.proceed();</div><div class="line">    stopWatch.stop();</div><div class="line"></div><div class="line">    DebugLog.log(className, buildLogMessage(methodName, stopWatch.getTotalTimeMillis()));</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * Create a log message.</div><div class="line">   *</div><div class="line">   * <span class="doctag">@param</span> methodName A string with the method name.</div><div class="line">   * <span class="doctag">@param</span> methodDuration Duration of the method in milliseconds.</div><div class="line">   * <span class="doctag">@return</span> A string representing message.</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">buildLogMessage</span><span class="params">(String methodName, <span class="keyword">long</span> methodDuration)</span> </span>&#123;</div><div class="line">    StringBuilder message = <span class="keyword">new</span> StringBuilder();</div><div class="line">    message.append(<span class="string">"Gintonic --&gt; "</span>);</div><div class="line">    message.append(methodName);</div><div class="line">    message.append(<span class="string">" --&gt; "</span>);</div><div class="line">    message.append(<span class="string">"["</span>);</div><div class="line">    message.append(methodDuration);</div><div class="line">    message.append(<span class="string">"ms"</span>);</div><div class="line">    message.append(<span class="string">"]"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> message.toString();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>build.gradle<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.android.build.gradle.LibraryPlugin</div><div class="line"><span class="keyword">import</span> org.aspectj.bridge.IMessage</div><div class="line"><span class="keyword">import</span> org.aspectj.bridge.MessageHandler</div><div class="line"><span class="keyword">import</span> org.aspectj.tools.ajc.Main</div><div class="line"></div><div class="line">buildscript &#123;</div><div class="line">  repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">  &#125;</div><div class="line">  dependencies &#123;</div><div class="line">    classpath <span class="string">'com.android.tools.build:gradle:2.2.2'</span></div><div class="line">    classpath <span class="string">'org.aspectj:aspectjtools:1.8.6'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">apply <span class="string">plugin:</span> <span class="string">'android-library'</span></div><div class="line"></div><div class="line">repositories &#123;</div><div class="line">  mavenCentral()</div><div class="line">&#125;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">  compile <span class="string">'org.aspectj:aspectjrt:1.8.6'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">android &#123;</div><div class="line">  compileSdkVersion <span class="number">19</span></div><div class="line">  buildToolsVersion <span class="string">'19.1.0'</span></div><div class="line"></div><div class="line">  lintOptions &#123;</div><div class="line">    abortOnError <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">android.libraryVariants.all &#123; variant -&gt;</div><div class="line">  LibraryPlugin plugin = project.plugins.getPlugin(LibraryPlugin)</div><div class="line">  JavaCompile javaCompile = variant.javaCompile</div><div class="line">  javaCompile.doLast &#123;</div><div class="line">    String[] args = [<span class="string">"-showWeaveInfo"</span>,</div><div class="line">                     <span class="string">"-1.8"</span>,</div><div class="line">                     <span class="string">"-inpath"</span>, javaCompile.destinationDir.toString(),</div><div class="line">                     <span class="string">"-aspectpath"</span>, javaCompile.classpath.asPath,</div><div class="line">                     <span class="string">"-d"</span>, javaCompile.destinationDir.toString(),</div><div class="line">                     <span class="string">"-classpath"</span>, javaCompile.classpath.asPath,</div><div class="line">                     <span class="string">"-bootclasspath"</span>, plugin.project.android.bootClasspath.join(</div><div class="line">        File.pathSeparator)]</div><div class="line"></div><div class="line">    MessageHandler handler = <span class="keyword">new</span> MessageHandler(<span class="literal">true</span>);</div><div class="line">    <span class="keyword">new</span> Main().run(args, handler)</div><div class="line"></div><div class="line">    <span class="keyword">def</span> log = project.logger</div><div class="line">    <span class="keyword">for</span> (IMessage <span class="string">message :</span> handler.getMessages(<span class="literal">null</span>, <span class="literal">true</span>)) &#123;</div><div class="line">      <span class="keyword">switch</span> (message.getKind()) &#123;</div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">ABORT:</span></div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">ERROR:</span></div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">FAIL:</span></div><div class="line">          log.error message.message, message.thrown</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">WARNING:</span></div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">INFO:</span></div><div class="line">          log.info message.message, message.thrown</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">DEBUG:</span></div><div class="line">          log.debug message.message, message.thrown</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Our test method<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@DebugTrace</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">testAnnotatedMethod</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      Thread.sleep(<span class="number">10</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>Executing our application<br><code>gradlew clean build installDebug</code></p>
+<p>If we open the logcat and execute our sample, we will see a debug log with:<br><code>Gintonic --&gt; testAnnotatedMethod --&gt; [10ms]</code></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>我们已经基本知道了aop编程的方式</li>
+<li>在编译时注入代码到工程</li>
+<li>在运行时weave code</li>
+<li>aop的能力不仅仅如此，是一种如此强大的方法论</li>
+<li>理解aop规则与原理，就可用aop去解决比较复杂的场景</li>
+</ol>
+<h2 id="aop-应用repo"><a href="#aop-应用repo" class="headerlink" title="aop 应用repo"></a>aop 应用repo</h2><blockquote>
+<p>repo里面基本实现了一些基本需求，比如activity，fragment，view的埋点设置，权限的检测，方法调用参数输入，结果输出，耗时追踪，view点击抖动处理，通过这些事例只是简单说明aop的应用场景，其实还有很多可以做，比如6.0动态权限也可以用aop的方式统一处理。最后要明白aop只是一个切点的收集器，至于收集完之后的处理，还是需要我们自己处理的。下篇继续分析aspect与asm的结合，aspect是如何在编译时注入代码的，以及注入原理是什么。</p>
+</blockquote>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://www.jackway.cn">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asm/">asm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aspect/">aspect</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/03/18/aspect初探与应用/&title=《aspect初探与应用》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/03/18/aspect初探与应用/&title=《aspect初探与应用》 — longway's blog&source=
+aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/03/18/aspect初探与应用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《aspect初探与应用》 — longway's blog&url=http://www.jackway.cn/2017/03/18/aspect初探与应用/&via=http://www.jackway.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/03/18/aspect初探与应用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/03/21/build-scan/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">build-scan</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/12/Loader/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android中的Loader异步加载架构分析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="aspect初探与应用" data-title="aspect初探与应用" data-url="http://www.jackway.cn/2017/03/18/aspect初探与应用/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/03/18/aspect初探与应用/&title=《aspect初探与应用》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/03/18/aspect初探与应用/&title=《aspect初探与应用》 — longway's blog&source=
+aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/03/18/aspect初探与应用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《aspect初探与应用》 — longway's blog&url=http://www.jackway.cn/2017/03/18/aspect初探与应用/&via=http://www.jackway.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/03/18/aspect初探与应用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHUlEQVR42u3aQW6EMAwFUO5/aXqACvptQyWSxwpNmYkfi9SOfRzxdV5cyTNXT17d/37+sQsDA+OzjGT5+8/vgzhbV/XVYGBg7MC42sGSZ+6Xz3fI6roYGBgY+caaBFT9fQwMDIw5o1d2JlQMDAyMSRHbO3q7DzdhPFyLY2BgfJCRb5T/f/9KfwMDA+NTjPcO63vpY7OFgIGBsTQj3+DuQ8mDTtK7ZjwYGBgbMPKFqwMWk0ZpUuhiYGCszagGUW1V9jDlFgIGBsYGjF6TYJIm5k2F6OgNAwNjA0bv+Ky3ZLUZWc5tMTAwlmNUR76qBWd1ax69JgwMjEUZ+VjD5EBt0h6ItmMMDIxtGJOGYt5orCaC0UvEwMDYgFEd7Xpjq82L1T/GLDAwMBZlVBdLBiB6gVY3XAwMjB0YkxSwd7j21GDZ5VoYGBjLMXrHXnkQr7xvDAyMLRm9pLA3UjZK+/IiFgMDYyFGb/Qh/261uO2NqWFgYOzAmAx+VTfuXkIZRYiBgbEBYxJ0dcCiulZ0FIiBgbENo3esXy01C8HlaSgGBsaijLN45YngfMisXH9jYGAsypiMVuSJYO/J5L4Mw8DA+Cxjvl1WWwhPbbgYGBi7MaqNycn4V/77hVM1DAwMjHgkYgKothOO5M8YGBhbMqrVcNLyrJbQj/3fwMDA+BQjLyyrDc6kRTqHYWBgrM2ojjhUD/on6eZ8RQwMjI8zfgB+jZNhy3jhXAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>

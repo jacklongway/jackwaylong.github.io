@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <title>工信部对android推送通道规范化的一些思考 | longway&#39;s blog | Technology change the world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="push">
+  <meta name="description" content="最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工信部对android推送通道规范化的一些思考">
+<meta property="og:url" content="http://www.jackway.cn/2017/06/04/push-md/index.html">
+<meta property="og:site_name" content="longway's blog">
+<meta property="og:description" content="最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。">
+<meta property="og:updated_time" content="2017-06-04T06:24:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="工信部对android推送通道规范化的一些思考">
+<meta name="twitter:description" content="最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。">
+  
+    <link rel="alternative" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css?v=1.3.2">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">龙伟</h5>
+          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/jacklongway" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+
+      <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>longway&#39;s blog &copy; 2014 - 2017</p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+    </div>
+  </div>
+</aside>
+
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">工信部对android推送通道规范化的一些思考</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">工信部对android推送通道规范化的一些思考</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-06-04T04:55:22.000Z" itemprop="datePublished" class="page-time">
+  2017-06-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android系统后台机制"><span class="post-toc-number">1.</span> <span class="post-toc-text">android系统后台机制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设备干扰"><span class="post-toc-number">2.</span> <span class="post-toc-text">设备干扰</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#用户情绪干扰"><span class="post-toc-number">3.</span> <span class="post-toc-text">用户情绪干扰</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#返璞归真"><span class="post-toc-number">4.</span> <span class="post-toc-text">返璞归真</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最近访客"><span class="post-toc-number">5.</span> <span class="post-toc-text">最近访客</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-push-md"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">工信部对android推送通道规范化的一些思考</h1>
+        <div class="post-meta">
+            <time datetime="2017-06-04T04:55:22.000Z" itemprop="datePublished" class="post-time">
+  2017-06-04
+</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
+
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="android系统后台机制"><a href="#android系统后台机制" class="headerlink" title="android系统后台机制"></a>android系统后台机制</h2><p>要想明白android推送机制，首先我们先得了解android系统的后台机制，android后台是开放式的，所谓的开放式就是后台在很多时候系统不会管我们，只有达到一定阈值情况下，系统才会去扫描我们的进程，然后执行一些资源的回收，这个时候才会影响我们的程序执行，但是这也不是一定会影响我们的程序执行，只要我们的程序做好自动恢复机制，也可以还原进程的状态。这就导致了很多开发者利用这一特性，即使用户将app切换到后台，然后也是一种假象，换句话说目前比较流行的口语假后台，如果对程序不是很懂的用户，根本不知道，app在后台做了什么操作。我们想想如果用户的手机里面每个app都是这样的app，这是多么的可怕，这样一来很多用户直接将app卸载了，但是有些app是必须要保留的，为了自己的便利。其实在android系统升级的过程中google也意识到了，android后台机制的设计缺陷，但是一下子想回收这种缺陷是不可能的了，这也是android系统最开始设计导致的，所以说设计很重要。我们从android系统5.0之后就明显的发现，不仅仅从系统层面，还是从sdk层面，google都给我们释放了后台限制的信号，比如增加job调度，增加进程组，jni层fork无效等等措施，但是还是没法完全的阻止那些黑色开发者，只要有一丝希望，他们都会去挖掘，但是这也是对自己技术提高的一种方式，因为在这一过程中，要去阅读大量的系统源码，挖掘系统漏洞，然后在开发层实现我们的需求。技术是一把双刃剑，我们还是尽量把技术用在正常的手段上，杜绝黑色与灰色产业，维护好android生态的良性循环。</p>
+<h2 id="设备干扰"><a href="#设备干扰" class="headerlink" title="设备干扰"></a>设备干扰</h2><p>设备是一个物理设备，而app是一个虚拟服务，一个设备可以有很多服务，如果每个app都是后台服务，那设备的消耗将是非常的大，同时有一些app在后台进行的一些不仅仅是本地服务，还可能是一些远程服务，这样一来将导致用户设备不仅仅电量不够用，而且流量也不够用，还会将用户的隐私信息通过后台push通道发送到云端，这些行为其实都是非常可怕的，这样一来，只要用户有手机，就知道用户的行为，虽然这个跟目前用户画像技术很吻合，但是这种画像不是用户行为，是后台行为，必须要静止这种操作的出现。</p>
+<h2 id="用户情绪干扰"><a href="#用户情绪干扰" class="headerlink" title="用户情绪干扰"></a>用户情绪干扰</h2><p>现在用户的很多日常都离不开手机，不仅仅工作，生活，几乎所有一切都离不开手机，这样一来泛滥的推送手机给用户，会给用户带来很多困扰，况且有的推送过来之后，还有一个小小的声音片段，我们想想如果后台不断的推送广告信息，用户是什么感受，会严重影响用户对app的使用好感。我们应该尽量避免这种影响用户情趣的操作，用户至上，用户最具有价值，只有有了用户，我们所做的一切才能让给我们带来价值。技术仅仅是一个解决问题的工具，我们要做的就是使用这个工具做更多用户认可的事情，而不是影响用户的事情。</p>
+<h2 id="返璞归真"><a href="#返璞归真" class="headerlink" title="返璞归真"></a>返璞归真</h2><p>不管从上面的几点来说，还是从工信部这一举措来说，我们都应该统一push通道，公用系统push通道，由系统统一push出入口，这样我们就可以避免那些非法的后台服务，从而有效的控制后台服务。同时我们还可以对出入口的信息进行检测与过滤等一些列行为的拦截。最后我相信android的推送行为也会像苹果的apns一样，基于硬件机制与系统软件栈机制提供push服务。希望android的未来生态越来越好，寄语今年io大会的一句话，希望mobile first to ai first 成功过渡的过程中，android 生态越来越好。</p>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        该内容没经过版主同意不得随意转发
+    </div>
+    <footer>
+        <a href="http://www.jackway.cn">
+            <img src="/img/avatar.jpg" alt="龙伟">
+            龙伟
+        </a>
+    </footer>
+</blockquote>
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/push/">push</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/06/04/push-md/&title=《工信部对android推送通道规范化的一些思考》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/06/04/push-md/&title=《工信部对android推送通道规范化的一些思考》 — longway's blog&source=
+最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到and..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/06/04/push-md/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《工信部对android推送通道规范化的一些思考》 — longway's blog&url=http://www.jackway.cn/2017/06/04/push-md/&via=http://www.jackway.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/06/04/push-md/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/21/build-scan/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">build-scan</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+<div class="duoshuo" id="comments">
+	<div class="ds-thread" data-thread-key="push-md" data-title="工信部对android推送通道规范化的一些思考" data-url="http://www.jackway.cn/2017/06/04/push-md/"></div>
+</div>
+<script src="/js/embed.min.js?v=1.3.2"></script>
+<script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js" async="async"></script>
+<script>
+var duoshuoQuery = {short_name:'longway', theme: 'none'}
+</script>
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+  </main>
+  <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true }</script>
+
+
+
+<div class="global-share" id="globalShare">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/06/04/push-md/&title=《工信部对android推送通道规范化的一些思考》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/06/04/push-md/&title=《工信部对android推送通道规范化的一些思考》 — longway's blog&source=
+最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到and..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/06/04/push-md/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《工信部对android推送通道规范化的一些思考》 — longway's blog&url=http://www.jackway.cn/2017/06/04/push-md/&via=http://www.jackway.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/06/04/push-md/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwUlEQVR42u3aQY7DMAgF0N7/0h1ptjN1P8ahqfSyiqo0fs4CYeDxiK/n7/Xqvv/L4QsXF7fNfS6vv8Q1Yr2l9fvXz+Di4s5zk+CVb2P9Odbbe2PDxcW9GXcddNZvy4MgLi7ud3HPnq5wcXHvz80PJ+vEJQ92l5/VcHFxG9x+wbR/P1rfxcXFbXQl+mEoL7JEq+Pi4o5w86Jn8mRnS4XyCi4u7gi3mkWsCyX9YYvC4QcXF/cC7jpg7YWt/oDFy19wcXFHuHnps1rUyFOffPALFxd3kpssmQe7U6eV8iq4uLiHuHlztJyIxOi85IqLizvPXZcsqyMR6ydb5VFcXNwRbhLO9oojnQPPP6vg4uKOcPMgUqXk4S9vxuDi4s5w91ogewnQ5hgWLi7uOHdvDCsqYcRNlHJDBRcX92JuNQDl6U7+CQopFC4u7iC30MwoLlANZG8+Fi4u7iD3wIGk0aYtz4Pg4uJezK0GlGTwImqHbL0TFxd3kpuXTfemIA4nQ7i4uIPcvXJnNToeSGVwcXFvxq0WOKqDHdEbcHFxb8ztpCn5h8DFxf0stz+e1dlq/i9cXNwZbqdgmhdQ8pYtLi7uR7k/lNPdRI0edhoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+  <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script src="/js/main.min.js?v=1.3.2"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.3.2"></script>
+
+
+
+
+
+<script src="//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982"></script>
+
+
+
+
+
+</body>
+</html>

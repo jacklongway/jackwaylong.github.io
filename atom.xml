@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jackway.cn/"/>
-  <updated>2017-03-12T13:10:23.000Z</updated>
+  <updated>2017-06-04T06:24:41.000Z</updated>
   <id>http://www.jackway.cn/</id>
   
   <author>
@@ -14,6 +14,193 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>工信部对android推送通道规范化的一些思考</title>
+    <link href="http://www.jackway.cn/2017/06/04/push-md/"/>
+    <id>http://www.jackway.cn/2017/06/04/push-md/</id>
+    <published>2017-06-04T04:55:22.000Z</published>
+    <updated>2017-06-04T06:24:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="android系统后台机制"><a href="#android系统后台机制" class="headerlink" title="android系统后台机制"></a>android系统后台机制</h2><p>要想明白android推送机制，首先我们先得了解android系统的后台机制，android后台是开放式的，所谓的开放式就是后台在很多时候系统不会管我们，只有达到一定阈值情况下，系统才会去扫描我们的进程，然后执行一些资源的回收，这个时候才会影响我们的程序执行，但是这也不是一定会影响我们的程序执行，只要我们的程序做好自动恢复机制，也可以还原进程的状态。这就导致了很多开发者利用这一特性，即使用户将app切换到后台，然后也是一种假象，换句话说目前比较流行的口语假后台，如果对程序不是很懂的用户，根本不知道，app在后台做了什么操作。我们想想如果用户的手机里面每个app都是这样的app，这是多么的可怕，这样一来很多用户直接将app卸载了，但是有些app是必须要保留的，为了自己的便利。其实在android系统升级的过程中google也意识到了，android后台机制的设计缺陷，但是一下子想回收这种缺陷是不可能的了，这也是android系统最开始设计导致的，所以说设计很重要。我们从android系统5.0之后就明显的发现，不仅仅从系统层面，还是从sdk层面，google都给我们释放了后台限制的信号，比如增加job调度，增加进程组，jni层fork无效等等措施，但是还是没法完全的阻止那些黑色开发者，只要有一丝希望，他们都会去挖掘，但是这也是对自己技术提高的一种方式，因为在这一过程中，要去阅读大量的系统源码，挖掘系统漏洞，然后在开发层实现我们的需求。技术是一把双刃剑，我们还是尽量把技术用在正常的手段上，杜绝黑色与灰色产业，维护好android生态的良性循环。</p>
+<h2 id="设备干扰"><a href="#设备干扰" class="headerlink" title="设备干扰"></a>设备干扰</h2><p>设备是一个物理设备，而app是一个虚拟服务，一个设备可以有很多服务，如果每个app都是后台服务，那设备的消耗将是非常的大，同时有一些app在后台进行的一些不仅仅是本地服务，还可能是一些远程服务，这样一来将导致用户设备不仅仅电量不够用，而且流量也不够用，还会将用户的隐私信息通过后台push通道发送到云端，这些行为其实都是非常可怕的，这样一来，只要用户有手机，就知道用户的行为，虽然这个跟目前用户画像技术很吻合，但是这种画像不是用户行为，是后台行为，必须要静止这种操作的出现。</p>
+<h2 id="用户情绪干扰"><a href="#用户情绪干扰" class="headerlink" title="用户情绪干扰"></a>用户情绪干扰</h2><p>现在用户的很多日常都离不开手机，不仅仅工作，生活，几乎所有一切都离不开手机，这样一来泛滥的推送手机给用户，会给用户带来很多困扰，况且有的推送过来之后，还有一个小小的声音片段，我们想想如果后台不断的推送广告信息，用户是什么感受，会严重影响用户对app的使用好感。我们应该尽量避免这种影响用户情趣的操作，用户至上，用户最具有价值，只有有了用户，我们所做的一切才能让给我们带来价值。技术仅仅是一个解决问题的工具，我们要做的就是使用这个工具做更多用户认可的事情，而不是影响用户的事情。</p>
+<h2 id="返璞归真"><a href="#返璞归真" class="headerlink" title="返璞归真"></a>返璞归真</h2><p>不管从上面的几点来说，还是从工信部这一举措来说，我们都应该统一push通道，公用系统push通道，由系统统一push出入口，这样我们就可以避免那些非法的后台服务，从而有效的控制后台服务。同时我们还可以对出入口的信息进行检测与过滤等一些列行为的拦截。最后我相信android的推送行为也会像苹果的apns一样，基于硬件机制与系统软件栈机制提供push服务。希望android的未来生态越来越好，寄语今年io大会的一句话，希望mobile first to ai first 成功过渡的过程中，android 生态越来越好。</p>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;最近工信部发文明确对android推送通道实现严格管制，从这一举措我深刻明白到了，android现在生态的多样性以及碎片化的严重性，工信部也意识到android信息危机，如果再不加强管制，可能会导致android生态崩溃，下面我就从技术与非技术角度来分析工信部的这一举措的意义。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="android" scheme="http://www.jackway.cn/categories/android/"/>
+    
+    
+      <category term="push" scheme="http://www.jackway.cn/tags/push/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>build-scan</title>
+    <link href="http://www.jackway.cn/2017/03/21/build-scan/"/>
+    <id>http://www.jackway.cn/2017/03/21/build-scan/</id>
+    <published>2017-03-21T09:57:35.000Z</published>
+    <updated>2017-03-21T10:36:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>build-scan是gradle最近版本提供的一种可以实现团队协助更好协助，更好的分析工程构建的插件，当我们在本使用gradle编译工程的时候，关于工程信息，计算机系统配置等信息通过build-scan就可以很简单的发布出去，让团队成员都了解工程在不同环境构建下的性能，任务执行情况等数据反馈，同时还可以提供tag,link让其它人也可以参与到项目中来。下面详细梳理一下build-scan的使用方法</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="build-scan的支持"><a href="#build-scan的支持" class="headerlink" title="build-scan的支持"></a>build-scan的支持</h2><p>通过修改root project build.gradle脚本，添加build scans插件提供build-scan功能的支持</p>
+<h2 id="基本条件"><a href="#基本条件" class="headerlink" title="基本条件"></a>基本条件</h2><ol>
+<li>因为build-scan发布到了云端，所以需要有网才能访问</li>
+<li>访问生成报告的链接，需要邮箱认证</li>
+</ol>
+<h2 id="简单实例"><a href="#简单实例" class="headerlink" title="简单实例"></a>简单实例</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        classpath <span class="string">'com.android.tools.build:gradle:2.2.2'</span></div><div class="line"></div><div class="line">        <span class="comment">// <span class="doctag">NOTE:</span> Do not place your application dependencies here; they belong</span></div><div class="line">        <span class="comment">// in the individual module build.gradle files</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">plugins &#123;</div><div class="line">    id <span class="string">'com.gradle.build-scan'</span> version <span class="string">'1.6'</span> <span class="comment">// build-scan插件版本</span></div><div class="line">&#125;</div><div class="line">allprojects &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">task clean(<span class="string">type:</span> Delete) &#123;</div><div class="line">    delete rootProject.buildDir</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// build-scan配置</span></div><div class="line">buildScan &#123;</div><div class="line">    licenseAgreementUrl = <span class="string">'https://gradle.com/terms-of-service'</span></div><div class="line">    licenseAgree = <span class="string">'yes'</span></div><div class="line">    tag <span class="string">'SAMPLE'</span></div><div class="line">    link <span class="string">'GitHub'</span>, <span class="string">'https://github.com/gradle/gradle-build-scan-quickstart'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>./gradlew build -Dscan</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">:app:preReleaseUnitTestBuild UP-TO-DATE</div><div class="line">:app:prepareReleaseUnitTestDependencies</div><div class="line">:app:compileReleaseUnitTestJavaWithJavac</div><div class="line">:app:processReleaseUnitTestJavaRes UP-TO-DATE</div><div class="line">:app:compileReleaseUnitTestSources</div><div class="line">:app:assembleReleaseUnitTest</div><div class="line">:app:testReleaseUnitTest</div><div class="line">:app:test</div><div class="line">:app:check</div><div class="line">:app:build</div><div class="line"></div><div class="line">BUILD SUCCESSFUL</div><div class="line"></div><div class="line">Total time: 16.357 secs</div><div class="line"></div><div class="line">Publishing build information...</div><div class="line">https://gradle.com/s/dx2zfwsoxhs2g</div></pre></td></tr></table></figure>
+<ol>
+<li><p>success</p>
+ <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/android/build-scan-success.png" alt="build-scan-success" title="">
+                </div>
+                <div class="image-caption">build-scan-success</div>
+            </figure>
+</li>
+<li><p>error</p>
+ <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/android/build-scan-error.png" alt="build-scan-success" title="">
+                </div>
+                <div class="image-caption">build-scan-success</div>
+            </figure>
+</li>
+</ol>
+<h2 id="支持所有工程"><a href="#支持所有工程" class="headerlink" title="支持所有工程"></a>支持所有工程</h2><p>You can avoid having to add the plugin and license agreement to every build by using a Gradle init script. Create a file called <code>buildScan.gradle</code> in the directory <code>~/.gradle/init.d</code>(where the tilde represents your home directory) with the following contents:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">initscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        maven &#123; url <span class="string">'https://plugins.gradle.org/m2'</span> &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    dependencies &#123;</div><div class="line">        classpath <span class="string">'com.gradle:build-scan-plugin:1.6'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">rootProject &#123;</div><div class="line">    apply <span class="string">plugin:</span> com.gradle.scan.plugin.BuildScanPlugin</div><div class="line"></div><div class="line">    buildScan &#123;</div><div class="line">        licenseAgreementUrl = <span class="string">'https://gradle.com/terms-of-service'</span></div><div class="line">        licenseAgree = <span class="string">'yes'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>添加build-scan插件</li>
+<li>add buildScan block to configurate attributes</li>
+<li>open build scan by parmas -Dscan or new latest –scan</li>
+<li>generate build scan link</li>
+<li>create init script enable scan for all builds</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://guides.gradle.org/basic-build-scans/" target="_blank" rel="external">build-scan</a></li>
+<li><a href="https://docs.gradle.com/scans/" target="_blank" rel="external">build-scan-manual</a></li>
+<li><a href="https://plugins.gradle.org/plugin/com.gradle.build-scan" target="_blank" rel="external">build-scan-portal</a></li>
+</ol>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>
+
+
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;build-scan是gradle最近版本提供的一种可以实现团队协助更好协助，更好的分析工程构建的插件，当我们在本使用gradle编译工程的时候，关于工程信息，计算机系统配置等信息通过build-scan就可以很简单的发布出去，让团队成员都了解工程在不同环境构建下的性能，任务执行情况等数据反馈，同时还可以提供tag,link让其它人也可以参与到项目中来。下面详细梳理一下build-scan的使用方法&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="gradle" scheme="http://www.jackway.cn/categories/gradle/"/>
+    
+    
+      <category term="build-scan" scheme="http://www.jackway.cn/tags/build-scan/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>aspect初探与应用</title>
+    <link href="http://www.jackway.cn/2017/03/18/aspect%E5%88%9D%E6%8E%A2%E4%B8%8E%E5%BA%94%E7%94%A8/"/>
+    <id>http://www.jackway.cn/2017/03/18/aspect初探与应用/</id>
+    <published>2017-03-18T10:01:03.000Z</published>
+    <updated>2017-03-19T08:56:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一起从认识it，然后使用it，然后初探it的场景，然后深入理解it的背后思想等不同角度和大家一起分享aspect, 在讲解aspect相关知识前，我们都知道在android领域应用层开发影响最大的就是jakewharton大神了，之所以有今天这篇文章，我也是看他写了一个hugo基础库，这个库虽然很简单，但是我们更重要学习的不是代码本身，而是他的那种思想，由此基于<a href="https://github.com/JakeWharton/hugo" target="_blank" rel="external">hugo</a>我进行了一番比较深入的学习与研究，也写了一些常用场景的事例分享给大家。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h2><blockquote>
+<p>我们都知道java的世界的是oop的世界，c的世界是过程化的世界，当然这里只是相对的来说，其实c也有对象的思想，在这里就不展开讲解，想了解的在文章末尾可以向我提问，我们还是回到java的世界，java我们太熟悉了，我们也太陌生了，为什么这么说了，熟悉是我们写程序离不开java，陌生是因为大多数人只是会使用。不管哪种，都是java的背后oop能力在支撑，oop是什么了，字面上解释就是面向对象编程，技术层面解释就具备封装，继承，多态的能力。大多数程序是oop的集合，可能在接触oop的时候，还有关注过ooa，ood，aop，ioc等程序方法论，但是这些都只是一些概念层面的，很多时候我们并没有真正使用过，比如ooa，这个我相信大家都知道是一种面向对象分析的方法论，在分析一对对象系统的时候我们要用ooa的思想去进行分析，然后用ood的方式可视化的表现出来，最后用oop的思想用对象语言实现。其实他们之间是有一定依赖关系的，ooa－&gt;ood-&gt;oop 从想法到落地的过程。那么aop在这个过程能做什么了，是什么角色了，aop主要在oop实施完阶段之后收集各个面的信息，然后集中处理，这样说起来可能很抽象，其实简单来说就是一个scanner，发现满足规则的切入点然后汇集到weave。ioc也是aop的实施阶段，但是会参与这个过程不是实施之后，ioc能够将一些有依赖关系的对象进行一定的规则生成对应的代码，然后汇集到javac参与编译的过程。不管是aop，还是ioc，目前市面上都有很多关于这两者应用的开源库，比如aop的有aspect，asm，cglib，dexmarker，asmdex等等，ioc我们常用的有butterknife，dagger2等等。这篇主要分析aspect，从各个层面分析以及与其它实现方式的比较。</p>
+</blockquote>
+<h2 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h2><ol>
+<li>Cross-cutting concerns</li>
+<li>Advice</li>
+<li>Joint point</li>
+<li>Pointcut</li>
+<li>Aspect</li>
+<li>Weaving</li>
+</ol>
+<p>aspect picture：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/android/AspectOrientedProgramming.png" alt="aspect" title="">
+                </div>
+                <div class="image-caption">aspect</div>
+            </figure></p>
+<h2 id="aspect使用场景"><a href="#aspect使用场景" class="headerlink" title="aspect使用场景"></a>aspect使用场景</h2><ol>
+<li>logging</li>
+<li>persistance</li>
+<li>performance monitoring</li>
+<li>data validation</li>
+<li>caching</li>
+<li>transcation</li>
+<li>permission</li>
+<li>……</li>
+</ol>
+<h2 id="android-aspect-picture"><a href="#android-aspect-picture" class="headerlink" title="android aspect picture"></a>android aspect picture</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/android/AspectWeaving.png" alt="aspect" title="">
+                </div>
+                <div class="image-caption">aspect</div>
+            </figure>
+<h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><p>Creating our annotation<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</div><div class="line"><span class="meta">@Target</span>(&#123; ElementType.CONSTRUCTOR, ElementType.METHOD &#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> DebugTrace &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>Our StopWatch for performance monitoring<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StopWatch</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> startTime;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> endTime;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> elapsedTime;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">StopWatch</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//empty</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">reset</span><span class="params">()</span> </span>&#123;</div><div class="line">    startTime = <span class="number">0</span>;</div><div class="line">    endTime = <span class="number">0</span>;</div><div class="line">    elapsedTime = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">    reset();</div><div class="line">    startTime = System.nanoTime();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (startTime != <span class="number">0</span>) &#123;</div><div class="line">      endTime = System.nanoTime();</div><div class="line">      elapsedTime = endTime - startTime;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      reset();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTotalTimeMillis</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> (elapsedTime != <span class="number">0</span>) ? TimeUnit.NANOSECONDS.toMillis(endTime - startTime) : <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Our Aspect<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Aspect representing the cross cutting-concern: Method and Constructor Tracing.</div><div class="line"> */</div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TraceAspect</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String POINTCUT_METHOD =</div><div class="line">      <span class="string">"execution(@org.android10.gintonic.annotation.DebugTrace * *(..))"</span>;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String POINTCUT_CONSTRUCTOR =</div><div class="line">      <span class="string">"execution(@org.android10.gintonic.annotation.DebugTrace *.new(..))"</span>;</div><div class="line"></div><div class="line">  <span class="meta">@Pointcut</span>(POINTCUT_METHOD)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodAnnotatedWithDebugTrace</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">  <span class="meta">@Pointcut</span>(POINTCUT_CONSTRUCTOR)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">constructorAnnotatedDebugTrace</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">  <span class="meta">@Around</span>(<span class="string">"methodAnnotatedWithDebugTrace() || constructorAnnotatedDebugTrace()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">weaveJoinPoint</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">    MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();</div><div class="line">    String className = methodSignature.getDeclaringType().getSimpleName();</div><div class="line">    String methodName = methodSignature.getName();</div><div class="line"></div><div class="line">    <span class="keyword">final</span> StopWatch stopWatch = <span class="keyword">new</span> StopWatch();</div><div class="line">    stopWatch.start();</div><div class="line">    Object result = joinPoint.proceed();</div><div class="line">    stopWatch.stop();</div><div class="line"></div><div class="line">    DebugLog.log(className, buildLogMessage(methodName, stopWatch.getTotalTimeMillis()));</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * Create a log message.</div><div class="line">   *</div><div class="line">   * <span class="doctag">@param</span> methodName A string with the method name.</div><div class="line">   * <span class="doctag">@param</span> methodDuration Duration of the method in milliseconds.</div><div class="line">   * <span class="doctag">@return</span> A string representing message.</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">buildLogMessage</span><span class="params">(String methodName, <span class="keyword">long</span> methodDuration)</span> </span>&#123;</div><div class="line">    StringBuilder message = <span class="keyword">new</span> StringBuilder();</div><div class="line">    message.append(<span class="string">"Gintonic --&gt; "</span>);</div><div class="line">    message.append(methodName);</div><div class="line">    message.append(<span class="string">" --&gt; "</span>);</div><div class="line">    message.append(<span class="string">"["</span>);</div><div class="line">    message.append(methodDuration);</div><div class="line">    message.append(<span class="string">"ms"</span>);</div><div class="line">    message.append(<span class="string">"]"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> message.toString();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>build.gradle<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.android.build.gradle.LibraryPlugin</div><div class="line"><span class="keyword">import</span> org.aspectj.bridge.IMessage</div><div class="line"><span class="keyword">import</span> org.aspectj.bridge.MessageHandler</div><div class="line"><span class="keyword">import</span> org.aspectj.tools.ajc.Main</div><div class="line"></div><div class="line">buildscript &#123;</div><div class="line">  repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">  &#125;</div><div class="line">  dependencies &#123;</div><div class="line">    classpath <span class="string">'com.android.tools.build:gradle:2.2.2'</span></div><div class="line">    classpath <span class="string">'org.aspectj:aspectjtools:1.8.6'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">apply <span class="string">plugin:</span> <span class="string">'android-library'</span></div><div class="line"></div><div class="line">repositories &#123;</div><div class="line">  mavenCentral()</div><div class="line">&#125;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">  compile <span class="string">'org.aspectj:aspectjrt:1.8.6'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">android &#123;</div><div class="line">  compileSdkVersion <span class="number">19</span></div><div class="line">  buildToolsVersion <span class="string">'19.1.0'</span></div><div class="line"></div><div class="line">  lintOptions &#123;</div><div class="line">    abortOnError <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">android.libraryVariants.all &#123; variant -&gt;</div><div class="line">  LibraryPlugin plugin = project.plugins.getPlugin(LibraryPlugin)</div><div class="line">  JavaCompile javaCompile = variant.javaCompile</div><div class="line">  javaCompile.doLast &#123;</div><div class="line">    String[] args = [<span class="string">"-showWeaveInfo"</span>,</div><div class="line">                     <span class="string">"-1.8"</span>,</div><div class="line">                     <span class="string">"-inpath"</span>, javaCompile.destinationDir.toString(),</div><div class="line">                     <span class="string">"-aspectpath"</span>, javaCompile.classpath.asPath,</div><div class="line">                     <span class="string">"-d"</span>, javaCompile.destinationDir.toString(),</div><div class="line">                     <span class="string">"-classpath"</span>, javaCompile.classpath.asPath,</div><div class="line">                     <span class="string">"-bootclasspath"</span>, plugin.project.android.bootClasspath.join(</div><div class="line">        File.pathSeparator)]</div><div class="line"></div><div class="line">    MessageHandler handler = <span class="keyword">new</span> MessageHandler(<span class="literal">true</span>);</div><div class="line">    <span class="keyword">new</span> Main().run(args, handler)</div><div class="line"></div><div class="line">    <span class="keyword">def</span> log = project.logger</div><div class="line">    <span class="keyword">for</span> (IMessage <span class="string">message :</span> handler.getMessages(<span class="literal">null</span>, <span class="literal">true</span>)) &#123;</div><div class="line">      <span class="keyword">switch</span> (message.getKind()) &#123;</div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">ABORT:</span></div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">ERROR:</span></div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">FAIL:</span></div><div class="line">          log.error message.message, message.thrown</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">WARNING:</span></div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">INFO:</span></div><div class="line">          log.info message.message, message.thrown</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> IMessage.<span class="string">DEBUG:</span></div><div class="line">          log.debug message.message, message.thrown</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Our test method<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@DebugTrace</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">testAnnotatedMethod</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      Thread.sleep(<span class="number">10</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>Executing our application<br><code>gradlew clean build installDebug</code></p>
+<p>If we open the logcat and execute our sample, we will see a debug log with:<br><code>Gintonic --&gt; testAnnotatedMethod --&gt; [10ms]</code></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>我们已经基本知道了aop编程的方式</li>
+<li>在编译时注入代码到工程</li>
+<li>在运行时weave code</li>
+<li>aop的能力不仅仅如此，是一种如此强大的方法论</li>
+<li>理解aop规则与原理，就可用aop去解决比较复杂的场景</li>
+</ol>
+<h2 id="aop-应用repo"><a href="#aop-应用repo" class="headerlink" title="aop 应用repo"></a>aop 应用repo</h2><blockquote>
+<p>repo里面基本实现了一些基本需求，比如activity，fragment，view的埋点设置，权限的检测，方法调用参数输入，结果输出，耗时追踪，view点击抖动处理，通过这些事例只是简单说明aop的应用场景，其实还有很多可以做，比如6.0动态权限也可以用aop的方式统一处理。最后要明白aop只是一个切点的收集器，至于收集完之后的处理，还是需要我们自己处理的。下篇继续分析aspect与asm的结合，aspect是如何在编译时注入代码的，以及注入原理是什么。</p>
+</blockquote>
+<h2 id="最近访客"><a href="#最近访客" class="headerlink" title="最近访客"></a>最近访客</h2><ul class="ds-recent-visitors" data-num-items="46" data-avatar-size="40"></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;aspect我相信大家对这个名词并不陌生，不熟悉的可以百度或者google一下，先对这个名词有个基本的了解，以前没了解过的同学也没关系，这篇文章和大家一起从认识it，然后使用it，然后初探it的场景，然后深入理解it的背后思想等不同角度和大家一起分享aspect, 在讲解aspect相关知识前，我们都知道在android领域应用层开发影响最大的就是jakewharton大神了，之所以有今天这篇文章，我也是看他写了一个hugo基础库，这个库虽然很简单，但是我们更重要学习的不是代码本身，而是他的那种思想，由此基于&lt;a href=&quot;https://github.com/JakeWharton/hugo&quot;&gt;hugo&lt;/a&gt;我进行了一番比较深入的学习与研究，也写了一些常用场景的事例分享给大家。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="android" scheme="http://www.jackway.cn/categories/android/"/>
+    
+    
+      <category term="aspect" scheme="http://www.jackway.cn/tags/aspect/"/>
+    
+      <category term="asm" scheme="http://www.jackway.cn/tags/asm/"/>
+    
+  </entry>
   
   <entry>
     <title>Android中的Loader异步加载架构分析</title>
