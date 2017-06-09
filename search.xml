@@ -33,23 +33,9 @@
 <p><code>./gradlew build -Dscan</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">:app:preReleaseUnitTestBuild UP-TO-DATE</div><div class="line">:app:prepareReleaseUnitTestDependencies</div><div class="line">:app:compileReleaseUnitTestJavaWithJavac</div><div class="line">:app:processReleaseUnitTestJavaRes UP-TO-DATE</div><div class="line">:app:compileReleaseUnitTestSources</div><div class="line">:app:assembleReleaseUnitTest</div><div class="line">:app:testReleaseUnitTest</div><div class="line">:app:test</div><div class="line">:app:check</div><div class="line">:app:build</div><div class="line"></div><div class="line">BUILD SUCCESSFUL</div><div class="line"></div><div class="line">Total time: 16.357 secs</div><div class="line"></div><div class="line">Publishing build information...</div><div class="line">https://gradle.com/s/dx2zfwsoxhs2g</div></pre></td></tr></table></figure>
 <ol>
-<li><p>success</p>
- <figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/android/build-scan-success.png" alt="build-scan-success" title="">
-                </div>
-                <div class="image-caption">build-scan-success</div>
-            </figure>
+<li><p>success<br> <img src="/img/android/build-scan-success.png" alt="build-scan-success"></p>
 </li>
-<li><p>error</p>
- <figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/android/build-scan-error.png" alt="build-scan-success" title="">
-                </div>
-                <div class="image-caption">build-scan-success</div>
-            </figure>
+<li><p>error<br> <img src="/img/android/build-scan-error.png" alt="build-scan-success"></p>
 </li>
 </ol>
 <h2 id="支持所有工程"><a href="#支持所有工程" class="headerlink" title="支持所有工程"></a>支持所有工程</h2><p>You can avoid having to add the plugin and license agreement to every build by using a Gradle init script. Create a file called <code>buildScan.gradle</code> in the directory <code>~/.gradle/init.d</code>(where the tilde represents your home directory) with the following contents:</p>
@@ -87,13 +73,7 @@
 <li>Aspect</li>
 <li>Weaving</li>
 </ol>
-<p>aspect picture：<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/android/AspectOrientedProgramming.png" alt="aspect" title="">
-                </div>
-                <div class="image-caption">aspect</div>
-            </figure></p>
+<p>aspect picture：<br><img src="/img/android/AspectOrientedProgramming.png" alt="aspect"></p>
 <h2 id="aspect使用场景"><a href="#aspect使用场景" class="headerlink" title="aspect使用场景"></a>aspect使用场景</h2><ol>
 <li>logging</li>
 <li>persistance</li>
@@ -104,13 +84,7 @@
 <li>permission</li>
 <li>……</li>
 </ol>
-<h2 id="android-aspect-picture"><a href="#android-aspect-picture" class="headerlink" title="android aspect picture"></a>android aspect picture</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/android/AspectWeaving.png" alt="aspect" title="">
-                </div>
-                <div class="image-caption">aspect</div>
-            </figure>
+<h2 id="android-aspect-picture"><a href="#android-aspect-picture" class="headerlink" title="android aspect picture"></a>android aspect picture</h2><p><img src="/img/android/AspectWeaving.png" alt="aspect"></p>
 <h2 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h2><p>Creating our annotation<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</div><div class="line"><span class="meta">@Target</span>(&#123; ElementType.CONSTRUCTOR, ElementType.METHOD &#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> DebugTrace &#123;&#125;</div></pre></td></tr></table></figure></p>
 <p>Our StopWatch for performance monitoring<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StopWatch</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> startTime;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> endTime;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">long</span> elapsedTime;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">StopWatch</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//empty</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">reset</span><span class="params">()</span> </span>&#123;</div><div class="line">    startTime = <span class="number">0</span>;</div><div class="line">    endTime = <span class="number">0</span>;</div><div class="line">    elapsedTime = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">    reset();</div><div class="line">    startTime = System.nanoTime();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (startTime != <span class="number">0</span>) &#123;</div><div class="line">      endTime = System.nanoTime();</div><div class="line">      elapsedTime = endTime - startTime;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      reset();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTotalTimeMillis</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> (elapsedTime != <span class="number">0</span>) ? TimeUnit.NANOSECONDS.toMillis(endTime - startTime) : <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Our Aspect<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Aspect representing the cross cutting-concern: Method and Constructor Tracing.</div><div class="line"> */</div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TraceAspect</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String POINTCUT_METHOD =</div><div class="line">      <span class="string">"execution(@org.android10.gintonic.annotation.DebugTrace * *(..))"</span>;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String POINTCUT_CONSTRUCTOR =</div><div class="line">      <span class="string">"execution(@org.android10.gintonic.annotation.DebugTrace *.new(..))"</span>;</div><div class="line"></div><div class="line">  <span class="meta">@Pointcut</span>(POINTCUT_METHOD)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodAnnotatedWithDebugTrace</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">  <span class="meta">@Pointcut</span>(POINTCUT_CONSTRUCTOR)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">constructorAnnotatedDebugTrace</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">  <span class="meta">@Around</span>(<span class="string">"methodAnnotatedWithDebugTrace() || constructorAnnotatedDebugTrace()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">weaveJoinPoint</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">    MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();</div><div class="line">    String className = methodSignature.getDeclaringType().getSimpleName();</div><div class="line">    String methodName = methodSignature.getName();</div><div class="line"></div><div class="line">    <span class="keyword">final</span> StopWatch stopWatch = <span class="keyword">new</span> StopWatch();</div><div class="line">    stopWatch.start();</div><div class="line">    Object result = joinPoint.proceed();</div><div class="line">    stopWatch.stop();</div><div class="line"></div><div class="line">    DebugLog.log(className, buildLogMessage(methodName, stopWatch.getTotalTimeMillis()));</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * Create a log message.</div><div class="line">   *</div><div class="line">   * <span class="doctag">@param</span> methodName A string with the method name.</div><div class="line">   * <span class="doctag">@param</span> methodDuration Duration of the method in milliseconds.</div><div class="line">   * <span class="doctag">@return</span> A string representing message.</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">buildLogMessage</span><span class="params">(String methodName, <span class="keyword">long</span> methodDuration)</span> </span>&#123;</div><div class="line">    StringBuilder message = <span class="keyword">new</span> StringBuilder();</div><div class="line">    message.append(<span class="string">"Gintonic --&gt; "</span>);</div><div class="line">    message.append(methodName);</div><div class="line">    message.append(<span class="string">" --&gt; "</span>);</div><div class="line">    message.append(<span class="string">"["</span>);</div><div class="line">    message.append(methodDuration);</div><div class="line">    message.append(<span class="string">"ms"</span>);</div><div class="line">    message.append(<span class="string">"]"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> message.toString();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -146,21 +120,9 @@
 <li>LoadTask(实际上是一个AsyncTask)</li>
 <li>CursorLoader(实现数据库访问的loader,异步loader实现者)</li>
 </ol>
-<h2 id="loader臆想图"><a href="#loader臆想图" class="headerlink" title="loader臆想图"></a>loader臆想图</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://www.processon.com/chart_image/58c50724e4b070abda1d8619.png" alt="loader-xmind" title="">
-                </div>
-                <div class="image-caption">loader-xmind</div>
-            </figure>
+<h2 id="loader臆想图"><a href="#loader臆想图" class="headerlink" title="loader臆想图"></a>loader臆想图</h2><p><img src="https://www.processon.com/chart_image/58c50724e4b070abda1d8619.png" alt="loader-xmind"></p>
 <p>这个图表达就是从使用者，到管理者，到使用者之间的转换需要的对象。</p>
-<h2 id="loader类图"><a href="#loader类图" class="headerlink" title="loader类图"></a>loader类图</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/android/loader.png" alt="loader-class" title="">
-                </div>
-                <div class="image-caption">loader-class</div>
-            </figure>
+<h2 id="loader类图"><a href="#loader类图" class="headerlink" title="loader类图"></a>loader类图</h2><p><img src="/img/android/loader.png" alt="loader-class"></p>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>由于类图里面的属性与方法比较多，这里省略了字段的类型，方法参数，返回值等元素，绘制类图主要目的是理解loader架构里面的类的关系，知道关系了，通过查阅代码就知道类的细节了，但是我这里是偷懒的做法了，在公开场合分享的时候，最好还是把类里面的信息尽量的描述清楚，这样不用看代码，直接看图就可以知道整个系统在做些什么事情，这里还需要说明一下，类的关系大概有：</p>
 <ol>
 <li>继承</li>
@@ -170,13 +132,7 @@
 <li>组合</li>
 <li>聚合<br>这六种关系，其中前面三种我们很好区分，因为是语法层面的约束，但是后面三种可能不是很好区分，其实这几种并没有严格的区分定义，我们尽量体会语义上的区别，我们可以根据语义的强烈进行区分，组合&gt;聚合&gt;关联。</li>
 </ol>
-<h2 id="loader时序图"><a href="#loader时序图" class="headerlink" title="loader时序图"></a>loader时序图</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/android/LoaderSequenceDiagram.png" alt="loader-sequence" title="">
-                </div>
-                <div class="image-caption">loader-sequence</div>
-            </figure>
+<h2 id="loader时序图"><a href="#loader时序图" class="headerlink" title="loader时序图"></a>loader时序图</h2><p><img src="/img/android/LoaderSequenceDiagram.png" alt="loader-sequence"></p>
 <p>时序图简单的分析了loader整个架构的调用链，注意这里只是描述的核心调用，其实里面还有很多细节处理，但是时序图没法完全体现，需要通过阅读代码了解细节。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面对loader的介绍，同学们应该对loader有了基本的认识，最好自己对着上面的讲解自己跟一下代码的调用，了解一下里面的处理细节，学习google设计架构的严谨思想与技巧。文章开始我说过，类似loader的实现方式很多，但是loader是最好的实现，因为具有先天的生命周期绑定。但是loader也有不足之处，比如loader生命周期方法并发调用是不支持的，注意这里不是并发执行任务。所以我们在自己实现的时候注意一下就好。最后还是希望大家自己看一下代码，这样在使用过程中才能更自信。</p>
 ]]></content>
@@ -189,13 +145,7 @@
 <p>由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交流了一下，如何才能保证工作高质量完成的同时，自己的技术同时得到了提高。我就说了star模型，今天借此这个机会，和大家一起聊聊这个经典模型，其实我们所有的事情，如果按照这个模型套路靠拢，最终的结果肯定不会太差，但是也未必一定成功。不成功不代表失败，失败有很多因素。下面用拆分模型的方式分析这个模型我们所要知道哪些因素。</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="star模型图"><a href="#star模型图" class="headerlink" title="star模型图"></a>star模型图</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://www.processon.com/chart_image/58bad08be4b0015fb3bac26b.png" alt="star" title="">
-                </div>
-                <div class="image-caption">star</div>
-            </figure>
+<h2 id="star模型图"><a href="#star模型图" class="headerlink" title="star模型图"></a>star模型图</h2><p><img src="https://www.processon.com/chart_image/58bad08be4b0015fb3bac26b.png" alt="star"></p>
 <p>这个模型很简单，只要我们真正理解了这个状态图，其实我们在做很多事情都有了方向，都知道自己要做什么了，就不会盲目，不会迷茫的做一些事情。下面详细分析这四种状态，然后结合实际的问题用这种模型进行验证。</p>
 <ol>
 <li>场景<br>所谓场景就是我们经常所有的背景，一切事情的产生都有它的背景，不会凭空产生，跟我们以前书本学到的唯物主义类似，明白了背景之后，我们需要进一步分析，在当前背景下，我们已经有什么，没有什么。</li>
@@ -261,32 +211,14 @@
 <h2 id="classloader命名空间"><a href="#classloader命名空间" class="headerlink" title="classloader命名空间"></a>classloader命名空间</h2><p>这个命名空间就好比给每个加载进来的class打上了一个前缀，注意这个跟pre verify class flag是不一样的，不要混淆了，这个就是xml术语里面的namespace，为了区分不同类加载加载的类，那么是什么意思了，有什么用途了，为什么要这么做了，我们带着这些疑问，来一步步分析，首先namespace的意思在不同语境下含义是不一样的，但是大多数场景下都是解决冲突，c++,android xml,等都可以看到它的身影，确实很用用，只是我们平时很少去关注它，那么在classloader的语境下就是为了区分不同的class来自不同的classloader，用途就是避免来自不同的classloader的class进行互操作，这样做的目的还是保证class的唯一性。明白了这个特性我们就在写插件的时候要特别注意，我们知道java是不支持多继承的，但是我们可以用多接口来实现多继承，那么问题来了，有时接口的很多端要使用的，我们会讲接口单独成jar包，我们在打包的时候，就一定要小心，不要将这个jar包一起包含进去，android里面最为常见就是直接provider就好。</p>
 <h2 id="classloader隔离机制"><a href="#classloader隔离机制" class="headerlink" title="classloader隔离机制"></a>classloader隔离机制</h2><p>说到隔离，我相信同学们都明白，不管是java的运行，还是android的apk运行，都是运行在沙箱里面的，也就是进程之间是隔离的。默认情况下进程之间是不同进行数据交互的，也不能尽兴行为通信的，那么classloader在不同进程之间也是隔离的，不同进程之间的classloader对象不一样，类的命名空间必然就不一样了，这里在开发插件的时候可能会用到这个技术，让一些类在其他进程的classloader里面去加载，这样做的好处有，比如安全隔离，内存分担等。</p>
 <h2 id="classloader下的class缓存"><a href="#classloader下的class缓存" class="headerlink" title="classloader下的class缓存"></a>classloader下的class缓存</h2><p>假如同学们看过classloader的源码，不管是java，还是android的，只要基于jvm的classloader，大家应该都看到过代码，loadclass这个方法并不是直接委派给parent去加载，而是首先从缓存取，如果取到了，直接return了，如果取不到再交给parent，这样做的好处是加快响应速度，坏处就是一但这个类被加载了，我们是没办法卸载的，这个就是很多基于class热修复的框架必须重启app生效的根本原因。我们只有知道了这些原因，我们遇到问题才能很好的去解决，才能预知有哪些问题。</p>
-<h2 id="打破classloader正常委派机制"><a href="#打破classloader正常委派机制" class="headerlink" title="打破classloader正常委派机制"></a>打破classloader正常委派机制</h2><p>我们在开始说了，正常classloader的加载模式的双亲委派，那么这个我们能不能打破了，打破之后，我们能够做些什么事情了，这里同学们就会明白，打破肯定是可以的，打破也很简单，我们理解了正常的加载模型，那么我们只要改变parent的指向就好了，类似改变parent指针，instant run的快速加载就是这么实现的，只是instant run里面还多了一个代理，其实也就是wrapper一个classloader去加载自己的dex。记住，什么时候我们会用到打破双亲模式的加载方式了，比如我们想加载一个热修复类，可以用这种方式替换数组插入的方式。instant run classloader图例:<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/classloader.png" alt="parent-classloader" title="">
-                </div>
-                <div class="image-caption">parent-classloader</div>
-            </figure></p>
+<h2 id="打破classloader正常委派机制"><a href="#打破classloader正常委派机制" class="headerlink" title="打破classloader正常委派机制"></a>打破classloader正常委派机制</h2><p>我们在开始说了，正常classloader的加载模式的双亲委派，那么这个我们能不能打破了，打破之后，我们能够做些什么事情了，这里同学们就会明白，打破肯定是可以的，打破也很简单，我们理解了正常的加载模型，那么我们只要改变parent的指向就好了，类似改变parent指针，instant run的快速加载就是这么实现的，只是instant run里面还多了一个代理，其实也就是wrapper一个classloader去加载自己的dex。记住，什么时候我们会用到打破双亲模式的加载方式了，比如我们想加载一个热修复类，可以用这种方式替换数组插入的方式。instant run classloader图例:<br><img src="/img/jvm/classloader.png" alt="parent-classloader"></p>
 <h2 id="java-classloader与android-classloader的异同"><a href="#java-classloader与android-classloader的异同" class="headerlink" title="java classloader与android classloader的异同"></a>java classloader与android classloader的异同</h2><p>java classloader与android classloader 我相信很多同学都不怎么明白，我这里主要讲解两个最根本的区别</p>
 <ol>
 <li>java的加载源是classpath，android的加载源是dex或者自定义path，java加载的class，android加载的是dex，但是最后也是加载的class，dex会经过解压。总体来说加载的数据根本没变。</li>
 <li>java默认可以加载网络的class，defineclass可以定义class，android下面默认是不允许的，不支持url的方式去加载，如果你非要加载也是可以的，这个是android系统为了安全把这个方法从java层移除掉了，jni层还是保留的，底层的class生成还是defineclass，我们可以jni层调用这个方法实现class的生成。</li>
 </ol>
-<p>android 类加载核心代码:<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/android-classloader.png" alt="android-classloader" title="">
-                </div>
-                <div class="image-caption">android-classloader</div>
-            </figure></p>
-<p>java define 生成Class代码<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/java-define.png" alt="define-classloader" title="">
-                </div>
-                <div class="image-caption">define-classloader</div>
-            </figure></p>
+<p>android 类加载核心代码:<br><img src="/img/jvm/android-classloader.png" alt="android-classloader"></p>
+<p>java define 生成Class代码<br><img src="/img/jvm/java-define.png" alt="define-classloader"></p>
 <h2 id="classloader的运用场景"><a href="#classloader的运用场景" class="headerlink" title="classloader的运用场景"></a>classloader的运用场景</h2><p>classloader场景就太多了，比如插件开发，热修复，so修复等等都可以用这个实现，只有深入理解了classloader，我们很多高难度的场景才能对付。其实静下心来也不难理解。</p>
 <h2 id="classloader常见问题以及解决方法"><a href="#classloader常见问题以及解决方法" class="headerlink" title="classloader常见问题以及解决方法"></a>classloader常见问题以及解决方法</h2><p>classloader我们在真正项目运用过程中肯定会遇到一些坑，比如不同的os的classloader被定制的面目全非，最坑的是阿里云的类加载器，这里就不过多吐槽，在插件化的时候，一定要单独处理对待，它的待遇就是不一样，还有360自家系统的classloader也要单独处理，其实这些都不难，就是坑，发现一个埋一个就好，理解原理了之后，后续问题基本都可以解决，只是可能有时麻烦点。这里的问题大多数是classloader内部的数据结构被改了。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来看classloader涉及到的东西还是很多的，我们平时开发可能很少注意，希望通过本篇文章，希望大家对classloader的应用层面有个好的理解，能够在以后的项目中遇到问题之后，用已有积累的知识点，快速解决问题。前面的文章分析了class的加载，也就是classloader真正加载class的生命周期，这篇是进一步的外部层面的补充。本来打算这篇是继续分析class的字节循环指令的，由于有同学对classloader不是很理解，就有了这篇文章的分析，下篇还是会按照正常套路分析字节码指令，敬请期待……</p>
@@ -300,13 +232,7 @@
 <p>2017我你前行，祝愿所有的小伙伴新的一年有新的收获, 鸡年好运~</p>
 </blockquote>
 <a id="more"></a>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/other/chicken.jpeg" alt="chicken" title="">
-                </div>
-                <div class="image-caption">chicken</div>
-            </figure>
+<p><img src="/img/other/chicken.jpeg" alt="chicken"></p>
 <p>[福]新年快乐![福]</p>
 <p>[福]身体健康![福]</p>
 <p>[福]步步高升![福]</p>
@@ -369,13 +295,7 @@
 </ol>
 <p>首先我们知道，从class结构分析中我们了解变量的存储是基于<code>slot</code>的，不超过<strong>32</strong>位的数据，占用<strong>一个</strong>slot，<strong>64</strong>的占用<strong>2个</strong>slot,<strong>引用类型</strong>也是占用一个<code>slot</code><br>比如我们定义一个基础变量:<br><code>int x = 10</code>;<br>对应的字节码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">0: bipush 10</div><div class="line">1: istore_0</div></pre></td></tr></table></figure></p>
 <p><code>bipush</code> 这个指令就是将10入操作栈,<code>istore_0</code>然后pop出并且存储到局部变量表中,对应的操作图示如下:</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://www.processon.com/chart_image/587f7d26e4b087b1161396d5.png" alt="variable" title="">
-                </div>
-                <div class="image-caption">variable</div>
-            </figure>
+<p><img src="https://www.processon.com/chart_image/587f7d26e4b087b1161396d5.png" alt="variable"></p>
 <p>后面任何指令都是入栈，出栈的流程，只是有些指令操作起来比较复杂而已，我相信只要理解了基本的指令，其他指令也就是一些组合，并不会有很大的难度。我们再来看一个实例变量的字节码操作指令:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">public class com.example.MyClass</div><div class="line">  minor version: 0</div><div class="line">  major version: 51</div><div class="line">  flags: ACC_PUBLIC, ACC_SUPER</div><div class="line">Constant pool:</div><div class="line">   #1 = Methodref          #4.#20         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #2 = Fieldref           #3.#21         // com/example/MyClass.a:I</div><div class="line">   #3 = Class              #22            // com/example/MyClass</div><div class="line">   #4 = Class              #23            // java/lang/Object</div><div class="line">   #5 = Utf8               a</div><div class="line">   #6 = Utf8               I</div><div class="line">   #7 = Utf8               &lt;init&gt;</div><div class="line">   #8 = Utf8               ()V</div><div class="line">   #9 = Utf8               Code</div><div class="line">  #10 = Utf8               LineNumberTable</div><div class="line">  #11 = Utf8               LocalVariableTable</div><div class="line">  #12 = Utf8               this</div><div class="line">  #13 = Utf8               Lcom/example/MyClass;</div><div class="line">  #14 = Utf8               main</div><div class="line">  #15 = Utf8               ([Ljava/lang/String;)V</div><div class="line">  #16 = Utf8               args</div><div class="line">  #17 = Utf8               [Ljava/lang/String;</div><div class="line">  #18 = Utf8               SourceFile</div><div class="line">  #19 = Utf8               MyClass.java</div><div class="line">  #20 = NameAndType        #7:#8          // &quot;&lt;init&gt;&quot;:()V</div><div class="line">  #21 = NameAndType        #5:#6          // a:I</div><div class="line">  #22 = Utf8               com/example/MyClass</div><div class="line">  #23 = Utf8               java/lang/Object</div><div class="line">&#123;</div><div class="line">  public com.example.MyClass();</div><div class="line">    descriptor: ()V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         4: aload_0</div><div class="line">         5: iconst_1</div><div class="line">         6: putfield      #2                  // Field a:I</div><div class="line">         9: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 3: 0</div><div class="line">        line 4: 4</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0      10     0  this   Lcom/example/MyClass;</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=0, locals=1, args_size=1</div><div class="line">         0: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 7: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       1     0  args   [Ljava/lang/String;</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;MyClass.java&quot;</div></pre></td></tr></table></figure>
 <p>我们重点看看Code属性就好了，我们知道是了变量的初始化其实实在构造函数进行的，首先我们看到<code>aload_0</code> 这个指令，这个指令就是将局部变量表中<code>this</code>(实例方法隐含参数)指针push到栈, 然后接下来执行<code>invokespecial</code> 这个就是调用父类的构造方法，在这里就是指向<code>Constant pool #1</code> 也就是<code>Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</code> 然后再次将<code>this</code>指针入栈,然后执行<code>iconst_1</code> 将1常量push到栈,然后<code>putfield</code> pop栈顶的值，写入<code>Constant pool #1</code> 对应的变量中，在这个实例也就是<code>Field a:I</code>,最后<code>return</code> 整个实例变量的赋值流程就完成了，写到这里，我想说，其实分析这个过程，很有利于我们对上层类加载，在初始化类的时候整个流程的理解很有帮助。</p>
@@ -401,13 +321,7 @@
 <blockquote>
 <p>classfile内部抽象数据结构</p>
 </blockquote>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/classfile.png" alt="classfile" title="">
-                </div>
-                <div class="image-caption">classfile</div>
-            </figure>
+<p><img src="/img/jvm/classfile.png" alt="classfile"></p>
 <p>上面的字段信息，相信小伙伴们一看就会理解的，其实就是一个数据模型描述，跟我们在平时开发写的实体类没有本质的区别，只是我们写的是业务层数据，而这个是底层数据结构的定义，含义不太一样，我们只要理解不同点就好了，这里我提醒小伙伴一个值得注意的就是常量池，为什么单独说这个，因为这个跟其他数组不太一样，我们知道数组大小是不可变的，是连续的，是读性能最好的等特性，不一样的是常量池真正存储的有效数据是池的长度－1，第一次可以理解为保留空间，不存储池的任何信息。<br>下面就详细的分析数据结构中的每一个字段的具体细节。</p>
 <ol>
 <li>u4(4个字节) magic 这个是魔数，可以理解为一个固定的数值，不同文件的这个值不一样，目的是为了，软件能够识别对    应文件，并能都执行，class就行jvm能够识别的，只要符合class协议定义的，jvm都能够去执行，比如png就是图片软    件以识别的，jvm能识别png吗？这个当然不行的，jvm是专为class服务的，后面有兴趣的可以写一个识别png的虚拟    机, 开玩笑，说这么多，只是希望大家明白一点，文件标志的意义。</li>
@@ -416,34 +330,14 @@
 <li>u2 constant_pool_count 表示常量池的数量。这里我们需要重点来说一下常量池是什么东西，请大家不要与Jvm内存模    型的运行时常量池混淆了，Class文件中常量池主要存储了字 面量以及符号引用，其中字面量主要包括字符串，final    常的值或者某个属性的初始值等等，而符号引用主要存储类和接口的全限定名称，字段的名称以及描 述符，方法的名称    以描述符，这里名称可能大家都容易理解，至于描述符的概念，放到下面说字段表以及方法表的时候再说。另外大家都知    道vm的内存模型中 有堆，栈，方法区，程序计数器构成，而方法区中又存在一块区域叫运行时常量池，运行时常量池中存    放东西其实也就是编译器长生的各种字面量以及符号引用， 只不过运行时常量池具有动态性，它可以在运行的时候向其    中加其它的常量进去，最具代表性的就是String的<code>intern</code>方法，说到这里，我相信很多小伙伴对intern这个方法不    是理解，不要急，现在简单理解从将符串放进常量池就好，后面分析<code>String</code>典型系列的时候，会深入分析这个方法到底    jvm为我们做了什么，以及应用    场的问题，解决方案等。这里不展开分析，自己心里纪录一下就好。</li>
 <li>cp_info 表示常量池，这里面就存在了上面说的各种各样的字面量和符号引用。放到常量池的中数据项在The Java     Vrtual Machine Specification Java SE 7 Edition 中一共有14个常量，每一种常量都是一个表，并且每种常    量用一个公共的部分tag来表示是哪种类型的常量。</li>
 <li>常量池中不同的类型，通过tag来区分，tag对应的不同类型下表:<br> CONSTANT_Utf8_info      tag标志位为1,   UTF-8编码的字符串<br> CONSTANT_Integer_info  tag标志位为3， 整形字面量<br> CONSTANT_Float_info     tag标志位为4， 浮点型字面量<br> CONSTANT_Long_info     tag标志位为5， 长整形字面量<br> CONSTANT_Double_info  tag标志位为6， 双精度字面量<br> CONSTANT_Class_info    tag标志位为7， 类或接口的符号引用<br> CONSTANT_String_info    tag标志位为8，字符串类型的字面量<br> CONSTANT_Fieldref_info  tag标志位为9,  字段的符号引用<br> CONSTANT_Methodref_info  tag标志位为10，类中方法的符号引用<br> CONSTANT_InterfaceMethodref_info tag标志位为11, 接口中方法的符号引用<br> CONSTANT_NameAndType_info tag 标志位为12，字段和方法的名称以及类型的符号引用<br> 有了这个表，我们就可以很好的分析出class常量池信息了。</li>
-<li>u2 access_flags 表示类或者接口的访问信息, 图例如下: <figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/classfile-acc.png" alt="classfile" title="">
-                </div>
-                <div class="image-caption">classfile</div>
-            </figure></li>
+<li>u2 access_flags 表示类或者接口的访问信息, 图例如下:<br> <img src="/img/jvm/classfile-acc.png" alt="classfile"></li>
 <li>u2 this_class 表示类的常量池索引，指</li>
 <li>向常量池中CONSTANT_Class_info的常量</li>
 <li>u2 super_class 表示超类的索引，指向常量池中CONSTANT_Class_info的常量</li>
 <li>u2 interface_counts 表示接口的数量</li>
 <li>u2 interface[interface_counts]表示接口表，它里面每一项都指向常量池中CONSTANT_Class_info常量</li>
-<li>u2 fields_count field_info fields[fields_count]表示字段表的信息。<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/classfile-fieldinfo.png" alt="classfile" title="">
-                </div>
-                <div class="image-caption">classfile</div>
-            </figure>
-上图中access_flags表示字段的访问表示，比如字段是public,private，protect 等，name_index表示字段名     称，指向常量池中类型是CONSTANT_UTF8_info的常量，descriptor_index表示字段的描述符，它也指向常量池中类型    为 CONSTANT_UTF8_info的常量，attributes_count表示字段表中的属性表的数量，而属性表是则是一种用与描述字    段，方法以及 类的属性的可扩展的结构，不同版本的Java虚拟机所支持的属性表的数量是不同的。</li>
-<li>u2 methods_count表示方法表的数量<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/classfile-methodinfo.png" alt="classfile" title="">
-                </div>
-                <div class="image-caption">classfile</div>
-            </figure>
-其中access_flags表示方法的访问表示，name_index表示名称的索引，descriptor_index表示方法的描述 符，    attributes_count以及attribute_info类似字段表中的属性表，只不过字段表和方法表中属性表中的属性是不同的，    比如方法 表中就Code属性，表示方法的代码，而字段表中就没有Code属性。其中具体Class中到底有多少种属性，等到    Class文件结构中的属性表的时候再说说。</li>
+<li>u2 fields_count field_info fields[fields_count]表示字段表的信息。<br><img src="/img/jvm/classfile-fieldinfo.png" alt="classfile"><br>上图中access_flags表示字段的访问表示，比如字段是public,private，protect 等，name_index表示字段名     称，指向常量池中类型是CONSTANT_UTF8_info的常量，descriptor_index表示字段的描述符，它也指向常量池中类型    为 CONSTANT_UTF8_info的常量，attributes_count表示字段表中的属性表的数量，而属性表是则是一种用与描述字    段，方法以及 类的属性的可扩展的结构，不同版本的Java虚拟机所支持的属性表的数量是不同的。</li>
+<li>u2 methods_count表示方法表的数量<br><img src="/img/jvm/classfile-methodinfo.png" alt="classfile"><br>其中access_flags表示方法的访问表示，name_index表示名称的索引，descriptor_index表示方法的描述 符，    attributes_count以及attribute_info类似字段表中的属性表，只不过字段表和方法表中属性表中的属性是不同的，    比如方法 表中就Code属性，表示方法的代码，而字段表中就没有Code属性。其中具体Class中到底有多少种属性，等到    Class文件结构中的属性表的时候再说说。</li>
 <li>attribute_count表示属性表的数量，说到属性表，我们需要明确以下几点：<ul>
 <li>属性表存在于Class文件结构的最后，字段表，方法表以及Code属性中，也就是说属性表中也可以存在属性表</li>
 <li>属性表的长度是不固定的，不同的属性，属性表的长度是不同的</li>
@@ -460,14 +354,7 @@
 <li>0x0000 次版本为0</li>
 <li>0x0034 主版本为52</li>
 <li>0x0013 常量池大小19，注意真正有效的数据只有18个，0号元素为预留空间</li>
-<li>0x0a tag值10 通过查表知道，是代表常量池方法引用信息，结构如下: <figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/constantspool-methodrefinfo.png" alt="constantspool-methodref" title="">
-                </div>
-                <div class="image-caption">constantspool-methodref</div>
-            </figure>
- u1 tag 意思是tag的描述占用一个字节,无符号，也就可以表示256中可能<br> u2 class_index 对应CONSTANT_Class_info 中的信息<br> u2 name_and_type_index 对应CONSTANT_NameAndType_info中的信息<br> 上面字节码中: tag为<code>10</code> 不多解释<br> class_index 0x0003数值是3也就是对应池里面的第三个我们查表得知结果为：<code>java/lang/Object</code><br> name_and_type_index 0x000f数值是15也是对应池里面的的第15个通过查表得知结果为: <code>&lt;init&gt;()V</code></li>
+<li>0x0a tag值10 通过查表知道，是代表常量池方法引用信息，结构如下:<br> <img src="/img/jvm/constantspool-methodrefinfo.png" alt="constantspool-methodref"><br> u1 tag 意思是tag的描述占用一个字节,无符号，也就可以表示256中可能<br> u2 class_index 对应CONSTANT_Class_info 中的信息<br> u2 name_and_type_index 对应CONSTANT_NameAndType_info中的信息<br> 上面字节码中: tag为<code>10</code> 不多解释<br> class_index 0x0003数值是3也就是对应池里面的第三个我们查表得知结果为：<code>java/lang/Object</code><br> name_and_type_index 0x000f数值是15也是对应池里面的的第15个通过查表得知结果为: <code>&lt;init&gt;()V</code></li>
 <li>0x07 tag值7,跟前面分析类似，查表得知为CONSTANT_Class_info，结构如下:<br> u2 class_name 0x0010 数值是16也就对应池里面的第16个数据，我们查表得知结果为: <code>com/longway/test/    Test</code></li>
 <li>0x07 tag值7,    跟前面分析类似，查表得知为CONSTANT_Class_info，结构如下:<br> u2 class_name 0x0011 数值是17也就对应池里面的第16个数据，我们查表得知结果为:<br> <code>java/lang/Object</code></li>
 <li>0x07 tag值7，跟前面分析类似，查表得知为CONSTANT_Class_info，结构如下:<br> u2 class_name 0x0012 数值是18也就对应池里面的第16个数据，我们查表得知结果为:<br> <code>com/longway/test/ITest</code></li>
@@ -491,20 +378,7 @@
 <li>u2 inerfaces_count 0x0001一个接口</li>
 <li>u2 interface[1] 0x0004对应值为<code>com/longway/test/ITest</code></li>
 <li>u2 fields_count 0x0001 有一个字段</li>
-<li>field_info 结构如下:<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/classfile-fieldinfo.png" alt="fieldinfo" title="">
-                </div>
-                <div class="image-caption">fieldinfo</div>
-            </figure>
-u2 access_flags 访问标志 <code>001a</code>==&gt;<code>ACC_PRIVATE|ACC_STATIC|ACC_FINAL</code><br> u2 name_index 名字索引 0x0005==&gt;<code>VALUE</code><br> u2 descriptor_index 描述索引 0x0006==&gt;<code>I</code>==&gt;<code>int</code>(integer)<br> u2 attributes_conut 0x0001 对应一个属性<br>attribute_info attributes[attributes_conut]<br> u2 attribute_name_index 0x0007==&gt;<code>ConstantValue</code><br> u4 attrubute_length 0x00000002<br> u1 info 0x0008 ==&gt;<code>1</code><br> <img src="/img/jvm/acc_field.png" alt="acc-field"> <figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/field-type.png" alt="field-type" title="">
-                </div>
-                <div class="image-caption">field-type</div>
-            </figure></li>
+<li>field_info 结构如下:<br><img src="/img/jvm/classfile-fieldinfo.png" alt="fieldinfo"><br>u2 access_flags 访问标志 <code>001a</code>==&gt;<code>ACC_PRIVATE|ACC_STATIC|ACC_FINAL</code><br> u2 name_index 名字索引 0x0005==&gt;<code>VALUE</code><br> u2 descriptor_index 描述索引 0x0006==&gt;<code>I</code>==&gt;<code>int</code>(integer)<br> u2 attributes_conut 0x0001 对应一个属性<br>attribute_info attributes[attributes_conut]<br> u2 attribute_name_index 0x0007==&gt;<code>ConstantValue</code><br> u4 attrubute_length 0x00000002<br> u1 info 0x0008 ==&gt;<code>1</code><br> <img src="/img/jvm/acc_field.png" alt="acc-field"><br> <img src="/img/jvm/field-type.png" alt="field-type"></li>
 <li>u2 methods_count 0x0001对应一个方法</li>
 <li>method_info结构如下:<br> <img src="/img/jvm/classfile-methodinfo.png" alt="methon-info"><br> u2 access_flags 0x0001==&gt;<code>ACC_PUBLIC</code><br> u2 name_index 0x0009==&gt;<code>&lt;init&gt;</code><br> u2 descriptor_index 0x000a==&gt;<code>()V</code><br> u2 attributes_count 0x0001对应一个属性<br> attribute_info attributes[attributes_count]<br> <img src="/img/jvm/acc_method.png" alt="methon-info"><br> u2 attribute_name_index 0x000b<br> u4 attribute_length 0x0000001d<br> u2 max_stack 0x0001<br> u2 max_locals 0x0001 //slot是虚拟机为局部变量分配内存的最小单元，在运行时，对于不超过     32位类型的数据类型，比如 byte,char,int等占用1个slot，而double和Long这种64位的数据类型则需要分配2     个slot，另外max_locals的值并 不是所有局部变量所需要的内存数量之和，因为slot是可以重用的，当局部变量     超过了它的作用域以后，局部变量所占用的slot就会被重用<br> u4 code_length 0x00000005<br> u1 code[code_length] 2a b7 00 01 b1<br> u2 exception_table_length 0x00 没有异常信息<br> {<pre><code>u2 start_pc
 u2 end_pc
@@ -514,14 +388,7 @@ u2 catch_type
 u2 line_number
 </code></pre> }line_number_table[line_number_table_length] <code>0000</code>==&gt;<code>0002</code>字节码行号对应源代码，这对于定位     代码很有作用<br> <img src="/img/jvm/acc_method.png" alt="methon-info"></li>
 <li>u2 attributes_count 0x0001 一个属性长度</li>
-<li>attributes_info attributes[attributes_count] <code>000d</code>==&gt;<code>SourceFile</code><br>我们再来简单的看一下SourceFile数据结构:<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/sourcefile.png" alt="methon-info" title="">
-                </div>
-                <div class="image-caption">methon-info</div>
-            </figure>
-u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_length 0x00000002 除了之前的offset的剩余长度<br>u2 sourcefile_index 0x000e==&gt;<code>Test.java</code><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>通过分析class的内部存储，我们对class的结构有了基本的认识，但是我还是希望小伙伴们自己分析一片，这样可能对class的结构理解更深刻，在实际运用过程中也会更加得心应手，分析完，并不代表就结束了，这仅仅分析了class而已，虚拟机加载完class到内存，然后按照我们的分析方式解析，分配内存，然后解析语义，然后还需进行编译才能去执行。这也就是class跨平台的原因，编译一次，到处运行，只要满足jvm规范，屏蔽底层细节。有了class结构的认知，下篇带领大家一起深入jvm内幕，也就是jvm最后一篇，也是最为重要的，在实际应用中用的最多的，比如2016年最火爆的技术，实时热修复线上bug技术，热更技术，有些技术用到asm这个工具实现编译时透明插入代码的。这里用到的技术就是对class文件操作，hook对应的指令，插入指令，达到变更操作行为的目的。所以我们还是很有必要对jvm指令深入理解一下，jvm指令不多，我们分析class结构的时候，看到code属性里面有个code指令集，占用一个字节，也就是说，jvm指令集的全集256个。分析class确实比较耗时间，但是从中可以明白很多一些设计思想，特别可以理解底层协议设计，设局结构设计等等。敬请期待下篇jvm指令解析……</li>
+<li>attributes_info attributes[attributes_count] <code>000d</code>==&gt;<code>SourceFile</code><br>我们再来简单的看一下SourceFile数据结构:<br><img src="/img/jvm/sourcefile.png" alt="methon-info"><br>u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_length 0x00000002 除了之前的offset的剩余长度<br>u2 sourcefile_index 0x000e==&gt;<code>Test.java</code><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>通过分析class的内部存储，我们对class的结构有了基本的认识，但是我还是希望小伙伴们自己分析一片，这样可能对class的结构理解更深刻，在实际运用过程中也会更加得心应手，分析完，并不代表就结束了，这仅仅分析了class而已，虚拟机加载完class到内存，然后按照我们的分析方式解析，分配内存，然后解析语义，然后还需进行编译才能去执行。这也就是class跨平台的原因，编译一次，到处运行，只要满足jvm规范，屏蔽底层细节。有了class结构的认知，下篇带领大家一起深入jvm内幕，也就是jvm最后一篇，也是最为重要的，在实际应用中用的最多的，比如2016年最火爆的技术，实时热修复线上bug技术，热更技术，有些技术用到asm这个工具实现编译时透明插入代码的。这里用到的技术就是对class文件操作，hook对应的指令，插入指令，达到变更操作行为的目的。所以我们还是很有必要对jvm指令深入理解一下，jvm指令不多，我们分析class结构的时候，看到code属性里面有个code指令集，占用一个字节，也就是说，jvm指令集的全集256个。分析class确实比较耗时间，但是从中可以明白很多一些设计思想，特别可以理解底层协议设计，设局结构设计等等。敬请期待下篇jvm指令解析……</li>
 </ol>
 ]]></content>
     </entry>
@@ -628,22 +495,10 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <li>可以更有效的清除不再需要的对象（即死对象，新生代和老年代使用不同的回收算法）。</li>
 </ol>
 <p>通过广泛研究面向对象实现的应用，发现一些特点：<br>1.大部分对象的生存时间都很短；<br>2.新生对象很少引用生存时间长的对象。<br>所以，新生代通过复制算法可以高效的回收垃圾。</p>
-<h2 id="堆区"><a href="#堆区" class="headerlink" title="堆区"></a>堆区</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvm-heap.png" alt="jvm-heap" title="">
-                </div>
-                <div class="image-caption">jvm-heap</div>
-            </figure>
+<h2 id="堆区"><a href="#堆区" class="headerlink" title="堆区"></a>堆区</h2><p><img src="/img/jvm/jvm-heap.png" alt="jvm-heap"></p>
 <h2 id="gc回收过程"><a href="#gc回收过程" class="headerlink" title="gc回收过程"></a>gc回收过程</h2><p>首先堆可以划分为新生代和老年代，然后新生代又可以划分为一个Elden区和两个Survivor（幸存）区。<br>按照规定，新对象会首先分配在Eden中（如果对象过大，比如大数组，将会直接放到老年代）。在GC中，Eden中的对象会被移动到survivor中，直至对象满足一定的年纪（定义为熬过minor GC的次数），会被移动到老年代。</p>
 <p>新生代采取复制算法，在Minor GC之前，to survivor区域保持清空，对象保存在Eden和from survivor区，minor GC运行时，Eden中的幸存对象会被复制到to Survivor（同时对象年龄会增加1）。而from survivor区中的幸存对象会考虑对象年龄，如果年龄没达到阈值，对象依然复制到to survivor中。如果对象达到阈值那么将被移到老年代。复制阶段完成后，Eden和From幸存区中只保存死对象，可以视为清空。如果在复制过程中to幸存区被填满了，剩余的对象将被放到老年代。最后，From survivor和to survivor会调换一下名字，下次Minor GC时，To survivor变为From Survivor。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvm-hp.png" alt="jvm-heap" title="">
-                </div>
-                <div class="image-caption">jvm-heap</div>
-            </figure>
+<p><img src="/img/jvm/jvm-hp.png" alt="jvm-heap"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总结一下，对象一般出生在Eden区，年轻代GC过程中，对象在2个幸存区之间移动，如果对象活到适当的年龄，会被移到老年代。当对象在老年代中死亡时，就需要更高级别的GC，更重量级的GC算法。</p>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>调优的重要性：新生代的大小设置非常重要，如果新生代过小，会导致新生对象很快就晋升到老年代中，在老年代中对象很难被回收。如果新生代过大，会发生过多的复制过程。因而我们需要找到一个合适的大小，不幸的是，要想获得一个合适的大小，只能通过不断的测试调优，这就需要JVM参数了。下面列出一些调优参数。</p>
 <h2 id="调优参数"><a href="#调优参数" class="headerlink" title="调优参数"></a>调优参数</h2><p>堆设置<br>-Xmx3550m：设置JVM最大堆内存 为3550M。<br>-Xms3550m：设置JVM初始堆内存 为3550M。此值可以设置与-Xmx相同，以避免每次垃圾回收完成后JVM重新分配内存。<br>-Xss128k： 设置每个线程的栈 大小。JDK5.0以后每个线程栈大小为1M，之前每个线程栈大小为256K。应当根据应用的线程所需内存大小进行调整。在相同物理内存下，减小这个值能 生成更多的线程。但是操作系统对一个进程内的线程数还是有限制的，不能无限生成，经验值在3000~5000左右。<br>-Xmn2g：设置堆内存年轻代 大小为2G。整个堆内存大小 = 年轻代大小 + 年老代大小 + 持久代大小 。持久代一般固定大小为64m，所以增大年轻代后，将会减小年老代大小。此值对系统性能影响较大，Sun官方推荐配置为整个堆的3/8。<br>-XX:PermSize=256M：设置堆内存持久代 初始值为256M。(貌似是Eclipse等IDE的初始化参数)<br>-XX:MaxNewSize=size：新生成的对象能占用内存的最大值。<br>-XX:MaxPermSize=512M：设置持久代最大值为512M。<br>-XX:NewRatio=4：设置堆内存年轻代（包括Eden和两个Survivor区）与堆内存年老代的比值（除去持久代） 。设置为4，则年轻代所占与年老代所占的比值为1:4。<br>-XX:SurvivorRatio=4： 设置堆内存年轻代中Eden区与Survivor区大小的比值 。设置为4，则两个Survivor区（JVM堆内存年轻代中默认有2个Survivor区）与一个Eden区的比值为2:4，一个Survivor区占 整个年轻代的1/6。<br>-XX:MaxTenuringThreshold=7：表示一个对象如果在救助空间（Survivor区）移动7次还没有被回收就放入年老代。<br>如果设置为0的话，则年轻代对象不经过Survivor区，直接进入年老代，对于年老代比较多的应用，这样做可以提高效率。<br>如果将此值设置为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象在年轻代存活时间，增加对象在年轻代即被回收的概率。<br>回收器选择<br>JVM给了三种选择：串行收集器、并行收集器、并发收集器，但是串行收集器只适用于小数据量的情况，所以这里的选择主要针对并行收集器和并发收集器。<br>默认情况下，JDK5.0以前都是使用串行收集器，如果想使用其他收集器需要在启动时加入相应参数。JDK5.0以后，JVM会根据当前系统配置进行智能判断。<br>串行收集器<br>-XX:+UseSerialGC：设置串行收集器<br>并行收集器(吞吐量优先)<br>-XX:+UseParallelGC：选择垃圾收集器为并行收集器。此配置仅对年轻代有效。即上述配置下，年轻代使用并发收集，而年老代仍旧使用串行收集。<br>-XX:ParallelGCThreads=20：配置并行收集器的线程数，即：同时多少个线程一起进行垃圾回收。此值最好配置与处理器数目相等。<br>-XX:+UseParallelOldGC：配置年老代垃圾收集方式为并行收集。JDK6.0支持对年老代并行收集。<br>-XX:MaxGCPauseMillis=100：设置每次年轻代垃圾回收的最长时间（单位毫秒），如果无法满足此时间，JVM会自动调整年轻代大小，以满足此值。<br>-XX:+UseAdaptiveSizePolicy：设置此选项后，并行收集器会自动选择年轻代区大小和相应的Survivor区比例，以达到目标系统规定的最低响应时间或者收集频率等。<br>此参数建议使用并行收集器时，一直打开。<br>并发收集器(响应时间优先)<br>-XX:+UseParNewGC：设置年轻代为并发收集。可与CMS收集同时使用。JDK5.0以上，JVM会根据系统配置自行设置，所以无需再设置此值。<br>CMS， 全称Concurrent Low Pause Collector，是jdk1.4后期版本开始引入的新gc算法，在jdk5和jdk6中得到了进一步改进，它的主要适合场景是对响应时间的重要性需求 大于对吞吐量的要求，能够承受垃圾回收线程和应用线程共享处理器资源，并且应用中存在比较多的长生命周期的对象的应用。CMS是用于对tenured generation的回收，也就是年老代的回收，目标是尽量减少应用的暂停时间，减少FullGC发生的几率，利用和应用程序线程并发的垃圾回收线程来 标记清除年老代。<br>-XX:+UseConcMarkSweepGC：设置年老代为并发收集。测试中配置这个以后，-XX:NewRatio=4的配置失效了。所以，此时年轻代大小最好用-Xmn设置。<br>-XX:CMSFullGCsBeforeCompaction=：由于并发收集器不对内存空间进行压缩、整理，所以运行一段时间以后会产生“碎片”，使得运行效率降低。此参数设置运行次FullGC以后对内存空间进行压缩、整理。<br>-XX:+UseCMSCompactAtFullCollection：打开对年老代的压缩。可能会影响性能，但是可以消除内存碎片。<br>-XX:+CMSIncrementalMode：设置为增量收集模式。一般适用于单CPU情况。<br>-XX:CMSInitiatingOccupancyFraction=70：表示年老代空间到70%时就开始执行CMS，确保年老代有足够的空间接纳来自年轻代的对象。<br>注：如果使用 throughput collector 和 concurrent low pause collector 这两种垃圾收集器，需要适当的挺高内存大小，为多线程做准备。<br>其它<br>-XX:+ScavengeBeforeFullGC：新生代GC优先于Full GC执行。<br>-XX:-DisableExplicitGC：禁止调用System.gc()，但JVM的gc仍然有效。<br>-XX:+MaxFDLimit：最大化文件描述符的数量限制。<br>-XX:+UseThreadPriorities：启用本地线程优先级API，即使 java.lang.Thread.setPriority() 生效，反之无效。<br>-XX:SoftRefLRUPolicyMSPerMB=0：“软引用”的对象在最后一次被访问后能存活0毫秒（默认为1秒）。<br>-XX:TargetSurvivorRatio=90：允许90%的Survivor空间被占用（默认为50%）。提高对于Survivor的使用率——超过就会尝试垃圾回收。<br>辅助信息<br>-XX:-CITime：打印消耗在JIT编译的时间<br>-XX:ErrorFile=./hs_err_pid.log：保存错误日志或者数据到指定文件中<br>-XX:-ExtendedDTraceProbes：开启solaris特有的dtrace探针<br>-XX:HeapDumpPath=./java_pid.hprof：指定导出堆信息时的路径或文件名<br>-XX:-HeapDumpOnOutOfMemoryError：当首次遭遇内存溢出时导出此时堆中相关信息<br>-XX:OnError=”;”：出现致命ERROR之后运行自定义命令<br>-XX:OnOutOfMemoryError=”;”：当首次遭遇内存溢出时执行自定义命令<br>-XX:-PrintClassHistogram：遇到Ctrl-Break后打印类实例的柱状信息，与jmap -histo功能相同<br>-XX:-PrintConcurrentLocks：遇到Ctrl-Break后打印并发锁的相关信息，与jstack -l功能相同<br>-XX:-PrintCommandLineFlags：打印在命令行中出现过的标记<br>-XX:-PrintCompilation：当一个方法被编译时打印相关信息<br>-XX:-PrintGC：每次GC时打印相关信息<br>-XX:-PrintGC Details：每次GC时打印详细信息<br>-XX:-PrintGCTimeStamps：打印每次GC的时间戳<br>-XX:-TraceClassLoading：跟踪类的加载信息<br>-XX:-TraceClassLoadingPreorder：跟踪被引用到的所有类的加载信息<br>-XX:-TraceClassResolution：跟踪常量池<br>-XX:-TraceClassUnloading：跟踪类的卸载信息<br>-XX:-TraceLoaderConstraints：跟踪类加载器约束的相关信息<br>JVM服务调优实战<br>服务器：8 cup, 8G mem<br>e.g.<br>java -Xmx3550m -Xms3550m -Xss128k -XX:NewRatio=4 -XX:SurvivorRatio=4 -XX:MaxPermSize=16m -XX:MaxTenuringThreshold=0<br>调优方案：<br>-Xmx5g：设置JVM最大可用内存为5G。<br>-Xms5g：设置JVM初始内存为5G。此值可以设置与-Xmx相同，以避免每次垃圾回收完成后JVM重新分配内存。<br>-Xmn2g：设置年轻代大小为2G。整个堆内存大小 = 年轻代大小 + 年老代大小 + 持久代大小 。持久代一般固定大小为64m，所以增大年轻代后，将会减小年老代大小。此值对系统性能影响较大，Sun官方推荐配置为整个堆的3/8。<br>-XX:+UseParNewGC：设置年轻代为并行收集。可与CMS收集同时使用。JDK5.0以上，JVM会根据系统配置自行设置，所以无需再设置此值。<br>-XX:ParallelGCThreads=8：配置并行收集器的线程数，即：同时多少个线程一起进行垃圾回收。此值最好配置与处理器数目相等。<br>-XX:SurvivorRatio=6：设置年轻代中Eden区与Survivor区的大小比值。根据经验设置为6，则两个Survivor区与一个Eden区的比值为2:6，一个Survivor区占整个年轻代的1/8。<br>-XX:MaxTenuringThreshold=30： 设置垃圾最大年龄（次数）。如果设置为0的话，则年轻代对象不经过Survivor区直接进入年老代。对于年老代比较多的应用，可以提高效率。如果将此值 设置为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象再年轻代的存活时间，增加在年轻代即被回收的概率。设置为30表示 一个对象如果在Survivor空间移动30次还没有被回收就放入年老代。<br>-XX:+UseConcMarkSweepGC：设置年老代为并发收集。测试配置这个参数以后，参数-XX:NewRatio=4就失效了，所以，此时年轻代大小最好用-Xmn设置，因此这个参数不建议使用。<br>参考资料 - JVM堆内存的分代<br>虚 拟机的堆内存共划分为三个代：年轻代（Young Generation）、年老代（Old Generation）和持久代（Permanent Generation）。其中持久代主要存放的是Java类的类信息，与垃圾收集器要收集的Java对象关系不大。所以，年轻代和年老代的划分才是对垃圾 收集影响比较大的。<br>年轻代<br>所有新生成的对象首先都是放在年轻代的。年轻代的目标就是尽可能快速的收集掉那些生命周期短的对象。年轻代分三个区。一个Eden区，两个 Survivor区(一般而言)。<br>大部分对象在Eden区中生成。当Eden区满时，还存活的对象将被复制到Survivor区（两个中的一个），当一个Survivor区满 时，此区的存活对象将被复制到另外一个Survivor区，当另一个Survivor区也满了的时候，从前一个Survivor区复制过来的并且此时还存 活的对象，将被复制“年老区(Tenured)”。<br>需要注意，两个Survivor区是对称的，没先后关系，所以同一个Survivor区中可能同时存在从Eden区复制过来对象，和从另一个 Survivor区复制过来的对象；而复制到年老区的只有从前一个Survivor区（相对的）过来的对象。而且，Survivor区总有一个是空的。特 殊的情况下，根据程序需要，Survivor区是可以配置为多个的（多于两个），这样可以增加对象在年轻代中的存在时间，减少被放到年老代的可能。<br>年老代<br>在年轻代中经历了N（可配置）次垃圾回收后仍然存活的对象，就会被放到年老代中。因此，可以认为年老代中存放的都是一些生命周期较长的对象。<br>持久代<br>用于存放静态数据，如 Java Class, Method 等。持久代对垃圾回收没有显著影响，但是有些应用可能动态生成或者调用一些Class，例如 Hibernate 等，在这种时候需要设置一个比较大的持久代空间来存放这些运行过程中动态增加的类型。持久代大小通过 -XX:MaxPermSize= 进行设置。</p>
@@ -671,13 +526,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <li>守护了被信任的类库的边界<br>虚拟机通过使用不同的类装载器装载可靠的包和不可靠的包，即所谓的双亲委派模式：在某个特定的类装载器试图以常用方式装载类型之前，它会先默认将这个任务“委派”给它的双亲，这个双亲再依次请求自己的双亲来装载这个类型。这个委派的过程一直向上继续，直到达到启动类加载器（boostrp classloader），如果一个类加载器的双亲类加载器有能力装载这个类型，则这个类加载器返回这个类型，否则这个类装载器试图自己来装载这个类型。java虚拟机只把彼此访问的特殊权限授予由同一个类装载器装载到同一个包中的类型。在允许两个类型之间对包内可见的成员（声明为受保护的或者包访问的成员）进行访问之前，虚拟机不但要确定这两个类型是否属于同一个包，还要确定它们属于同一个运行时包——即它们必须是由同一个类装载器装载的</li>
 <li>将代码归入某类（称为保护域），该类确定了代码可以进行哪些操作。</li>
 </ol>
-<h2 id="java类加载器体系"><a href="#java类加载器体系" class="headerlink" title="java类加载器体系"></a>java类加载器体系</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvm类加载.png" alt="classloader" title="">
-                </div>
-                <div class="image-caption">classloader</div>
-            </figure>
+<h2 id="java类加载器体系"><a href="#java类加载器体系" class="headerlink" title="java类加载器体系"></a>java类加载器体系</h2><p><img src="/img/jvm/jvm类加载.png" alt="classloader"></p>
 <h2 id="class文件检验器"><a href="#class文件检验器" class="headerlink" title="class文件检验器"></a>class文件检验器</h2><p>和类加载器一起，class文件检验器保证了装载的class文件内容中有正确的内部结构，并且这些class文件相互间协调一致，如果class文件检验器在class文件中发生了问题，它将抛出异常。好的java编译器不应该产生畸形的class文件，但是java虚拟机并不知道某个特定的class文件的来源，所以java虚拟机的实现必须有个class文件检验器，文件检验器可以调用class文件以确保这些定义的类型可以安全的使用。java虚拟机的class文件检验器在字节码执行之前，必须完成大部分检验工作。class文件检验器需要经过四趟独立的扫描来完成其工作。第一趟扫描是在类被装载时进行的，在这次扫描中，class文件检验器检查这个class文件内部结构，以保证它可以被安全地编译。第二和第三趟扫描是在连接过程进行的，在这两次扫描中，class文件检验器确认类型数据遵从java编程语言的语义，包括检验它所包含的所有字节码的完整性，第四趟扫描是在进行动态链接的过程中解析符号引用时进行的，在这次扫描中，class文件检验器确认被引用的类、字段以及方法确实存在。</p>
 <ol>
 <li>第一趟扫描：class文件结构检查<br>对每一段被当做类型导入的字节序列，class文件检验器都会确认其是否符合class文件格式。比如是否以魔数0xCAFEBABE开头，主次版本号所代表的的版本是否被当前虚拟机支持等等，第一趟扫描的主要目的就是保证这个字节序列正确地定义了一个新类型，它必须遵从class文件的固定格式，这样它才能被编译成在方法区中的内部数据结构。第二、第三和第四趟扫描是在方法区中由实现决定的数据结构上进行的。</li>
@@ -685,13 +534,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <li>第三趟扫描：字节码验证<br>在这趟扫描中，java虚拟机对字节流进行数据流分析，这些字节流代表的是类的方法。它确保局部变量在赋值之前不可访问，类的字段中总必须赋予正确类型的值等等。</li>
 <li>第四趟扫描：符号引用验证<br>在动态链接的过程中，如果包含在一个class文件中的符号引用被解析时，class文件检验器将进行第四趟检查。在这趟检查中，java虚拟机将追踪那些引用，从被验证的class文件到被引用的class文件，确保这个引用是正确的。</li>
 </ol>
-<h2 id="class检验模型"><a href="#class检验模型" class="headerlink" title="class检验模型"></a>class检验模型</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvm类检测.png" alt="class-verify" title="">
-                </div>
-                <div class="image-caption">class-verify</div>
-            </figure>
+<h2 id="class检验模型"><a href="#class检验模型" class="headerlink" title="class检验模型"></a>class检验模型</h2><p><img src="/img/jvm/jvm类检测.png" alt="class-verify"></p>
 <h2 id="java虚拟机中内置的安全特性"><a href="#java虚拟机中内置的安全特性" class="headerlink" title="java虚拟机中内置的安全特性"></a>java虚拟机中内置的安全特性</h2><p>java虚拟机装载了一个类，并且对它进行了第一到第三趟的class文件检验，这些字节码就可以被运行了。除了对符号引用的检验（class文件检查的第四趟扫描），java虚拟机在执行字节码时<br>还进行了一些内置的安全机制的操作。这些机制大多数是java类型安全的基础：</p>
 <ol>
 <li>类型安全的引用转换；</li>
@@ -731,13 +574,7 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <li>所有基于该类的对象销毁了</li>
 <li>Class对象销毁了</li>
 </ol>
-<h2 id="java-classloader-模型"><a href="#java-classloader-模型" class="headerlink" title="java classloader 模型"></a>java classloader 模型</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/java类加载原生模型.png" alt="classloader" title="">
-                </div>
-                <div class="image-caption">classloader</div>
-            </figure>
+<h2 id="java-classloader-模型"><a href="#java-classloader-模型" class="headerlink" title="java classloader 模型"></a>java classloader 模型</h2><p><img src="/img/jvm/java类加载原生模型.png" alt="classloader"></p>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>这里只是java的基本流程，但是我们知道android是没法运行class文件的，<br>必须dx化，转换成dalvik或者art，或者混合模式下的字节码，才能运行。并且<br>移动设备对class的执行进行了深度优化，比如inline等等。这篇只讲解jvm的加载<br>，android的加载必须单独分开写，才能明白原理与区别，后续更新……</p>
 ]]></content>
     </entry>
@@ -749,41 +586,10 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <p>世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="运行数据内存布局"><a href="#运行数据内存布局" class="headerlink" title="运行数据内存布局"></a>运行数据内存布局</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvm运行时内存布局.png" alt="memory" title="">
-                </div>
-                <div class="image-caption">memory</div>
-            </figure>
-<h2 id="虚拟机栈区"><a href="#虚拟机栈区" class="headerlink" title="虚拟机栈区"></a>虚拟机栈区</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvmstack.png" alt="stack" title="">
-                </div>
-                <div class="image-caption">stack</div>
-            </figure>
-<h2 id="虚拟机变量表"><a href="#虚拟机变量表" class="headerlink" title="虚拟机变量表"></a>虚拟机变量表</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvm变量表.png" alt="local variable" title="">
-                </div>
-                <div class="image-caption">local variable</div>
-            </figure>
-<h2 id="虚拟机栈对象引用方式"><a href="#虚拟机栈对象引用方式" class="headerlink" title="虚拟机栈对象引用方式"></a>虚拟机栈对象引用方式</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvm栈引用方式1.png" alt="reference1" title="">
-                </div>
-                <div class="image-caption">reference1</div>
-            </figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/jvm栈引用方式2.png" alt="reference2" title="">
-                </div>
-                <div class="image-caption">reference2</div>
-            </figure>
+<h2 id="运行数据内存布局"><a href="#运行数据内存布局" class="headerlink" title="运行数据内存布局"></a>运行数据内存布局</h2><p><img src="/img/jvm/jvm运行时内存布局.png" alt="memory"></p>
+<h2 id="虚拟机栈区"><a href="#虚拟机栈区" class="headerlink" title="虚拟机栈区"></a>虚拟机栈区</h2><p><img src="/img/jvm/jvmstack.png" alt="stack"></p>
+<h2 id="虚拟机变量表"><a href="#虚拟机变量表" class="headerlink" title="虚拟机变量表"></a>虚拟机变量表</h2><p><img src="/img/jvm/jvm变量表.png" alt="local variable"></p>
+<h2 id="虚拟机栈对象引用方式"><a href="#虚拟机栈对象引用方式" class="headerlink" title="虚拟机栈对象引用方式"></a>虚拟机栈对象引用方式</h2><p><img src="/img/jvm/jvm栈引用方式1.png" alt="reference1"><br><img src="/img/jvm/jvm栈引用方式2.png" alt="reference2"></p>
 <blockquote>
 <p>虚拟内存布局还有一个堆区，这个在这里没有画出来，因为堆区比较特殊，非常重要，对于我们理解整个虚拟机内幕都很重要，<br>那个区域必须详细讲解，必须写一篇文章来专门讲解堆区的细节。有了内存布局的认识，下面对jvm gc,class结构，class布局，class加载安全机制，class加载流程，class优化，classloader namespace，classloader模式，class生成细节，字节码指令运用等一些列进行深入分析，敬请期待……</p>
 </blockquote>
@@ -822,118 +628,25 @@ u2 attribute_name_index 0x000d==&gt;<code>SourceFile</code><br>u4 attribute_leng
 <p>往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般<br>我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么<br>我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们<br>就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间<br>我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了<br>今天的<code>android</code>系统中，包括<code>编译,打包</code>,<code>运行时</code>,<code>框架</code>,<code>安装</code>等脑图。<br><a id="more"></a></p>
 </blockquote>
 <h2 id="compile"><a href="#compile" class="headerlink" title="compile"></a>compile</h2><ol>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/apk/build-ant.jpg" alt="build-ant" title="">
-                </div>
-                <div class="image-caption">build-ant</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/apk/build-detail.png" alt="build-detail" title="">
-                </div>
-                <div class="image-caption">build-detail</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/apk/build-gradle.png" alt="build-gradle" title="">
-                </div>
-                <div class="image-caption">build-gradle</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/apk/build-official.png" alt="build-official" title="">
-                </div>
-                <div class="image-caption">build-official</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/apk/install.png" alt="install" title="">
-                </div>
-                <div class="image-caption">install</div>
-            </figure>
-</li>
+<li><img src="/img/apk/build-ant.jpg" alt="build-ant"></li>
+<li><img src="/img/apk/build-detail.png" alt="build-detail"></li>
+<li><img src="/img/apk/build-gradle.png" alt="build-gradle"></li>
+<li><img src="/img/apk/build-official.png" alt="build-official"></li>
+<li><img src="/img/apk/install.png" alt="install"></li>
 </ol>
 <h2 id="application-framework"><a href="#application-framework" class="headerlink" title="application-framework"></a>application-framework</h2><ol>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/application-framework/activity-data-transfer.png" alt="activity-data-transfer" title="">
-                </div>
-                <div class="image-caption">activity-data-transfer</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/application-framework/activity-fragment-lifecycle.png" alt="activity-fragment-lifecycle" title="">
-                </div>
-                <div class="image-caption">activity-fragment-lifecycle</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/application-framework/activity-lifecycle-2.png" alt="activity-lifecycle-2" title="">
-                </div>
-                <div class="image-caption">activity-lifecycle-2</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/application-framework/activity-lifecycle.png" alt="activity-lifecycle" title="">
-                </div>
-                <div class="image-caption">activity-lifecycle</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/application-framework/fragment-lifecycle.png" alt="fragment-lifecycle" title="">
-                </div>
-                <div class="image-caption">fragment-lifecycle</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/application-framework/service-lifecycle.png" alt="service-lifecycle" title="">
-                </div>
-                <div class="image-caption">service-lifecycle</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/application-framework/ui-action-down-dispatch.jpg" alt="ui-action-down-dispatch" title="">
-                </div>
-                <div class="image-caption">ui-action-down-dispatch</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/application-framework/view-widgets-inherit.png" alt="view-widgets-inherit" title="">
-                </div>
-                <div class="image-caption">view-widgets-inherit</div>
-            </figure>
-</li>
+<li><img src="/img/application-framework/activity-data-transfer.png" alt="activity-data-transfer"></li>
+<li><img src="/img/application-framework/activity-fragment-lifecycle.png" alt="activity-fragment-lifecycle"></li>
+<li><img src="/img/application-framework/activity-lifecycle-2.png" alt="activity-lifecycle-2"></li>
+<li><img src="/img/application-framework/activity-lifecycle.png" alt="activity-lifecycle"></li>
+<li><img src="/img/application-framework/fragment-lifecycle.png" alt="fragment-lifecycle"></li>
+<li><img src="/img/application-framework/service-lifecycle.png" alt="service-lifecycle"></li>
+<li><img src="/img/application-framework/ui-action-down-dispatch.jpg" alt="ui-action-down-dispatch"></li>
+<li><img src="/img/application-framework/view-widgets-inherit.png" alt="view-widgets-inherit"></li>
 </ol>
 <h2 id="system-framework"><a href="#system-framework" class="headerlink" title="system-framework"></a>system-framework</h2><ol>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/framework/framework.jpg" alt="framework" title="">
-                </div>
-                <div class="image-caption">framework</div>
-            </figure></li>
-<li><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/framework/handler-sequence.jpg" alt="handler-sequence.jpg" title="">
-                </div>
-                <div class="image-caption">handler-sequence.jpg</div>
-            </figure>
-</li>
+<li><img src="/img/framework/framework.jpg" alt="framework"></li>
+<li><img src="/img/framework/handler-sequence.jpg" alt="handler-sequence.jpg"></li>
 </ol>
 <blockquote>
 <p>后续会不断整理脑图…..</p>

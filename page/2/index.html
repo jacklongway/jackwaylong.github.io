@@ -1,26 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
-
-    
-
-    
-
-
-
-    <meta charset="utf-8">
-    
-    
-    
-    <title>longway&#39;s blog | Technology change the world</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#00796B">
-    
-    
-    <meta name="keywords" content="android">
-    <meta name="description" content="developer">
+  <meta charset="utf-8">
+  
+  <title>longway&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="developer">
 <meta property="og:type" content="website">
 <meta property="og:title" content="longway's blog">
 <meta property="og:url" content="http://www.jackway.cn/page/2/index.html">
@@ -29,783 +14,706 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="longway's blog">
 <meta name="twitter:description" content="developer">
+  
+    <link rel="alternate" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
     
-        <link rel="alternate" type="application/atom+xml" title="longway&#39;s blog" href="/atom.xml">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/style.css?v=1.6.7">
-    <script>window.lazyScripts=[]</script>
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
 
 <body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu"  >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">龙伟</h5>
-          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
-        </hgroup>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.jackway.cn"></form>
       </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
     </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">longway&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Technology change the world</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-jvm-class内部结构" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/15/jvm-class内部结构/" class="article-date">
+  <time datetime="2017-01-15T06:24:26.000Z" itemprop="datePublished">2017-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jvm/">jvm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                Home
-              </a>
-            </li>
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/15/jvm-class内部结构/">jvm-class内部结构深度揭秘</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们<br>并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们<br>都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，<br>也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心最上层的源码编写，那有同学可能<br>会疑惑，既然开发工具都帮我完成了，我们还有必要去了解内部吗？我们用过classloader加载一下不就好了吗？<br>是的，说的很对，几乎99%的场景下，我们都是这样，但是假如一天遇到需要我们修改class内部结构的需求，那<br>这时类加载就帮我们不了了，我们能够去完成需求的前提是，对class结构有一定的了解，不管如何，最为用java<br>语言开发的开发者，都建议多少深入研究一下class的内部结构，这样不仅仅对写上层代码有帮助，更有助于我们<br>对我们写的程序的把控，做到心理有底的代码必定bug会降到最低，说了这么多，这篇就来简单分析一下class内部<br>的存储逻辑，jvm怎么能够识别class文件的。</p>
+</blockquote>
         
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
+          <p class="article-more-link">
+            <a href="/2017/01/15/jvm-class内部结构/#more">继续阅读全文 »</a>
+          </p>
         
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2017/01/15/jvm-class内部结构/" data-id="cj3pzibx0001cswfyqe4kb8vo" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-sdk-design-rules" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/12/sdk-design-rules/" class="article-date">
+  <time datetime="2017-01-12T03:17:05.000Z" itemprop="datePublished">2017-01-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/sdk/">sdk</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/12/sdk-design-rules/">sdk-design-rules</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Twitter 的 Fabric 是知名的注重质量的 SDK，并已部署在数十亿的设备。在这次dev 演讲中，来自 Twitter 的 Ty Smith，揭示了 Fabric 团队创建他们 Fabric 的各种原则，特别是在 Android 方面。通过深入参与技术决策团队，Ty 了解到很多信息，他展示了团队在创建这个 SDK 过程中，学到的各种经验心得，关于稳定性、性能、SDK 体积控制、以及对于一些特殊情况的处理这些方面。无论你现在或将来想要建设一个 SDK，通过这次演讲你应该能收益很多关于设计 SDK 的伟大想法。</p>
+</blockquote>
         
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/jacklongway" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
+          <p class="article-more-link">
+            <a href="/2017/01/12/sdk-design-rules/#more">继续阅读全文 »</a>
+          </p>
         
-            <li class="waves-block waves-effect">
-              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
-                <i class="icon icon-lg icon-weibo"></i>
-                Weibo
-              </a>
-            </li>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2017/01/12/sdk-design-rules/" data-id="cj3pzibxi0025swfy8gr0of44" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sdk/">sdk</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-jvm-heap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/11/jvm-heap/" class="article-date">
+  <time datetime="2017-01-11T13:45:17.000Z" itemprop="datePublished">2017-01-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jvm/">jvm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/11/jvm-heap/">jvm-(heap-gc)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那么这篇文章，我来分析一下，jvm里面的堆以及gc，前面也说过，堆内存的重要性，堆与我们开发非常密切，如果在写程序的过程中，没有很好的利用堆内存，最为常见的问题就是内存泄漏，内存溢出等致命bug。下面我来详细分析一下jvm里面的堆与gc。</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2017/01/11/jvm-heap/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2017/01/11/jvm-heap/" data-id="cj3pzibx4001hswfy7ca6e5no" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gc/">gc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/">heap</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-jvm-class-verify" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/07/jvm-class-verify/" class="article-date">
+  <time datetime="2017-01-07T09:58:52.000Z" itemprop="datePublished">2017-01-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/07/jvm-class-verify/">jvm-class加载验证</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的隔离，互不干扰，数据安全，运行安全等安全机制，能够保证我们的程序在自身稳定的情况下，不会受到外界环境干扰，而出现进程运行异常，这篇文章从jvm加载class的角度来分析jvm内部安全体系。</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2017/01/07/jvm-class-verify/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2017/01/07/jvm-class-verify/" data-id="cj3pzibww0015swfyuhb2gsah" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class-verify/">class-verify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/inbox/">inbox</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/security/">security</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-jvm-classloader" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/04/jvm-classloader/" class="article-date">
+  <time datetime="2017-01-04T09:06:02.000Z" itemprop="datePublished">2017-01-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jvm/">jvm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/04/jvm-classloader/">jvm-class生命周期</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在class文件中描述的各种信息，最终都需要被加载到虚拟机中之后，才能被运行和使用。<br>虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验，转换，解析和初始化，最终形成可以被虚拟机直接使用的java类型，这就是虚拟机的类加载机制。</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/01/04/jvm-classloader/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2017/01/04/jvm-classloader/" data-id="cj3pzibwy0019swfyazf0x3wh" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-jvm-memorymodel" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/03/jvm-memorymodel/" class="article-date">
+  <time datetime="2017-01-03T09:44:30.000Z" itemprop="datePublished">2017-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jvm/">jvm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/03/jvm-memorymodel/">jvm-内存模型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2017/01/03/jvm-memorymodel/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2017/01/03/jvm-memorymodel/" data-id="cj3pzibx1001fswfyt2se5nke" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-2016总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/30/2016总结/" class="article-date">
+  <time datetime="2016-12-30T13:37:24.000Z" itemprop="datePublished">2016-12-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/other/">other</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/30/2016总结/">总结过去,展望未来,致敬2016</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>2016即将过去，此时我在想，我该写点什么好了，我该怎么总结自己这一年中的得与失了，我该怎么计划2017了，我该如何计划自己的未来了，我离自己的职业规划的目标还差多远了，那么此文不聊技术，总结自我一下。希望看到此文的同仁也会有自己的感受，也希望同仁对自己也好好的总结。</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2016/12/30/2016总结/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2016/12/30/2016总结/" data-id="cj3pzibvt0000swfy0hc0xdi1" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-android-system-img" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/28/android-system-img/" class="article-date">
+  <time datetime="2016-12-28T02:44:14.000Z" itemprop="datePublished">2016-12-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/28/android-system-img/">android脑图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般<br>我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么<br>我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们<br>就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间<br>我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了<br>今天的<code>android</code>系统中，包括<code>编译,打包</code>,<code>运行时</code>,<code>框架</code>,<code>安装</code>等脑图。<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/12/28/android-system-img/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2016/12/28/android-system-img/" data-id="cj3pzibwh000gswfyecss1zfy" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-sys-img/">android-sys-img</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xmind/">xmind</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-JMM-transient-4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/25/JMM-transient-4/" class="article-date">
+  <time datetime="2016-12-25T04:01:41.000Z" itemprop="datePublished">2016-12-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/25/JMM-transient-4/">JMM-transient</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>java里面将一个对象序列化，步骤就是将要被序列化的对象实现<code>Serializable</code>接口，这个接口是个标志接口，跟java里面的<code>Clonable,Closable</code>等接口一样，没有具体的行为标准定义，就是一个描述。只有实现了序列化接口的对象，才能够序列化，但是我们还注意到序列化对象的类的内部还定义了一个<code>serialVersionUUID</code>,这个是做什么的了，这个可以理解为一个token，只有token值一样的类，序列化的对象才可逆，也就是说，标志这个<code>class,Class</code>对象是否前后版本一致。注意类里面的被序列的数据只有，非<code>static</code>字段，非<code>transient</code>字段。下面重点来来讲解序列化的几种不同姿势。以及我们需要的地方，但是在<code>Android</code>里面最好用<code>Parcelable</code>接口，实现数据的序列化，这个本地性能很棒，原因是内存拷贝，前者是反射，性能当然差点哈，但是如果要将对象在网络传输，那么我们就只能用前者了。其实还有一个接口可以实现序列化，本文为了更专注序列化的几大特性来讲，不会过多介绍，后面我会提到。知道就行。</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2016/12/25/JMM-transient-4/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2016/12/25/JMM-transient-4/" data-id="cj3pzibw80007swfyfc89bg88" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/transient/">transient</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-transfer-security-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/22/transfer-security-1/" class="article-date">
+  <time datetime="2016-12-22T08:01:43.000Z" itemprop="datePublished">2016-12-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/22/transfer-security-1/">安全那点事情</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概<br>包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，<br>so 调试等,下面我就针对我每个方面的思考详细讲解一下。</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2016/12/22/transfer-security-1/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2016/12/22/transfer-security-1/" data-id="cj3pzibxq002lswfybfp3wnfx" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/attack/">attack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/security/">security</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页&raquo;</a>
+  </nav>
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title recent-posts">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/04/push-md/">对工信部对android推送通道规范化的一些思考</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/21/build-scan/">build-scan</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/18/aspect初探与应用/">aspect初探与应用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/12/Loader/">Android中的Loader异步加载架构分析</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/04/star-模型/">star模型</a>
+          </li>
         
       </ul>
     </div>
   </div>
+
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
 </aside>
 
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">longway&#39;s blog</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header index-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">longway&#39;s blog</h1>
-        <h5 class="subtitle">
-            
-                Technology change the world
-            
-        </h5>
-    </div>
-
-    
-
-
-</header>
-
-<div class="container body-wrap">
-
-    <ul class="post-list">
-    
-        <li class="post-list-item fade">
-            <article id="post-jvm-class内部结构"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-01-15 14:24:26" datetime="2017-01-15T06:24:26.000Z"  itemprop="datePublished">2017-01-15</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
+      </div>
+      <footer id="footer">
   
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/15/jvm-class内部结构/">jvm-class内部结构深度揭秘</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-前面几篇关于jvm的分析，比如gc，内存分区，类加载，类验证等都是基于已有class文件进行分析的，我们并没过多的去关系class的内部结构，在大多数情况下，我们也没必要去了解class的构成，在开发层面，我们都是假定class已知，实际情况却是也是这样，我们通过开发工具，比如android开发中我们最为熟悉的开发工具，也是业界我个人认为最为强大的工具帮我们完成了class的生成，我们只需要关心最上层的源码编写，那有同学可能会疑惑，既然开发工具都帮我完成了，我们还有必要去了解内部吗？我们用过classloader加载一下不就好了吗？是的，说的很对，几乎99%的场景下，我们都是这样，但是假如一天遇到需要我们修改class内部结构的需求，那这时类加载就帮我们不了了，我们能够去完成需求的前提是，对class结构有一定的了解，不管如何，最为用java语言开发的开发者，都建议多少深入研究一下class的内部结构，这样不仅仅对写上层代码有帮助，更有助于我们对我们写的程序的把控，做到心理有底的代码必定bug会降到最低，说了这么多，这篇就来简单分析一下class内部的存储逻辑，jvm怎么能够识别class文件的。
-
-    
-
-        <a href="/2017/01/15/jvm-class内部结构/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2017 龙伟&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
-
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;youemail@outlook.com
     </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-sdk-design-rules"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-01-12 11:17:05" datetime="2017-01-12T03:17:05.000Z"  itemprop="datePublished">2017-01-12</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/sdk/">sdk</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/12/sdk-design-rules/">sdk-design-rules</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-Twitter 的 Fabric 是知名的注重质量的 SDK，并已部署在数十亿的设备。在这次dev 演讲中，来自 Twitter 的 Ty Smith，揭示了 Fabric 团队创建他们 Fabric 的各种原则，特别是在 Android 方面。通过深入参与技术决策团队，Ty 了解到很多信息，他展示了团队在创建这个 SDK 过程中，学到的各种经验心得，关于稳定性、性能、SDK 体积控制、以及对于一些特殊情况的处理这些方面。无论你现在或将来想要建设一个 SDK，通过这次演讲你应该能收益很多关于设计 SDK 的伟大想法。
-
-    
-
-        <a href="/2017/01/12/sdk-design-rules/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sdk/">sdk</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-jvm-heap"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-01-11 21:45:17" datetime="2017-01-11T13:45:17.000Z"  itemprop="datePublished">2017-01-11</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/11/jvm-heap/">jvm-(heap-gc)</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-前面几篇文章我们大体了解到了，jvm运行时内存的布局，class的加载，以及class的验证，这些都是我们虚拟机平台最为核心的功能，其实虚拟机是一个很庞大的系统，里面每个子系统都很重要，如果我们需要对jvm进行一些行为控制，那么我们必须好好理解，那么这篇文章，我来分析一下，jvm里面的堆以及gc，前面也说过，堆内存的重要性，堆与我们开发非常密切，如果在写程序的过程中，没有很好的利用堆内存，最为常见的问题就是内存泄漏，内存溢出等致命bug。下面我来详细分析一下jvm里面的堆与gc。
-
-    
-
-        <a href="/2017/01/11/jvm-heap/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gc/">gc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/">heap</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-jvm-class-verify"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-01-07 17:58:52" datetime="2017-01-07T09:58:52.000Z"  itemprop="datePublished">2017-01-07</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/07/jvm-class-verify/">jvm-class加载验证</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-java通过所谓的inbox模型保证了其安全性, inbox就是进程之间的隔离，互不干扰，数据安全，运行安全等安全机制，能够保证我们的程序在自身稳定的情况下，不会受到外界环境干扰，而出现进程运行异常，这篇文章从jvm加载class的角度来分析jvm内部安全体系。
-
-    
-
-        <a href="/2017/01/07/jvm-class-verify/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class-verify/">class-verify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/inbox/">inbox</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/security/">security</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-jvm-classloader"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-01-04 17:06:02" datetime="2017-01-04T09:06:02.000Z"  itemprop="datePublished">2017-01-04</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/04/jvm-classloader/">jvm-class生命周期</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        在class文件中描述的各种信息，最终都需要被加载到虚拟机中之后，才能被运行和使用。虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验，转换，解析和初始化，最终形成可以被虚拟机直接使用的java类型，这就是虚拟机的类加载机制。
-    
-
-        <a href="/2017/01/04/jvm-classloader/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-jvm-memorymodel"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-01-03 17:44:30" datetime="2017-01-03T09:44:30.000Z"  itemprop="datePublished">2017-01-03</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/01/03/jvm-memorymodel/">jvm-内存模型</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-世界是一个很现实的空间，但是我们写的代码运行在一个虚拟的空间，我们知道这个虚拟空间就是虚拟机内部为我们代码运行分配的一个空间，但是这个空间的特性就是规则，也就是说每块区域的职责很明确，下面就揭开虚拟机内存内幕，内存布局是作为了解，学习，虚拟机的最为重要的部分。这篇主要让大家对内存布局有个清晰的认识。
-
-    
-
-        <a href="/2017/01/03/jvm-memorymodel/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-2016总结"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2016-12-30 21:37:24" datetime="2016-12-30T13:37:24.000Z"  itemprop="datePublished">2016-12-30</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/other/">other</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/12/30/2016总结/">总结过去,展望未来,致敬2016</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-2016即将过去，此时我在想，我该写点什么好了，我该怎么总结自己这一年中的得与失了，我该怎么计划2017了，我该如何计划自己的未来了，我离自己的职业规划的目标还差多远了，那么此文不聊技术，总结自我一下。希望看到此文的同仁也会有自己的感受，也希望同仁对自己也好好的总结。
-
-    
-
-        <a href="/2016/12/30/2016总结/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-android-system-img"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2016-12-28 10:44:14" datetime="2016-12-28T02:44:14.000Z"  itemprop="datePublished">2016-12-28</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/12/28/android-system-img/">android脑图</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-往往文本不那么直观，也让那些不喜欢看文字的大佬们比较疲劳，所以一般我们都会用图片替代文本，即使是文本我们通过一些手段将其转换成图片，那么我们是开发人员，是不是必须跟代码打交代了，有时想理解一些框架原理，我们就不得不去看底层源码，但是我有一种感受就是看懂源码容易，但是过一段时间我就会忘记，我认为记不久的根本原因就是没有在脑袋形成一幅风景，所以就有了今天的android系统中，包括编译,打包,运行时,框架,安装等脑图。
-    
-
-        <a href="/2016/12/28/android-system-img/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-sys-img/">android-sys-img</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xmind/">xmind</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-JMM-transient-4"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2016-12-25 12:01:41" datetime="2016-12-25T04:01:41.000Z"  itemprop="datePublished">2016-12-25</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/12/25/JMM-transient-4/">JMM-transient</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-java里面将一个对象序列化，步骤就是将要被序列化的对象实现Serializable接口，这个接口是个标志接口，跟java里面的Clonable,Closable等接口一样，没有具体的行为标准定义，就是一个描述。只有实现了序列化接口的对象，才能够序列化，但是我们还注意到序列化对象的类的内部还定义了一个serialVersionUUID,这个是做什么的了，这个可以理解为一个token，只有token值一样的类，序列化的对象才可逆，也就是说，标志这个class,Class对象是否前后版本一致。注意类里面的被序列的数据只有，非static字段，非transient字段。下面重点来来讲解序列化的几种不同姿势。以及我们需要的地方，但是在Android里面最好用Parcelable接口，实现数据的序列化，这个本地性能很棒，原因是内存拷贝，前者是反射，性能当然差点哈，但是如果要将对象在网络传输，那么我们就只能用前者了。其实还有一个接口可以实现序列化，本文为了更专注序列化的几大特性来讲，不会过多介绍，后面我会提到。知道就行。
-
-    
-
-        <a href="/2016/12/25/JMM-transient-4/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/transient/">transient</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-transfer-security-1"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2016-12-22 16:01:43" datetime="2016-12-22T08:01:43.000Z"  itemprop="datePublished">2016-12-22</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/android/">android</a></li></ul>
-
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/12/22/transfer-security-1/">安全那点事情</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-安全重要吗？有必要深度考虑安全吗？什么是安全？这篇文章就这些问题来聊聊安全。就我心目中的安全而言，安全大概包括以下几个方面: 网络数据传输安全，本地数据安全，网络中间劫持，运营商劫持,app反编译，app二次打包，so 调试等,下面我就针对我每个方面的思考详细讲解一下。
-
-    
-
-        <a href="/2016/12/22/transfer-security-1/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/attack/">attack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/security/">security</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-    </ul>
-
-    
-<nav id="page-nav">
-    <div class="inner">
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
-    </div>
-</nav>
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-        站点总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
-        站点总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
-            
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p>
-            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
-            <span>龙伟 &copy; 2014 - 2017</span>
-        </p>
-    </div>
+  </div>
 </footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/page/2/&title=longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/page/2/&title=longway's blog&source=developer" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/page/2/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=longway's blog&url=http://www.jackway.cn/page/2/&via=http://www.jackway.cn" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/page/2/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAB0klEQVR42u3aS47CQAwFQO5/6cwWCYU82+kGRtUrxAzpysby7/GIz/F0nr95/evz92e/fX3CzQcXF3fMPd6e91f2npO88OmNuLi4G7ln1+dBJ2FVn4+Li/uL3DwAvQ+LuLi4/4mbv0xeSuHi4n4PNy9aqq2NpIGypFbDxcUdcPMu5brPS/q7uLi4Le5RPL0XSxKd6HZcXNwt3GqakjQ78vDXvBcXF3cxN2905q2N+ZrFRQjDxcVdzM0boNWgU32ZUYKFi4t7KzcZfCYXJwtYeXv09Gm4uLhbuHmi00PM42szL8PFxb2J21uiStYyesVPYVsEFxd3MTcPYXlplBdFUcmEi4u7mFtNR3rjk7yRGtVquLi4G7nViy+aF0FYzJ+Ji4u7k5uzqmtYd01Fo+IHFxd3GTdvXiQjk3zImic9uLi4+7m94qc6ZM0HNhdDVlxc3C3cXiHUS4yqCVCh/4qLizvmHsWTNDfz/ym/Hi4u7hZuNbhUk5XRmsVggQMXF3fO7Y1J5i3UZpjDxcXdyO01RqsDkmrIu5j84OLifg23is5DWLTUhYuL+8XcalE0KZlwcXE/xe0tT/TWPfPRLC4u7qe4k2ZHOUEpdm1H/V1cXNwO9w//T+IxcutAIAAAAABJRU5ErkJggg==" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
 <script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-
-lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982')
-
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
 </script>
-
-<script src="/js/main.min.js?v=1.6.7"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
-</li>
-</template>
-
-<script src="/js/search.min.js?v=1.6.7" async></script>
+      
 
 
 
 
 
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
+ <script  type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2129764"></script>
 
 
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '死鬼去哪里了！';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '(つェ⊂)咦!又好了!';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
         }
-    });
-})();
-</script>
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
 
 
+ <script src="/js/is.js"></script>
 
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
 </body>
 </html>

@@ -1,26 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
-
-    
-
-    
-
-
-
-    <meta charset="utf-8">
-    
-    
-    
-    <title>单例模式真的很简单吗？ | longway&#39;s blog | Technology change the world</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#00796B">
-    
-    
-    <meta name="keywords" content="volatile,synchronized,single,enum">
-    <meta name="description" content="单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各种版本，这篇文章我想跟大家聊聊我心中的单例模式，同时我会给出我心目中的单例模式的各种版本，同时会给出不同版本的优缺点，以及我们最后应该选用哪个版本才是最为安全，优雅，同时性能也是比较好的，最后我想说，安全，性能是一个折中的考虑。">
+  <meta charset="utf-8">
+  
+  <title>单例模式真的很简单吗？ | longway&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各种版本，这篇文章我想跟大家聊聊我心中的单例模式，同时我会给出我心目中的单例模式的各种版本，同时会给出不同版本的优缺点，以及我们最后应该选用哪个版本才是最为安全，优雅，同时性能也是比较好的，最后我想说，安全，性能是一个折中的考虑。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="单例模式真的很简单吗？">
 <meta property="og:url" content="http://www.jackway.cn/2016/12/03/single/index.html">
@@ -30,164 +15,91 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单例模式真的很简单吗？">
 <meta name="twitter:description" content="单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各种版本，这篇文章我想跟大家聊聊我心中的单例模式，同时我会给出我心目中的单例模式的各种版本，同时会给出不同版本的优缺点，以及我们最后应该选用哪个版本才是最为安全，优雅，同时性能也是比较好的，最后我想说，安全，性能是一个折中的考虑。">
+  
+    <link rel="alternate" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
     
-        <link rel="alternate" type="application/atom+xml" title="longway&#39;s blog" href="/atom.xml">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/style.css?v=1.6.7">
-    <script>window.lazyScripts=[]</script>
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
 
 <body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu" class="hide" >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">龙伟</h5>
-          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
-        </hgroup>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.jackway.cn"></form>
       </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
     </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                Home
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/jacklongway" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
-                <i class="icon icon-lg icon-weibo"></i>
-                Weibo
-              </a>
-            </li>
-        
-      </ul>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">longway&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Technology change the world</a>
+        </h2>
+      
     </div>
   </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">单例模式真的很简单吗？</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
 </header>
-<header class="content-header post-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">单例模式真的很简单吗？</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2016-12-02T18:30:04.000Z" itemprop="datePublished" class="page-time">
-  2016-12-03
-</time>
-
-
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
-
-            
-        </h5>
-    </div>
-
+      <div class="outer">
+        <section id="main"><article id="post-single" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/03/single/" class="article-date">
+  <time datetime="2016-12-02T18:30:04.000Z" itemprop="datePublished">2016-12-03</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
 
-
-</header>
-
-
-<div class="container body-wrap">
+  </div>
+  <div class="article-inner">
     
-    <aside class="post-widget">
-        <nav class="post-toc-wrap" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单例对象创建的一般步骤"><span class="post-toc-number">1.</span> <span class="post-toc-text">单例对象创建的一般步骤</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV1"><span class="post-toc-number">2.</span> <span class="post-toc-text">SingletonV1</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV2"><span class="post-toc-number">3.</span> <span class="post-toc-text">SingletonV2</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV3"><span class="post-toc-number">4.</span> <span class="post-toc-text">SingletonV3</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV4"><span class="post-toc-number">5.</span> <span class="post-toc-text">SingletonV4</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV5"><span class="post-toc-number">6.</span> <span class="post-toc-text">SingletonV5</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV6"><span class="post-toc-number">7.</span> <span class="post-toc-text">SingletonV6</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV7"><span class="post-toc-number">8.</span> <span class="post-toc-text">SingletonV7</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV8"><span class="post-toc-number">9.</span> <span class="post-toc-text">SingletonV8</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV9"><span class="post-toc-number">10.</span> <span class="post-toc-text">SingletonV9</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV10"><span class="post-toc-number">11.</span> <span class="post-toc-text">SingletonV10</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SingletonV11"><span class="post-toc-number">12.</span> <span class="post-toc-text">SingletonV11</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#扩展"><span class="post-toc-number">13.</span> <span class="post-toc-text">扩展</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">14.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可能的疑问"><span class="post-toc-number">15.</span> <span class="post-toc-text">可能的疑问</span></a></li></ol>
-        </nav>
-    </aside>
     
-<article id="post-single"
-  class="post-article article-type-post fade" itemprop="blogPost">
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      单例模式真的很简单吗？
+    </h1>
+  
 
-    <div class="post-card">
-        <h1 class="post-card-title">单例模式真的很简单吗？</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2016-12-03 02:30:04" datetime="2016-12-02T18:30:04.000Z"  itemprop="datePublished">2016-12-03</time>
-
-            
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/java/">java</a></li></ul>
-
-
-
-            
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
-    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
-</span>
-
-
-            
-
-        </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <blockquote>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <blockquote>
 <p>单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各种版本，这篇文章我想跟大家聊聊我心中的单例模式，同时我会给出我心目中的单例模式的各种版本，同时会给出不同版本的优缺点，以及我们最后应该选用哪个版本才是最为安全，优雅，同时性能也是比较好的，最后我想说，安全，性能是一个折中的考虑。</p>
 </blockquote>
 <a id="more"></a>
@@ -234,308 +146,170 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看似很简单一种设计模式，其实我们深入思考一下，就没那么简单了，中间有很多技术点，有很多细节需要我们去挖掘，思考，最后推荐SingletonV7版本，注意这个只是保证了对象创建安全，对象成员的安全，还需要我们自己去保证。希望阅读过这篇文章的同学，再也不要写不安全的单例对象代码了，代码改进的一小步，程序稳定，可靠的一大步。</p>
 <h2 id="可能的疑问"><a href="#可能的疑问" class="headerlink" title="可能的疑问"></a>可能的疑问</h2><p>有的同学可能会在想，客户端平台不是不建议enum吗？确实没错，那是很早以前android官网也不建议使用，但是现在你去看官网还能看到那句话吗？google已经去掉了，至于为什么去掉了，我个人认为，有几种可能的原因，第一个是目前机器的配置，现在的cpu，内存等配置跟以前都不是在一个级别上，第二个就是软件层运行时对代码优化。另外还有<code>JakeWharton</code>大神都不考虑这个了，我们还有什么理由考虑这些了，其实真的没必要考虑这个了。</p>
 
-        </div>
-
-        <blockquote class="post-copyright">
-    <div class="content">
-        
-<span class="post-time">
-    Last updated: <time datetime="2017-06-04T08:05:33.000Z" itemprop="dateUpdated">2017-06-04 16:05:33</time>
-</span><br>
-
-
-        
-        该内容没经过版主同意不得随意转发
-        
+      
     </div>
-    <footer>
-        <a href="http://www.jackway.cn">
-            <img src="/img/avatar.jpg" alt="龙伟">
-            龙伟
-        </a>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2016/12/03/single/" data-id="cj3pzibxl002dswfyra9oke9h" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/enum/">enum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/single/">single</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/synchronized/">synchronized</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
+
     </footer>
-</blockquote>
-
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/03/safesharepreferences/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
         
-<div class="page-reward">
-    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
-</div>
-
-
-
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/enum/">enum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/single/">single</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/synchronized/">synchronized</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
-
-
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2016/12/03/single/&title=《单例模式真的很简单吗？》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2016/12/03/single/&title=《单例模式真的很简单吗？》 — longway's blog&source=
-单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2016/12/03/single/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《单例模式真的很简单吗？》 — longway's blog&url=http://www.jackway.cn/2016/12/03/single/&via=http://www.jackway.cn" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2016/12/03/single/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
+          SharedPreferences真的安全吗?
+        
+      </div>
     </a>
-</div>
-
-
-
-        </div>
-    </div>
-
-    
-<nav class="post-nav flex-row flex-justify-between">
   
-    <div class="waves-block waves-effect prev">
-      <a href="/2016/12/03/safesharepreferences/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">SharedPreferences真的安全吗?</h4>
-      </a>
-    </div>
   
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2016/11/29/gradle/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">揭开Gradle的神秘面纱</h4>
-      </a>
-    </div>
+    <a href="/2016/11/29/gradle/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">揭开Gradle的神秘面纱</div>
+    </a>
   
 </nav>
 
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+       
+      
+           <div id="uyan_frame"></div>
+    
+  </div>
+ 
+  
 
-
+</section>
+           
+    <aside id="sidebar">
+  
     
 
-
-
-
-
-
-
-<section class="comments" id="comments">
-    <!-- UY BEGIN -->
-    <div id="uyan_frame"></div>
-    <script src="http://v2.uyan.cc/code/uyan.js?uid=2129764"></script>
-    <!-- UY END -->
-</section>
-
-
-
-
-
-
-
-
-
-
-</article>
-
-<div id="reward" class="page-modal reward-lay">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <h3 class="reward-title">
-        <i class="icon icon-quote-left"></i>
-        谢谢大爷~
-        <i class="icon icon-quote-right"></i>
-    </h3>
-    <ul class="reward-items">
-        
-        <li>
-            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
-            <p>微信</p>
-        </li>
-        
-
-        
-        <li>
-            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
-            <p>支付宝</p>
-        </li>
-        
-    </ul>
-</div>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-        站点总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
-        站点总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
-            
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
-        </p>
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#单例对象创建的一般步骤"><span class="toc-number">1.</span> <span class="toc-text">单例对象创建的一般步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV1"><span class="toc-number">2.</span> <span class="toc-text">SingletonV1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV2"><span class="toc-number">3.</span> <span class="toc-text">SingletonV2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV3"><span class="toc-number">4.</span> <span class="toc-text">SingletonV3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV4"><span class="toc-number">5.</span> <span class="toc-text">SingletonV4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV5"><span class="toc-number">6.</span> <span class="toc-text">SingletonV5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV6"><span class="toc-number">7.</span> <span class="toc-text">SingletonV6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV7"><span class="toc-number">8.</span> <span class="toc-text">SingletonV7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV8"><span class="toc-number">9.</span> <span class="toc-text">SingletonV8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV9"><span class="toc-number">10.</span> <span class="toc-text">SingletonV9</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV10"><span class="toc-number">11.</span> <span class="toc-text">SingletonV10</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingletonV11"><span class="toc-number">12.</span> <span class="toc-text">SingletonV11</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展"><span class="toc-number">13.</span> <span class="toc-text">扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">14.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可能的疑问"><span class="toc-number">15.</span> <span class="toc-text">可能的疑问</span></a></li></ol>
+          </div>
+      </div>
     </div>
-    <div class="bottom">
-        <p>
-            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
-            <span>龙伟 &copy; 2014 - 2017</span>
-        </p>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2017 龙伟&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;youemail@outlook.com
+    </div>
+  </div>
 </footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2016/12/03/single/&title=《单例模式真的很简单吗？》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2016/12/03/single/&title=《单例模式真的很简单吗？》 — longway's blog&source=
-单例模式真的不简单，但是单例模式也是我们开发中常用的一种设计模式,然而不管Github上开源的代码，还是很多开发同学写的单例模式，百花齐放，百家争鸣，各..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2016/12/03/single/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《单例模式真的很简单吗？》 — longway's blog&url=http://www.jackway.cn/2016/12/03/single/&via=http://www.jackway.cn" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2016/12/03/single/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABv0lEQVR42u3aQZKDMAwEwP3/p7MPSAVGkm2yW+1TCgh0cpiSZH5+4vV6W/k1yZHFCxcXd8x9Xa7kAfnx93vmBlxc3PPc64d9+nwdVb3739hwcXG/knv9rTz4cHFx/xM3KVx6R3Bxcb+NmzQ/8zBKmqtlvRouLu6Am08p933eMt/FxcVtcV/FlQRWdcxaeDouLu4Rbh4oE0r17M2VuLi4m7l5W1LdFp28bBFFGC4u7jZu79LkR1a3ZAolDi4u7mbuqgDKB6C9fxQXF/dZ7rwFyl/LSPL1JshwcXE3cHvtzdoBSrUkwsXF3c3tbXn2Xo+oljvRwBQXF3cD91N85DdKCp1kXJIPbXFxcXdz50VMby7b3IbBxcU9ws2LjyS8epsr1bDDxcV9ips3Ib3mJxmIFIIMFxd3M3ey7bGjAPo4NsXFxX2Iu+xtr+K6uQ8uLu5mbi905sOO5pYMLi7uEW41XHo/LBl55OUOLi7uGW4vvObD0+TsTfODi4u7mTsJmslIdFlvhIuL+yg3j56k9Ll+Ci4u7l/h5oVR0kSVswsXF/cgtxc9SczlgRiFGi4u7hHuqo4jj6o8yEbzXVxc3A73F17FAS/OPaDNAAAAAElFTkSuQmCC" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
 <script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
-
-
-
-lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982')
-
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
 </script>
-
-<script src="/js/main.min.js?v=1.6.7"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
-</li>
-</template>
-
-<script src="/js/search.min.js?v=1.6.7" async></script>
+      
 
 
 
 
 
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
+ <script  type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2129764"></script>
 
 
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '死鬼去哪里了！';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '(つェ⊂)咦!又好了!';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
         }
-    });
-})();
-</script>
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
 
 
+ <script src="/js/is.js"></script>
 
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
 </body>
 </html>

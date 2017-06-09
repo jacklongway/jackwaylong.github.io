@@ -1,26 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
-
-    
-
-    
-
-
-
-    <meta charset="utf-8">
-    
-    
-    
-    <title>star模型 | longway&#39;s blog | Technology change the world</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#00796B">
-    
-    
-    <meta name="keywords" content="SoftPower">
-    <meta name="description" content="由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交流了一下，如何才能保证工作高质量完成的同时，自己的技术同时得到了提高。我就说了star模型，今天借此这个机会，和大家一起聊聊这个经典模型，其实我们所有的事情，如果按照这个模型套路靠拢，最终的结果肯定不会太差，但是也未必一定成功。不成功不代表失败，">
+  <meta charset="utf-8">
+  
+  <title>star模型 | longway&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交流了一下，如何才能保证工作高质量完成的同时，自己的技术同时得到了提高。我就说了star模型，今天借此这个机会，和大家一起聊聊这个经典模型，其实我们所有的事情，如果按照这个模型套路靠拢，最终的结果肯定不会太差，但是也未必一定成功。不成功不代表失败，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="star模型">
 <meta property="og:url" content="http://www.jackway.cn/2017/03/04/star-模型/index.html">
@@ -32,170 +17,91 @@
 <meta name="twitter:title" content="star模型">
 <meta name="twitter:description" content="由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交流了一下，如何才能保证工作高质量完成的同时，自己的技术同时得到了提高。我就说了star模型，今天借此这个机会，和大家一起聊聊这个经典模型，其实我们所有的事情，如果按照这个模型套路靠拢，最终的结果肯定不会太差，但是也未必一定成功。不成功不代表失败，">
 <meta name="twitter:image" content="https://www.processon.com/chart_image/58bad08be4b0015fb3bac26b.png">
+  
+    <link rel="alternate" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
     
-        <link rel="alternate" type="application/atom+xml" title="longway&#39;s blog" href="/atom.xml">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/style.css?v=1.6.7">
-    <script>window.lazyScripts=[]</script>
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
 
 <body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu" class="hide" >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">龙伟</h5>
-          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
-        </hgroup>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.jackway.cn"></form>
       </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
     </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                Home
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/jacklongway" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
-                <i class="icon icon-lg icon-weibo"></i>
-                Weibo
-              </a>
-            </li>
-        
-      </ul>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">longway&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Technology change the world</a>
+        </h2>
+      
     </div>
   </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">star模型</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
 </header>
-<header class="content-header post-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">star模型</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2017-03-04T14:19:27.000Z" itemprop="datePublished" class="page-time">
-  2017-03-04
-</time>
-
-
-            
-        </h5>
-    </div>
-
+      <div class="outer">
+        <section id="main"><article id="post-star-模型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/04/star-模型/" class="article-date">
+  <time datetime="2017-03-04T14:19:27.000Z" itemprop="datePublished">2017-03-04</time>
+</a>
     
-
-
-</header>
-
-
-<div class="container body-wrap">
+  </div>
+  <div class="article-inner">
     
-    <aside class="post-widget">
-        <nav class="post-toc-wrap" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#star模型图"><span class="post-toc-number">1.</span> <span class="post-toc-text">star模型图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#star案例"><span class="post-toc-number">2.</span> <span class="post-toc-text">star案例</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">总结</span></a></li></ol>
-        </nav>
-    </aside>
     
-<article id="post-star-模型"
-  class="post-article article-type-post fade" itemprop="blogPost">
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      star模型
+    </h1>
+  
 
-    <div class="post-card">
-        <h1 class="post-card-title">star模型</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2017-03-04 22:19:27" datetime="2017-03-04T14:19:27.000Z"  itemprop="datePublished">2017-03-04</time>
-
-            
-
-
-            
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
-    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
-</span>
-
-
-            
-
-        </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <blockquote>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <blockquote>
 <p>由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交流了一下，如何才能保证工作高质量完成的同时，自己的技术同时得到了提高。我就说了star模型，今天借此这个机会，和大家一起聊聊这个经典模型，其实我们所有的事情，如果按照这个模型套路靠拢，最终的结果肯定不会太差，但是也未必一定成功。不成功不代表失败，失败有很多因素。下面用拆分模型的方式分析这个模型我们所要知道哪些因素。</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="star模型图"><a href="#star模型图" class="headerlink" title="star模型图"></a>star模型图</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://www.processon.com/chart_image/58bad08be4b0015fb3bac26b.png" alt="star" title="">
-                </div>
-                <div class="image-caption">star</div>
-            </figure>
+<h2 id="star模型图"><a href="#star模型图" class="headerlink" title="star模型图"></a>star模型图</h2><p><img src="https://www.processon.com/chart_image/58bad08be4b0015fb3bac26b.png" alt="star"></p>
 <p>这个模型很简单，只要我们真正理解了这个状态图，其实我们在做很多事情都有了方向，都知道自己要做什么了，就不会盲目，不会迷茫的做一些事情。下面详细分析这四种状态，然后结合实际的问题用这种模型进行验证。</p>
 <ol>
 <li>场景<br>所谓场景就是我们经常所有的背景，一切事情的产生都有它的背景，不会凭空产生，跟我们以前书本学到的唯物主义类似，明白了背景之后，我们需要进一步分析，在当前背景下，我们已经有什么，没有什么。</li>
@@ -206,308 +112,170 @@
 <h2 id="star案例"><a href="#star案例" class="headerlink" title="star案例"></a>star案例</h2><p>比如我们学习android里面的view，首先我们要知道view的场景，这个场景不难发现就是用户需要交互入口，我们的最终目标就是能够在手机上绘制出view，然后绑定事件，这样才能提供用户接口。为了实现这个目标，首先我们需要抽象，view是什么，view如何绘制到屏幕上，怎么给view绑定事件。这里就产生了3个task。最后分别执行这一系列的任务，中间可能还有很多子task，最后都done，然后验证最终结果，是不是满足了用户接口，最后写wiki总结，反复思考。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不管是在学习一门技术，还是做一项调研，还是分析一个产品，star模型都可以很好的指导我们，希望小伙伴们后面用这种模型尝试的分析，我相信这种模型带来的效果是很明显的。</p>
 
-        </div>
-
-        <blockquote class="post-copyright">
-    <div class="content">
-        
-<span class="post-time">
-    Last updated: <time datetime="2017-06-04T08:05:40.000Z" itemprop="dateUpdated">2017-06-04 16:05:40</time>
-</span><br>
-
-
-        
-        该内容没经过版主同意不得随意转发
-        
+      
     </div>
-    <footer>
-        <a href="http://www.jackway.cn">
-            <img src="/img/avatar.jpg" alt="龙伟">
-            龙伟
-        </a>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2017/03/04/star-模型/" data-id="cj3pzibxo002fswfypqiw9der" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SoftPower/">SoftPower</a></li></ul>
+
     </footer>
-</blockquote>
-
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/12/Loader/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
         
-<div class="page-reward">
-    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
-</div>
-
-
-
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SoftPower/">SoftPower</a></li></ul>
-
-
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/03/04/star-模型/&title=《star模型》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/03/04/star-模型/&title=《star模型》 — longway's blog&source=
-由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/03/04/star-模型/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《star模型》 — longway's blog&url=http://www.jackway.cn/2017/03/04/star-模型/&via=http://www.jackway.cn" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/03/04/star-模型/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
+          Android中的Loader异步加载架构分析
+        
+      </div>
     </a>
-</div>
-
-
-
-        </div>
-    </div>
-
-    
-<nav class="post-nav flex-row flex-justify-between">
   
-    <div class="waves-block waves-effect prev">
-      <a href="/2017/03/12/Loader/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Android中的Loader异步加载架构分析</h4>
-      </a>
-    </div>
   
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2017/02/12/jvm-字节码指令-3/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">jvm-字节码指令(3)</h4>
-      </a>
-    </div>
+    <a href="/2017/02/12/jvm-字节码指令-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">jvm-字节码指令(3)</div>
+    </a>
   
 </nav>
 
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+       
+      
+           <div id="uyan_frame"></div>
+    
+  </div>
+ 
+  
 
-
+</section>
+           
+    <aside id="sidebar">
+  
     
 
-
-
-
-
-
-
-<section class="comments" id="comments">
-    <!-- UY BEGIN -->
-    <div id="uyan_frame"></div>
-    <script src="http://v2.uyan.cc/code/uyan.js?uid=2129764"></script>
-    <!-- UY END -->
-</section>
-
-
-
-
-
-
-
-
-
-
-</article>
-
-<div id="reward" class="page-modal reward-lay">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <h3 class="reward-title">
-        <i class="icon icon-quote-left"></i>
-        谢谢大爷~
-        <i class="icon icon-quote-right"></i>
-    </h3>
-    <ul class="reward-items">
-        
-        <li>
-            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
-            <p>微信</p>
-        </li>
-        
-
-        
-        <li>
-            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
-            <p>支付宝</p>
-        </li>
-        
-    </ul>
-</div>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-        站点总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
-        站点总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
-            
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
-        </p>
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#star模型图"><span class="toc-number">1.</span> <span class="toc-text">star模型图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#star案例"><span class="toc-number">2.</span> <span class="toc-text">star案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+          </div>
+      </div>
     </div>
-    <div class="bottom">
-        <p>
-            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
-            <span>龙伟 &copy; 2014 - 2017</span>
-        </p>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2017 龙伟&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;youemail@outlook.com
+    </div>
+  </div>
 </footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/03/04/star-模型/&title=《star模型》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/03/04/star-模型/&title=《star模型》 — longway's blog&source=
-由于最近比较忙，没太多的时间来写文章，忙归忙，文章还得继续，本来这篇开始asm系列的，由于有好几个小伙伴包括已经进入程序开发行业的，已经在实习的，跟我交..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/03/04/star-模型/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《star模型》 — longway's blog&url=http://www.jackway.cn/2017/03/04/star-模型/&via=http://www.jackway.cn" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/03/04/star-模型/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACM0lEQVR42u3awY6DMAxFUf7/pxlptp1m7rNDVcxlhVQoOVk8JXaOA1/n7/V6T54n/3O+XMcVlwwZMm7LOJdX7ZM19rvvrscmQ4aM5zDSoawHx9lkylCgy5AhQ8ZyEPz+indlyJAhI/27daSuF38yZMiQsWbwj6VFsfVAyZOb9+IyZMi4IaPTGLj6/kP9DRkyZHwx49x01ZaGJHbR12XIkDGasS6l1cKXtwE4BgWxDBkyhjI64birDdA/oiFDhownMPr74DSCecSj8ciQIWM0I11lkVgkU8Pju7Z4lSFDxlQGj0Ky+UzvCazYj5UhQ8YgRlqUTxeF6aRwmAwZMp7ASAtqu45N8BYm+lWGDBlDGTxSa0u3dFGYbpWDboYMGTJGMHY1Gq+I5n8mS4YMGQ9g1MphaamudkQMsWXIkDGakYZdP3zT8xJx81KGDBmjGZ0WI3kyjdeWW4YMGYMYpDSfBmJtUtJYf7uJlSFDxjhGbZOZthhrBzgIWIYMGc9h1GKuM4haUa+1QJQhQ8YIRhqsZNvJF5dp+zM+OSJDhoybM9LtK2lA7mqOFhsGMmTIGMSobTLTpgJvG5BC3h9vyZAhYzSjttFNm5e73trQ8pQhQ8ZtGbyIlkYqn79a4AblNhkyZIxg9EOWF+ZqDYD4mIUMGTIezOgf/OKHycjyUYYMGTJ4eau2EEwLc9vOjMiQIeOGDH7YKw1l/m6rLihDhozRjFpjgC/vyPTVmpcb+hsyZMj4dsYPABbk80lvCNUAAAAASUVORK5CYII=" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
 <script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
-
-
-
-lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982')
-
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
 </script>
-
-<script src="/js/main.min.js?v=1.6.7"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
-</li>
-</template>
-
-<script src="/js/search.min.js?v=1.6.7" async></script>
+      
 
 
 
 
 
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
+ <script  type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2129764"></script>
 
 
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '死鬼去哪里了！';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '(つェ⊂)咦!又好了!';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
         }
-    });
-})();
-</script>
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
 
 
+ <script src="/js/is.js"></script>
 
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
 </body>
 </html>

@@ -1,26 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
-
-    
-
-    
-
-
-
-    <meta charset="utf-8">
-    
-    
-    
-    <title>深入分析classloader | longway&#39;s blog | Technology change the world</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#00796B">
-    
-    
-    <meta name="keywords" content="classloader">
-    <meta name="description" content="classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词就很通俗的说明了是class加载器，不能加载其它，可能有能有疑问，不是可以加载资源和so吗？确实没错，classloader是代码，资源大管家，注意这里的资源不是android里面的assetsmanager，比如加载文件，最为常见的是加载配置文">
+  <meta charset="utf-8">
+  
+  <title>深入分析classloader | longway&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词就很通俗的说明了是class加载器，不能加载其它，可能有能有疑问，不是可以加载资源和so吗？确实没错，classloader是代码，资源大管家，注意这里的资源不是android里面的assetsmanager，比如加载文件，最为常见的是加载配置文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入分析classloader">
 <meta property="og:url" content="http://www.jackway.cn/2017/02/06/classloader/index.html">
@@ -34,164 +19,91 @@
 <meta name="twitter:title" content="深入分析classloader">
 <meta name="twitter:description" content="classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词就很通俗的说明了是class加载器，不能加载其它，可能有能有疑问，不是可以加载资源和so吗？确实没错，classloader是代码，资源大管家，注意这里的资源不是android里面的assetsmanager，比如加载文件，最为常见的是加载配置文">
 <meta name="twitter:image" content="http://www.jackway.cn/img/jvm/classloader.png">
+  
+    <link rel="alternate" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
     
-        <link rel="alternate" type="application/atom+xml" title="longway&#39;s blog" href="/atom.xml">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/style.css?v=1.6.7">
-    <script>window.lazyScripts=[]</script>
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
 
 <body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu" class="hide" >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">龙伟</h5>
-          <a href="mailto:1315498745@qq.com" title="1315498745@qq.com" class="mail">1315498745@qq.com</a>
-        </hgroup>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.jackway.cn"></form>
       </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
     </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                Home
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/jacklongway" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="http://weibo.com/3278255437/profile?topnav=1&wvr=6&is_all=1" target="_blank" >
-                <i class="icon icon-lg icon-weibo"></i>
-                Weibo
-              </a>
-            </li>
-        
-      </ul>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">longway&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Technology change the world</a>
+        </h2>
+      
     </div>
   </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">深入分析classloader</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
 </header>
-<header class="content-header post-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">深入分析classloader</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2017-02-06T12:48:24.000Z" itemprop="datePublished" class="page-time">
-  2017-02-06
-</time>
-
-
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
-
-            
-        </h5>
-    </div>
-
+      <div class="outer">
+        <section id="main"><article id="post-classloader" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/06/classloader/" class="article-date">
+  <time datetime="2017-02-06T12:48:24.000Z" itemprop="datePublished">2017-02-06</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jvm/">jvm</a>
+  </div>
 
-
-</header>
-
-
-<div class="container body-wrap">
+  </div>
+  <div class="article-inner">
     
-    <aside class="post-widget">
-        <nav class="post-toc-wrap" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正确使用classloader需要明白的问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">正确使用classloader需要明白的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#classloader的加载机制-双亲委派"><span class="post-toc-number">2.</span> <span class="post-toc-text">classloader的加载机制(双亲委派)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#classloader类型"><span class="post-toc-number">3.</span> <span class="post-toc-text">classloader类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#classloader命名空间"><span class="post-toc-number">4.</span> <span class="post-toc-text">classloader命名空间</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#classloader隔离机制"><span class="post-toc-number">5.</span> <span class="post-toc-text">classloader隔离机制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#classloader下的class缓存"><span class="post-toc-number">6.</span> <span class="post-toc-text">classloader下的class缓存</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#打破classloader正常委派机制"><span class="post-toc-number">7.</span> <span class="post-toc-text">打破classloader正常委派机制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java-classloader与android-classloader的异同"><span class="post-toc-number">8.</span> <span class="post-toc-text">java classloader与android classloader的异同</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#classloader的运用场景"><span class="post-toc-number">9.</span> <span class="post-toc-text">classloader的运用场景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#classloader常见问题以及解决方法"><span class="post-toc-number">10.</span> <span class="post-toc-text">classloader常见问题以及解决方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">11.</span> <span class="post-toc-text">总结</span></a></li></ol>
-        </nav>
-    </aside>
     
-<article id="post-classloader"
-  class="post-article article-type-post fade" itemprop="blogPost">
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深入分析classloader
+    </h1>
+  
 
-    <div class="post-card">
-        <h1 class="post-card-title">深入分析classloader</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2017-02-06 20:48:24" datetime="2017-02-06T12:48:24.000Z"  itemprop="datePublished">2017-02-06</time>
-
-            
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/jvm/">jvm</a></li></ul>
-
-
-
-            
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
-    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
-</span>
-
-
-            
-
-        </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <blockquote>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <blockquote>
 <p>classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词就很通俗的说明了是class加载器，不能加载其它，可能有能有疑问，不是可以加载资源和so吗？确实没错，classloader是代码，资源大管家，注意这里的资源不是android里面的assetsmanager，比如加载文件，最为常见的是加载配置文件，属性文件，写后台的很常见，我们写客户端的基本很少用到，既然classloader能做这么多事情，那么问题来了，我们在android代码的时候根本没有用到了，class也加载进来了，对象也创建出来了，这是什么原因了。是的，我们想想，如果我们平时开发每创建一个对象都要手动classloader加载，肯定是很繁琐的。这个流程系统接管了，所以导致很多同学对class的加载流程不是很明白，即使在网上看了一些文档，也没有根本理解原理。那么这篇文章我就跟同学们较为全面，深入的讲解，让我们能真正的理解的classloader的加载机制，命名空间，隔离行等特性。</p>
 </blockquote>
 <a id="more"></a>
@@ -214,338 +126,182 @@
 <h2 id="classloader命名空间"><a href="#classloader命名空间" class="headerlink" title="classloader命名空间"></a>classloader命名空间</h2><p>这个命名空间就好比给每个加载进来的class打上了一个前缀，注意这个跟pre verify class flag是不一样的，不要混淆了，这个就是xml术语里面的namespace，为了区分不同类加载加载的类，那么是什么意思了，有什么用途了，为什么要这么做了，我们带着这些疑问，来一步步分析，首先namespace的意思在不同语境下含义是不一样的，但是大多数场景下都是解决冲突，c++,android xml,等都可以看到它的身影，确实很用用，只是我们平时很少去关注它，那么在classloader的语境下就是为了区分不同的class来自不同的classloader，用途就是避免来自不同的classloader的class进行互操作，这样做的目的还是保证class的唯一性。明白了这个特性我们就在写插件的时候要特别注意，我们知道java是不支持多继承的，但是我们可以用多接口来实现多继承，那么问题来了，有时接口的很多端要使用的，我们会讲接口单独成jar包，我们在打包的时候，就一定要小心，不要将这个jar包一起包含进去，android里面最为常见就是直接provider就好。</p>
 <h2 id="classloader隔离机制"><a href="#classloader隔离机制" class="headerlink" title="classloader隔离机制"></a>classloader隔离机制</h2><p>说到隔离，我相信同学们都明白，不管是java的运行，还是android的apk运行，都是运行在沙箱里面的，也就是进程之间是隔离的。默认情况下进程之间是不同进行数据交互的，也不能尽兴行为通信的，那么classloader在不同进程之间也是隔离的，不同进程之间的classloader对象不一样，类的命名空间必然就不一样了，这里在开发插件的时候可能会用到这个技术，让一些类在其他进程的classloader里面去加载，这样做的好处有，比如安全隔离，内存分担等。</p>
 <h2 id="classloader下的class缓存"><a href="#classloader下的class缓存" class="headerlink" title="classloader下的class缓存"></a>classloader下的class缓存</h2><p>假如同学们看过classloader的源码，不管是java，还是android的，只要基于jvm的classloader，大家应该都看到过代码，loadclass这个方法并不是直接委派给parent去加载，而是首先从缓存取，如果取到了，直接return了，如果取不到再交给parent，这样做的好处是加快响应速度，坏处就是一但这个类被加载了，我们是没办法卸载的，这个就是很多基于class热修复的框架必须重启app生效的根本原因。我们只有知道了这些原因，我们遇到问题才能很好的去解决，才能预知有哪些问题。</p>
-<h2 id="打破classloader正常委派机制"><a href="#打破classloader正常委派机制" class="headerlink" title="打破classloader正常委派机制"></a>打破classloader正常委派机制</h2><p>我们在开始说了，正常classloader的加载模式的双亲委派，那么这个我们能不能打破了，打破之后，我们能够做些什么事情了，这里同学们就会明白，打破肯定是可以的，打破也很简单，我们理解了正常的加载模型，那么我们只要改变parent的指向就好了，类似改变parent指针，instant run的快速加载就是这么实现的，只是instant run里面还多了一个代理，其实也就是wrapper一个classloader去加载自己的dex。记住，什么时候我们会用到打破双亲模式的加载方式了，比如我们想加载一个热修复类，可以用这种方式替换数组插入的方式。instant run classloader图例:<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/classloader.png" alt="parent-classloader" title="">
-                </div>
-                <div class="image-caption">parent-classloader</div>
-            </figure></p>
+<h2 id="打破classloader正常委派机制"><a href="#打破classloader正常委派机制" class="headerlink" title="打破classloader正常委派机制"></a>打破classloader正常委派机制</h2><p>我们在开始说了，正常classloader的加载模式的双亲委派，那么这个我们能不能打破了，打破之后，我们能够做些什么事情了，这里同学们就会明白，打破肯定是可以的，打破也很简单，我们理解了正常的加载模型，那么我们只要改变parent的指向就好了，类似改变parent指针，instant run的快速加载就是这么实现的，只是instant run里面还多了一个代理，其实也就是wrapper一个classloader去加载自己的dex。记住，什么时候我们会用到打破双亲模式的加载方式了，比如我们想加载一个热修复类，可以用这种方式替换数组插入的方式。instant run classloader图例:<br><img src="/img/jvm/classloader.png" alt="parent-classloader"></p>
 <h2 id="java-classloader与android-classloader的异同"><a href="#java-classloader与android-classloader的异同" class="headerlink" title="java classloader与android classloader的异同"></a>java classloader与android classloader的异同</h2><p>java classloader与android classloader 我相信很多同学都不怎么明白，我这里主要讲解两个最根本的区别</p>
 <ol>
 <li>java的加载源是classpath，android的加载源是dex或者自定义path，java加载的class，android加载的是dex，但是最后也是加载的class，dex会经过解压。总体来说加载的数据根本没变。</li>
 <li>java默认可以加载网络的class，defineclass可以定义class，android下面默认是不允许的，不支持url的方式去加载，如果你非要加载也是可以的，这个是android系统为了安全把这个方法从java层移除掉了，jni层还是保留的，底层的class生成还是defineclass，我们可以jni层调用这个方法实现class的生成。</li>
 </ol>
-<p>android 类加载核心代码:<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/android-classloader.png" alt="android-classloader" title="">
-                </div>
-                <div class="image-caption">android-classloader</div>
-            </figure></p>
-<p>java define 生成Class代码<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/jvm/java-define.png" alt="define-classloader" title="">
-                </div>
-                <div class="image-caption">define-classloader</div>
-            </figure></p>
+<p>android 类加载核心代码:<br><img src="/img/jvm/android-classloader.png" alt="android-classloader"></p>
+<p>java define 生成Class代码<br><img src="/img/jvm/java-define.png" alt="define-classloader"></p>
 <h2 id="classloader的运用场景"><a href="#classloader的运用场景" class="headerlink" title="classloader的运用场景"></a>classloader的运用场景</h2><p>classloader场景就太多了，比如插件开发，热修复，so修复等等都可以用这个实现，只有深入理解了classloader，我们很多高难度的场景才能对付。其实静下心来也不难理解。</p>
 <h2 id="classloader常见问题以及解决方法"><a href="#classloader常见问题以及解决方法" class="headerlink" title="classloader常见问题以及解决方法"></a>classloader常见问题以及解决方法</h2><p>classloader我们在真正项目运用过程中肯定会遇到一些坑，比如不同的os的classloader被定制的面目全非，最坑的是阿里云的类加载器，这里就不过多吐槽，在插件化的时候，一定要单独处理对待，它的待遇就是不一样，还有360自家系统的classloader也要单独处理，其实这些都不难，就是坑，发现一个埋一个就好，理解原理了之后，后续问题基本都可以解决，只是可能有时麻烦点。这里的问题大多数是classloader内部的数据结构被改了。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来看classloader涉及到的东西还是很多的，我们平时开发可能很少注意，希望通过本篇文章，希望大家对classloader的应用层面有个好的理解，能够在以后的项目中遇到问题之后，用已有积累的知识点，快速解决问题。前面的文章分析了class的加载，也就是classloader真正加载class的生命周期，这篇是进一步的外部层面的补充。本来打算这篇是继续分析class的字节循环指令的，由于有同学对classloader不是很理解，就有了这篇文章的分析，下篇还是会按照正常套路分析字节码指令，敬请期待……</p>
 
-        </div>
-
-        <blockquote class="post-copyright">
-    <div class="content">
-        
-<span class="post-time">
-    Last updated: <time datetime="2017-06-04T08:01:46.000Z" itemprop="dateUpdated">2017-06-04 16:01:46</time>
-</span><br>
-
-
-        
-        该内容没经过版主同意不得随意转发
-        
+      
     </div>
-    <footer>
-        <a href="http://www.jackway.cn">
-            <img src="/img/avatar.jpg" alt="龙伟">
-            龙伟
-        </a>
+    <footer class="article-footer">
+      <a data-url="http://www.jackway.cn/2017/02/06/classloader/" data-id="cj3pzibwn000qswfys547s4lc" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/classloader/">classloader</a></li></ul>
+
     </footer>
-</blockquote>
-
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/12/jvm-字节码指令-3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
         
-<div class="page-reward">
-    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
-</div>
-
-
-
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/classloader/">classloader</a></li></ul>
-
-
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/02/06/classloader/&title=《深入分析classloader》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/02/06/classloader/&title=《深入分析classloader》 — longway's blog&source=
-classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/02/06/classloader/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入分析classloader》 — longway's blog&url=http://www.jackway.cn/2017/02/06/classloader/&via=http://www.jackway.cn" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/02/06/classloader/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
+          jvm-字节码指令(3)
+        
+      </div>
     </a>
-</div>
-
-
-
-        </div>
-    </div>
-
-    
-<nav class="post-nav flex-row flex-justify-between">
   
-    <div class="waves-block waves-effect prev">
-      <a href="/2017/02/12/jvm-字节码指令-3/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">jvm-字节码指令(3)</h4>
-      </a>
-    </div>
   
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2017/01/27/new-2017/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">2017我你前行</h4>
-      </a>
-    </div>
+    <a href="/2017/01/27/new-2017/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">2017我你前行</div>
+    </a>
   
 </nav>
 
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+       
+      
+           <div id="uyan_frame"></div>
+    
+  </div>
+ 
+  
 
-
+</section>
+           
+    <aside id="sidebar">
+  
     
 
-
-
-
-
-
-
-<section class="comments" id="comments">
-    <!-- UY BEGIN -->
-    <div id="uyan_frame"></div>
-    <script src="http://v2.uyan.cc/code/uyan.js?uid=2129764"></script>
-    <!-- UY END -->
-</section>
-
-
-
-
-
-
-
-
-
-
-</article>
-
-<div id="reward" class="page-modal reward-lay">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <h3 class="reward-title">
-        <i class="icon icon-quote-left"></i>
-        谢谢大爷~
-        <i class="icon icon-quote-right"></i>
-    </h3>
-    <ul class="reward-items">
-        
-        <li>
-            <img src="/img/wechat.jpeg" title="微信打赏二维码" alt="微信打赏二维码">
-            <p>微信</p>
-        </li>
-        
-
-        
-        <li>
-            <img src="/img/alipay.jpeg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
-            <p>支付宝</p>
-        </li>
-        
-    </ul>
-</div>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-        站点总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
-        站点总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
-            
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
-        </p>
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#正确使用classloader需要明白的问题"><span class="toc-number">1.</span> <span class="toc-text">正确使用classloader需要明白的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#classloader的加载机制-双亲委派"><span class="toc-number">2.</span> <span class="toc-text">classloader的加载机制(双亲委派)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#classloader类型"><span class="toc-number">3.</span> <span class="toc-text">classloader类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#classloader命名空间"><span class="toc-number">4.</span> <span class="toc-text">classloader命名空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#classloader隔离机制"><span class="toc-number">5.</span> <span class="toc-text">classloader隔离机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#classloader下的class缓存"><span class="toc-number">6.</span> <span class="toc-text">classloader下的class缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打破classloader正常委派机制"><span class="toc-number">7.</span> <span class="toc-text">打破classloader正常委派机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-classloader与android-classloader的异同"><span class="toc-number">8.</span> <span class="toc-text">java classloader与android classloader的异同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#classloader的运用场景"><span class="toc-number">9.</span> <span class="toc-text">classloader的运用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#classloader常见问题以及解决方法"><span class="toc-number">10.</span> <span class="toc-text">classloader常见问题以及解决方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">11.</span> <span class="toc-text">总结</span></a></li></ol>
+          </div>
+      </div>
     </div>
-    <div class="bottom">
-        <p>
-            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
-            <span>龙伟 &copy; 2014 - 2017</span>
-        </p>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2017 龙伟&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;youemail@outlook.com
+    </div>
+  </div>
 </footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.jackway.cn/2017/02/06/classloader/&title=《深入分析classloader》 — longway's blog&pic=http://www.jackway.cn/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.jackway.cn/2017/02/06/classloader/&title=《深入分析classloader》 — longway's blog&source=
-classloader我相信大家都很明白能做什么事情，不能做什么事情，能做的事情从字面意思，我们很容易知道是类加载器,其实classloader这个单词..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.jackway.cn/2017/02/06/classloader/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入分析classloader》 — longway's blog&url=http://www.jackway.cn/2017/02/06/classloader/&via=http://www.jackway.cn" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.jackway.cn/2017/02/06/classloader/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aUY6rMAwF0O5/050FvAdzrwMjEQ5fFUohp5UsO/bnE1/fgytZk6z89/7njgsDA+OxjOT17Zrkzuz+IRUDA+MFjKMINlsTvTh+zvl6DAwMjPZzkuol38LAwMC4I+DmNeb5EzAwMDBWitgkROZhtH3XZbU4BgbGAxl5uPz7z7f0NzAwMB7F+JbXSiE6SyKjXWFgYGzNyAPcSuKYFLRtwMXAwHgbIxl3SGD5RlfW/ELFwMDYmtFuLjn8urZVecF/goGB8UDGrFycDXit/Fi3VL0YGBgPYawUsVFJWW5rabwDAwNjU8bKQFi+lXbM4nx98T9gYGBsxFgPhXkat0I63AkGBsbWjPZxs4GMfHN5OnjYicXAwNiOkQ9M1E3EshhOnh8NhGFgYGzHyI/vk3bCrM3ZFtXDQzcMDIzHMtqhq7rnUB7A5cXzf1JDDAyMTRkrCdzscL8NuLMfDgMDYyfGrExdTwrb0bGov4GBgbEpox2JaF85m4UYhm8MDIzXMM4TwbwvOmttztZgYGC8h9EGynbAKy+bh8d8GBgYr2Fctek2lVynYmBg7Mr4lleeMrZNhbzlEPUxMDAwNmLk1x1HcrMBi7YtioGBsQejDbJ5sG5D/GzUAwMD4z2MqwJfcsQ/nFY7L5IxMDAwlsvRvLhNGpaHh24YGBgYQfOgfX3eEvjlXRgYGC9gtIVlG17zQbE8lcTAwHgPIy8dk9Rw9pzZKBgGBsYLGD9FKdE/ZgrKIgAAAABJRU5ErkJggg==" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
 <script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
-
-
-
-lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1260894982&web_id=1260894982')
-
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
 </script>
-
-<script src="/js/main.min.js?v=1.6.7"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
-</li>
-</template>
-
-<script src="/js/search.min.js?v=1.6.7" async></script>
+      
 
 
 
 
 
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
+ <script  type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2129764"></script>
 
 
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '死鬼去哪里了！';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '(つェ⊂)咦!又好了!';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
         }
-    });
-})();
-</script>
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
 
 
+ <script src="/js/is.js"></script>
 
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
 </body>
 </html>
