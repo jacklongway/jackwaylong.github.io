@@ -19,7 +19,7 @@
     <link rel="alternate" href="/atom.xml" title="longway&#39;s blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.png">
   
   
     
@@ -41,7 +41,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.jackway.cn"></form>
@@ -185,7 +185,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.jackway.cn/2017/01/12/sdk-design-rules/" data-id="cj3q1qs6o002hyjfyhz7yc6c9" class="article-share-link">分享</a>
+      <a data-url="http://www.jackway.cn/2017/01/12/sdk-design-rules/" data-id="cj3q1vsej002c1kfylgj2p05j" class="article-share-link">Share</a>
       
       
       
@@ -198,7 +198,7 @@
 <nav id="article-nav">
   
     <a href="/2017/01/15/jvm-class内部结构/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           jvm-class内部结构深度揭秘
@@ -208,7 +208,7 @@
   
   
     <a href="/2017/01/11/jvm-heap/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">jvm-(heap-gc)</div>
     </a>
   
@@ -242,7 +242,7 @@
     
       <div class="widget" id="toc-widget-fixed">
       
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
               <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#APIs-amp-Fabric"><span class="toc-number">1.</span> <span class="toc-text">APIs & Fabric</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意事项"><span class="toc-number">2.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使-SDK-具备可测试性和可模拟性"><span class="toc-number">3.</span> <span class="toc-text">使 SDK 具备可测试性和可模拟性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试用例"><span class="toc-number">4.</span> <span class="toc-text">测试用例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优美的降解"><span class="toc-number">5.</span> <span class="toc-text">优美的降解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#轻量"><span class="toc-number">6.</span> <span class="toc-text">轻量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#报告二进制文件-binary-的大小"><span class="toc-number">7.</span> <span class="toc-text">报告二进制文件(binary)的大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dalvik-方法数量限制"><span class="toc-number">8.</span> <span class="toc-text">Dalvik 方法数量限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块化"><span class="toc-number">9.</span> <span class="toc-text">模块化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩数据"><span class="toc-number">10.</span> <span class="toc-text">压缩数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#批量处理请求"><span class="toc-number">11.</span> <span class="toc-text">批量处理请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步任务"><span class="toc-number">12.</span> <span class="toc-text">异步任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#灵活性"><span class="toc-number">13.</span> <span class="toc-text">灵活性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立工具支持"><span class="toc-number">14.</span> <span class="toc-text">建立工具支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尽量选择兼容最低的系统版本"><span class="toc-number">15.</span> <span class="toc-text">尽量选择兼容最低的系统版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-Manifests"><span class="toc-number">16.</span> <span class="toc-text">Android Manifests</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#权限"><span class="toc-number">17.</span> <span class="toc-text">权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可选的功能"><span class="toc-number">18.</span> <span class="toc-text">可选的功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Classpath-检测"><span class="toc-number">19.</span> <span class="toc-text">Classpath 检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可扩展类和接口"><span class="toc-number">20.</span> <span class="toc-text">可扩展类和接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Callbacks"><span class="toc-number">21.</span> <span class="toc-text">Callbacks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#良好支持的-SDK"><span class="toc-number">22.</span> <span class="toc-text">良好支持的 SDK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">23.</span> <span class="toc-text">总结</span></a></li></ol>
           </div>
@@ -274,10 +274,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2017 龙伟&nbsp;|&nbsp;
-      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      联系方式&nbsp;|&nbsp;1315498745@qq.com
+      Contact&nbsp;|&nbsp;1315498745@qq.com
     </div>
   </div>
 </footer>
